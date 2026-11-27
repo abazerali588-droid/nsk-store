@@ -4,23 +4,46 @@ void main() {
   runApp(const NSKApp());
 }
 
-// نموذج بيانات المنتج
+// ==========================================
+// 1. نماذج البيانات (Models)
+// ==========================================
 class Product {
   String id;
   String name;
   double price;
   String description;
-  String imageUrl;
+  bool isAvailable;
 
   Product({
     required this.id,
     required this.name,
     required this.price,
     required this.description,
-    required this.imageUrl,
+    this.isAvailable = true,
   });
 }
 
+class OrderItem {
+  String customerName;
+  String phone;
+  String address;
+  String productName;
+  double totalPrice;
+  DateTime date;
+
+  OrderItem({
+    required this.customerName,
+    required this.phone,
+    required this.address,
+    required this.productName,
+    required this.totalPrice,
+    required this.date,
+  });
+}
+
+// ==========================================
+// 2. التطبيق الرئيسي (Main App)
+// ==========================================
 class NSKApp extends StatelessWidget {
   const NSKApp({super.key});
 
@@ -30,263 +53,261 @@ class NSKApp extends StatelessWidget {
       title: 'NSK Store',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        fontFamily: 'Arial',
+        useMaterial3: true,
+        colorSchemeSeed: Colors.indigo,
       ),
-      home: const MainScreen(),
+      home: const StoreHomeScreen(),
     );
   }
 }
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+// ==========================================
+// 3. الشاشة الرئيسية (واجهة العميل + المالك)
+// ==========================================
+class StoreHomeScreen extends StatefulWidget {
+  const StoreHomeScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<StoreHomeScreen> createState() => _StoreHomeScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-  // حالة المستخدم: false = عميل عادي، true = مالك التطبيق
+class _StoreHomeScreenState extends State<StoreHomeScreen> {
+  // حالة المالك وكلمة المرور
   bool isOwner = false;
-
-  // كلمة مرور المالك الافتراضية (يمكنك تغييرها)
   final String ownerPin = "1234";
 
-  // قائمة المنتجات المبدئية (تُعدل من لوحة المالك)
+  // إعدادات المتجر القابلة للتعديل من المالك
+  String storeName = "NSK";
+  String welcomeBanner = "أهلاً بكم في متجر NSK الرسمي - أفضل المنتجات بأفضل الأسعار";
+  Color primaryThemeColor = Colors.indigo;
+
+  // قائمة المنتجات
   List<Product> products = [
     Product(
-      id: '1',
-      name: 'منتج NSK المميز 1',
-      price: 450.0,
-      description: 'وصف تفصيلي للمنتج الأول بجودة عالية.',
-      imageUrl: 'https://placeholder.com',
+      id: '101',
+      name: 'منتج NSK الأساسي',
+      price: 350.0,
+      description: 'جودة ممتازة وضمان استبدال من NSK.',
+      isAvailable: true,
     ),
     Product(
-      id: '2',
-      name: 'منتج NSK الكلاسيكي 2',
-      price: 750.0,
-      description: 'وصف تفصيلي للمنتج الثاني.',
-      imageUrl: 'https://placeholder.com',
+      id: '102',
+      name: 'منتج NSK برو',
+      price: 690.0,
+      description: 'الإصدار المطور بمواصفات عالية.',
+      isAvailable: true,
     ),
   ];
 
-  // دالة لفتح نافذة تسجيل دخول المالك
-  void _showOwnerLoginDialog() {
-    TextEditingController pinController = TextEditingController();
+  // قائمة الطلبات الواردة من العملاء
+  List<OrderItem> orders = [];
+
+  // ------------------------------------------
+  // نافذة تسجيل دخول المالك
+  // ------------------------------------------
+  void _openOwnerLogin() {
+    final pinController = TextEditingController();
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('دخول المالك - NSK'),
-        content: TextField(
-          controller: pinController,
-          obscureText: true,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            hintText: 'أدخل رمز المالك (1234)',
-            border: OutlineInputBorder(),
+      builder: (ctx) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
+          title: const Row(
+            children: [
+              Icon(Icons.lock_person, color: Colors.indigo),
+              SizedBox(width: 8),
+              Text('دخول المالك'),
+            ],
           ),
+          content: TextField(
+            controller: pinController,
+            obscureText: true,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'الرمز السري (الافتراضي: 1234)',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('إلغاء'),
+            ),
+            FilledButton(
+              onPressed: () {
+                if (pinController.text == ownerPin) {
+                  setState(() => isOwner = true);
+                  Navigator.pop(ctx);
+                  _showMessage('تم تفعيل وضع المالك بنجاح', Colors.green);
+                } else {
+                  _showMessage('الرمز السري غير صحيح', Colors.red);
+                }
+              },
+              child: const Text('تأكيد الدخول'),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (pinController.text == ownerPin) {
-                setState(() {
-                  isOwner = true;
-                });
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('تم تفعيل وضع المالك بنجاح')),
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('رمز الدخول غير صحيح!')),
-                );
-              }
-            },
-            child: const Text('دخول'),
-          ),
-        ],
       ),
     );
   }
 
-  // دالة لإضافة أو تعديل منتج (خاصة بالمالك)
-  void _showProductForm({Product? existingProduct, int? index}) {
-    final nameController = TextEditingController(text: existingProduct?.name ?? '');
-    final priceController = TextEditingController(text: existingProduct?.price.toString() ?? '');
-    final descController = TextEditingController(text: existingProduct?.description ?? '');
+  // ------------------------------------------
+  // نافذة إعدادات المتجر (تعديل الاسم والبانر)
+  // ------------------------------------------
+  void _openStoreSettings() {
+    final nameCtrl = TextEditingController(text: storeName);
+    final bannerCtrl = TextEditingController(text: welcomeBanner);
+
+    showDialog(
+      context: context,
+      builder: (ctx) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
+          title: const Text('إعدادات التطبيق (للمالك)'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameCtrl,
+                decoration: const InputDecoration(
+                  labelText: 'اسم المتجر',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: bannerCtrl,
+                maxLines: 2,
+                decoration: const InputDecoration(
+                  labelText: 'نص رسالة الترحيب / العرض',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('إلغاء'),
+            ),
+            FilledButton(
+              onPressed: () {
+                setState(() {
+                  if (nameCtrl.text.isNotEmpty) storeName = nameCtrl.text;
+                  welcomeBanner = bannerCtrl.text;
+                });
+                Navigator.pop(ctx);
+                _showMessage('تم تحديث إعدادات التطبيق', Colors.green);
+              },
+              child: const Text('حفظ الإعدادات'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ------------------------------------------
+  // نافذة إضافة أو تعديل منتج (للمالك)
+  // ------------------------------------------
+  void _openProductEditor({Product? product, int? index}) {
+    final nameCtrl = TextEditingController(text: product?.name ?? '');
+    final priceCtrl = TextEditingController(text: product?.price.toString() ?? '');
+    final descCtrl = TextEditingController(text: product?.description ?? '');
+    bool available = product?.isAvailable ?? true;
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-          left: 20,
-          right: 20,
-          top: 20,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              existingProduct == null ? 'إضافة منتج جديد' : 'تعديل المنتج',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      builder: (ctx) => StatefulBuilder(
+        builder: (context, setModalState) => Directionality(
+          textDirection: TextDirection.rtl,
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+              left: 20,
+              right: 20,
+              top: 20,
             ),
-            const SizedBox(height: 15),
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: 'اسم المنتج', border: OutlineInputBorder()),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: priceController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'السعر (ج.م)', border: OutlineInputBorder()),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: descController,
-              decoration: const InputDecoration(labelText: 'وصف المنتج', border: OutlineInputBorder()),
-            ),
-            const SizedBox(height: 15),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, 45)),
-              onPressed: () {
-                if (nameController.text.isNotEmpty && priceController.text.isNotEmpty) {
-                  setState(() {
-                    if (existingProduct == null) {
-                      // إضافة جديد
-                      products.add(Product(
-                        id: DateTime.now().toString(),
-                        name: nameController.text,
-                        price: double.tryParse(priceController.text) ?? 0.0,
-                        description: descController.text,
-                        imageUrl: 'https://placeholder.com',
-                      ));
-                    } else if (index != null) {
-                      // تعديل حالي
-                      products[index] = Product(
-                        id: existingProduct.id,
-                        name: nameController.text,
-                        price: double.tryParse(priceController.text) ?? 0.0,
-                        description: descController.text,
-                        imageUrl: existingProduct.imageUrl,
-                      );
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  product == null ? 'إضافة منتج جديد' : 'تعديل المنتج',
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 15),
+                TextField(
+                  controller: nameCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'اسم المنتج',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: priceCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'السعر (ج.م)',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: descCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'وصف المنتج',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SwitchListTile(
+                  title: const Text('المنتج متوفر للبيع'),
+                  value: available,
+                  onChanged: (val) => setModalState(() => available = val),
+                ),
+                const SizedBox(height: 10),
+                FilledButton(
+                  onPressed: () {
+                    final parsedPrice = double.tryParse(priceCtrl.text);
+                    if (nameCtrl.text.isNotEmpty && parsedPrice != null) {
+                      setState(() {
+                        if (product == null) {
+                          products.add(Product(
+                            id: DateTime.now().millisecondsSinceEpoch.toString(),
+                            name: nameCtrl.text,
+                            price: parsedPrice,
+                            description: descCtrl.text,
+                            isAvailable: available,
+                          ));
+                        } else if (index != null) {
+                          products[index] = Product(
+                            id: product.id,
+                            name: nameCtrl.text,
+                            price: parsedPrice,
+                            description: descCtrl.text,
+                            isAvailable: available,
+                          );
+                        }
+                      });
+                      Navigator.pop(ctx);
+                      _showMessage('تم حفظ المنتج بنجاح', Colors.green);
+                    } else {
+                      _showMessage('يرجى إدخال الاسم والسعر بشكل صحيح', Colors.orange);
                     }
-                  });
-                  Navigator.pop(context);
-                }
-              },
-              child: const Text('حفظ التغييرات'),
+                  },
+                  child: const Text('حفظ'),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl, // لدعم اللغة العربية من اليمين لليسار
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(isOwner ? 'NSK - لوحة تحكم المالك' : 'متجر NSK'),
-          backgroundColor: isOwner ? Colors.redAccent : Colors.indigo,
-          actions: [
-            // زر التبديل بين المالك والعميل
-            if (!isOwner)
-              IconButton(
-                icon: const Icon(Icons.admin_panel_settings),
-                tooltip: 'دخول المالك',
-                onPressed: _showOwnerLoginDialog,
-              )
-            else
-              TextButton.icon(
-                onPressed: () {
-                  setState(() {
-                    isOwner = false;
-                  });
-                },
-                icon: const Icon(Icons.logout, color: Colors.white),
-                label: const Text('خروج المالك', style: TextStyle(color: Colors.white)),
-              ),
-          ],
-        ),
-        body: ListView.builder(
-          padding: const EdgeInsets.all(10),
-          itemCount: products.length,
-          itemBuilder: (context, index) {
-            final product = products[index];
-            return Card(
-              elevation: 3,
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListTile(
-                leading: Container(
-                  width: 60,
-                  height: 60,
-                  color: Colors.grey[200],
-                  child: const Icon(Icons.shopping_bag, size: 35, color: Colors.indigo),
-                ),
-                title: Text(product.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(product.description),
-                    const SizedBox(height: 5),
-                    Text(
-                      '${product.price} ج.م',
-                      style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                // الأزرار تتغير حسب من يفتح التطبيق (مالك أم عميل)
-                trailing: isOwner
-                    ? Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit, color: Colors.blue),
-                            onPressed: () => _showProductForm(existingProduct: product, index: index),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () {
-                              setState(() {
-                                products.removeAt(index);
-                              });
-                            },
-                          ),
-                        ],
-                      )
-                    : ElevatedButton(
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('تم طلب: ${product.name}')),
-                          );
-                        },
-                        child: const Text('اطلب الآن'),
-                      ),
-              ),
-            );
-          },
-        ),
-        // زر إضافة منتج يظهر للمالك فقط في الأسفل
-        floatingActionButton: isOwner
-            ? FloatingActionButton.extended(
-                onPressed: () => _showProductForm(),
-                backgroundColor: Colors.redAccent,
-                icon: const Icon(Icons.add),
-                label: const Text('إضافة منتج'),
-              )
-            : null,
-      ),
-    );
-  }
-}
+  // ------------------------------------------
+  // نافذة طلب المنتج (للعميل)
+  // ------------------------------------------
