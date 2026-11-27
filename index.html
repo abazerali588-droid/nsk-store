@@ -6,54 +6,54 @@
 <title>NSK Store</title>
 <style>
 @import url('https://googleapis.com');
-:root{--bg:#0f1015;--card:#181a22;--gold:#d4af37;--txt:#f5f5f7;--mut:#9ca3af;--red:#e11d48}
-*{box-sizing:border-box;font-family:'Cairo',sans-serif}
-body{margin:0;background:var(--bg);color:var(--txt);padding-bottom:90px}
-header{background:#181a22;border-bottom:1px solid rgba(212,175,55,.3);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
-h1{margin:0;font-size:22px;color:var(--gold)}
-.obadge{background:var(--red);color:#fff;font-size:11px;padding:2px 8px;border-radius:10px;display:none;margin-right:8px}
-.ibtn{background:rgba(255,255,255,.07);border:1px solid rgba(212,175,55,.3);color:var(--gold);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:700;position:relative;margin-right:5px}
-.badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:11px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.hero{background:#161820;border-bottom:1px solid rgba(212,175,55,.15);padding:18px;text-align:center;color:var(--gold);font-weight:700}
-.container{max-width:700px;margin:20px auto;padding:0 15px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.pcard{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:15px;overflow:hidden}
-.slider{position:relative;width:100%;height:220px;background:#000}
-.slider img{width:100%;height:100%;object-fit:cover}
-.nbtn{position:absolute;top:50%;left:10px;transform:translateY(-50%);background:rgba(0,0,0,.7);color:#fff;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer}
-.pbody{padding:15px}
-.ptitle{margin:0 0 5px;font-size:18px}
-.pdesc{margin:0 0 12px;font-size:13px;color:var(--mut)}
-.pfoot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.08);padding-top:10px}
-.pprice{font-size:17px;font-weight:800;color:var(--gold)}
-.bgold{background:linear-gradient(135deg,#d4af37,#b8860b);color:#000;border:none;padding:8px 15px;border-radius:8px;font-weight:800;cursor:pointer}
-.bedit{background:#2563eb;color:#fff;border:none;padding:7px 11px;border-radius:8px;cursor:pointer}
-.bdel{background:var(--red);color:#fff;border:none;padding:7px 11px;border-radius:8px;cursor:pointer;margin-right:4px}
-.fab{position:fixed;bottom:20px;left:20px;background:var(--gold);color:#000;border:none;padding:14px 20px;border-radius:30px;font-weight:800;cursor:pointer;display:none;z-index:90}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:200;padding:15px}
-.mbox{background:var(--card);border:1px solid var(--gold);padding:20px;border-radius:16px;width:100%;max-width:400px;max-height:90vh;overflow-y:auto}
-.mbox h3{margin-top:0;color:var(--gold);border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:8px}
-label{display:block;font-size:12px;color:var(--mut);margin-bottom:3px}
-input,textarea{width:100%;padding:10px;margin-bottom:12px;background:#0f1015;border:1px solid rgba(255,255,255,.2);border-radius:8px;color:#fff}
-.bcard{background:#0f172a;border:1px solid var(--gold);border-radius:10px;padding:12px;margin:10px 0;text-align:center}
-.acc{font-size:20px;font-weight:800;letter-spacing:2px;background:#000;padding:6px;border-radius:6px;margin:6px 0}
-.citem{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1)}
-.mact{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
-.bcancel{background:rgba(255,255,255,.1);color:#fff;border:none;padding:8px 14px;border-radius:8px;cursor:pointer}
+:root { --bg: #0f1015; --card: #181a22; --gold: #d4af37; --txt: #f5f5f7; --mut: #9ca3af; --red: #e11d48; }
+* { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--txt); padding-bottom: 90px; }
+header { background: #181a22; border-bottom: 1px solid rgba(212,175,55,0.3); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+h1 { margin: 0; font-size: 22px; color: var(--gold); }
+.obadge { background: var(--red); color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 10px; display: none; margin-right: 8px; }
+.ibtn { background: rgba(255,255,255,0.07); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); padding: 8px 12px; border-radius: 10px; cursor: pointer; font-weight: 700; position: relative; margin-right: 5px; }
+.badge { position: absolute; top: -6px; right: -6px; background: var(--red); color: #fff; font-size: 11px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.hero { background: #161820; border-bottom: 1px solid rgba(212,175,55,0.15); padding: 18px; text-align: center; color: var(--gold); font-weight: 700; }
+.container { max-width: 700px; margin: 20px auto; padding: 0 15px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.pcard { background: var(--card); border: 1px solid rgba(255,255,255,0.08); border-radius: 15px; overflow: hidden; }
+.slider { position: relative; width: 100%; height: 220px; background: #000; }
+.slider img { width: 100%; height: 100%; object-fit: cover; }
+.nbtn { position: absolute; top: 50%; left: 10px; transform: translateY(-50%); background: rgba(0,0,0,0.7); color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; }
+.pbody { padding: 15px; }
+.ptitle { margin: 0 0 5px; font-size: 18px; }
+.pdesc { margin: 0 0 12px; font-size: 13px; color: var(--mut); }
+.pfoot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; }
+.pprice { font-size: 17px; font-weight: 800; color: var(--gold); }
+.bgold { background: linear-gradient(135deg, #d4af37, #b8860b); color: #000; border: none; padding: 8px 15px; border-radius: 8px; font-weight: 800; cursor: pointer; }
+.bedit { background: #2563eb; color: #fff; border: none; padding: 7px 11px; border-radius: 8px; cursor: pointer; }
+.bdel { background: var(--red); color: #fff; border: none; padding: 7px 11px; border-radius: 8px; cursor: pointer; margin-right: 4px; }
+.fab { position: fixed; bottom: 20px; left: 20px; background: var(--gold); color: #000; border: none; padding: 14px 20px; border-radius: 30px; font-weight: 800; cursor: pointer; display: none; z-index: 90; }
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 200; padding: 15px; }
+.mbox { background: var(--card); border: 1px solid var(--gold); padding: 20px; border-radius: 16px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
+.mbox h3 { margin-top: 0; color: var(--gold); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+label { display: block; font-size: 12px; color: var(--mut); margin-bottom: 3px; }
+input, textarea { width: 100%; padding: 10px; margin-bottom: 12px; background: #0f1015; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff; }
+.bcard { background: #0f172a; border: 1px solid var(--gold); border-radius: 10px; padding: 12px; margin: 10px 0; text-align: center; }
+.acc { font-size: 20px; font-weight: 800; letter-spacing: 2px; background: #000; padding: 6px; border-radius: 6px; margin: 6px 0; }
+.citem { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.mact { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.bcancel { background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; }
 </style>
 </head>
 <body>
 
 <header>
-<div style="display:flex;align-items:center">
-<h1 id="sTitle">NSK</h1>
-<span class="obadge" id="oBadge">وضع المالك</span>
-</div>
-<div>
-<button class="ibtn" onclick="openCart()">🛒 السلة <span class="badge" id="cCount">0</span></button>
-<button class="ibtn" id="setBtn" style="display:none" onclick="openSettings()">⚙️</button>
-<button class="ibtn" id="authBtn" onclick="auth()">🔐</button>
-</div>
+  <div style="display:flex;align-items:center">
+    <h1 id="sTitle">NSK</h1>
+    <span class="obadge" id="oBadge">وضع المالك</span>
+  </div>
+  <div>
+    <button class="ibtn" onclick="openCart()">🛒 السلة <span class="badge" id="cCount">0</span></button>
+    <button class="ibtn" id="setBtn" style="display:none" onclick="openSettings()">⚙️</button>
+    <button class="ibtn" id="authBtn" onclick="auth()">🔐</button>
+  </div>
 </header>
 
 <div class="hero" id="wBanner">فخامة الاختيار وجودة المنتجات في متجر NSK</div>
@@ -61,117 +61,315 @@ input,textarea{width:100%;padding:10px;margin-bottom:12px;background:#0f1015;bor
 <button class="fab" id="addFab" onclick="openPModal()">+ إضافة منتج</button>
 
 <div class="modal" id="pModal">
-<div class="mbox">
-<h3 id="pmTitle">إضافة منتج</h3>
-<input type="hidden" id="eIdx">
-<label>اسم المنتج</label><input type="text" id="pName">
-<label>السعر</label><input type="number" id="pPrice">
-<label>الوصف</label><textarea id="pDesc" rows="2"></textarea>
-<label>الصور (يمكن اختيار عدة صور)</label><input type="file" id="pImgs" accept="image/*" multiple>
-<div class="mact">
-<button class="bcancel" onclick="closeM('pModal')">إلغاء</button>
-<button class="bgold" onclick="saveProd()">حفظ ونشر</button>
-</div>
-</div>
+  <div class="mbox">
+    <h3 id="pmTitle">إضافة منتج</h3>
+    <input type="hidden" id="eIdx">
+    <label>اسم المنتج</label><input type="text" id="pName">
+    <label>السعر</label><input type="number" id="pPrice">
+    <label>الوصف</label><textarea id="pDesc" rows="2"></textarea>
+    <label>الصور (يمكن اختيار عدة صور)</label><input type="file" id="pImgs" accept="image/*" multiple>
+    <div class="mact">
+      <button class="bcancel" onclick="closeM('pModal')">إلغاء</button>
+      <button class="bgold" onclick="saveProd()">حفظ ونشر</button>
+    </div>
+  </div>
 </div>
 
 <div class="modal" id="cModal">
-<div class="mbox">
-<h3>🛒 سلة المشتريات</h3>
-<div id="cList"></div>
-<div style="font-size:17px;font-weight:800;color:var(--gold);margin:10px 0">الإجمالي: <span id="cTotal">0</span> ج.س</div>
-<div id="chkSec" style="display:none">
-<div class="bcard">
-<div style="color:var(--gold);font-weight:700">🏦 التحويل عبر بنك الخرطوم</div>
-<div class="acc" id="dAcc">0000000</div>
-<div style="color:var(--gold);font-weight:700;margin-bottom:6px" id="dBName">الاسم: صاحب المتجر</div>
-<button class="ibtn" style="font-size:12px" onclick="copyAcc()">📋 نسخ الحساب</button>
-<div style="font-size:11px;color:#fca5a5;margin-top:6px">* أرفق إشعار التحويل في الواتساب بعد الإرسال</div>
-</div>
-<label>اسم الزبون</label><input type="text" id="uName">
-<label>رقم الهاتف</label><input type="tel" id="uPhone">
-<label>العنوان</label><input type="text" id="uAddr">
-</div>
-<div class="mact">
-<button class="bcancel" onclick="closeM('cModal')">إغلاق</button>
-<button class="bgold" id="waBtn" style="display:none" onclick="sendWA()">📲 إرسال للواتساب</button>
-</div>
-</div>
+  <div class="mbox">
+    <h3>🛒 سلة المشتريات</h3>
+    <div id="cList"></div>
+    <div style="font-size:17px;font-weight:800;color:var(--gold);margin:10px 0">الإجمالي: <span id="cTotal">0</span> ج.س</div>
+    <div id="chkSec" style="display:none">
+      <div class="bcard">
+        <div style="color:var(--gold);font-weight:700">🏦 التحويل عبر بنك الخرطوم</div>
+        <div class="acc" id="dAcc">0000000</div>
+        <div style="color:var(--gold);font-weight:700;margin-bottom:6px" id="dBName">الاسم: صاحب المتجر</div>
+        <button class="ibtn" style="font-size:12px" onclick="copyAcc()">📋 نسخ الحساب</button>
+        <div style="font-size:11px;color:#fca5a5;margin-top:6px">* أرفق إشعار التحويل في الواتساب بعد الإرسال</div>
+      </div>
+      <label>اسم الزبون</label><input type="text" id="uName">
+      <label>رقم الهاتف</label><input type="tel" id="uPhone">
+      <label>العنوان</label><input type="text" id="uAddr">
+    </div>
+    <div class="mact">
+      <button class="bcancel" onclick="closeM('cModal')">إغلاق</button>
+      <button class="bgold" id="waBtn" style="display:none" onclick="sendWA()">📲 إرسال للواتساب</button>
+    </div>
+  </div>
 </div>
 
 <div class="modal" id="sModal">
-<div class="mbox">
-<h3>⚙️ إعدادات المتجر والدفع</h3>
-<label>اسم المتجر</label><input type="text" id="inName">
-<label>عبارة الترحيب</label><input type="text" id="inBan">
-<label>رقم حساب بنك الخرطوم</label><input type="text" id="inAcc">
-<label>الاسم في بنك الخرطوم</label><input type="text" id="inBName">
-<label>رقم الواتساب (مثال: 249912345678)</label><input type="tel" id="inWA">
-<div class="mact">
-<button class="bcancel" onclick="closeM('sModal')">إلغاء</button>
-<button class="bgold" onclick="saveSet()">حفظ</button>
-</div>
-</div>
+  <div class="mbox">
+    <h3>⚙️ إعدادات المتجر والدفع</h3>
+    <label>اسم المتجر</label><input type="text" id="inName">
+    <label>عبارة الترحيب</label><input type="text" id="inBan">
+    <label>رقم حساب بنك الخرطوم</label><input type="text" id="inAcc">
+    <label>الاسم في بنك الخرطوم</label><input type="text" id="inBName">
+    <label>رقم الواتساب (مثال: 249912345678)</label><input type="tel" id="inWA">
+    <div class="mact">
+      <button class="bcancel" onclick="closeM('sModal')">إلغاء</button>
+      <button class="bgold" onclick="saveSet()">حفظ</button>
+    </div>
+  </div>
 </div>
 
 <script>
-const DB="https://firebaseio.com";
-const PIN="69866986";
-let owner=false,cart=[],sIdx={};
-let data={name:"NSK",banner:"فخامة الاختيار وجودة المنتجات في متجر NSK",acc:"0000000",bname:"صاحب متجر NSK",wa:"249900000000",prods:[{id:"1",name:"منتج NSK الملكي",price:15000,desc:"تصميم حصري وجودة عالية.",imgs:["https://placeholder.com"]}]};
+const DB = "https://firebaseio.com";
+const PIN = "69866986";
+let owner = false;
+let cart = [];
+let sIdx = {};
+let data = {
+  name: "NSK",
+  banner: "فخامة الاختيار وجودة المنتجات في متجر NSK",
+  acc: "0000000",
+  bname: "صاحب متجر NSK",
+  wa: "249900000000",
+  prods: [
+    {
+      id: "1",
+      name: "منتج NSK الملكي",
+      price: 15000,
+      desc: "تصميم حصري وجودة عالية.",
+      imgs: ["https://placeholder.com"]
+    }
+  ]
+};
 
-async function load(){
-try{let r=await fetch(DB);let d=await r.json();if(d)data=d}catch(e){}
-render();
+async function load() {
+  try {
+    let r = await fetch(DB);
+    let d = await r.json();
+    if (d) data = d;
+  } catch (e) {}
+  render();
 }
-async function sync(){
-try{await fetch(DB,{method:'PUT',body:JSON.stringify(data)})}catch(e){alert("خطأ في الاتصال")}
-render();
+
+async function sync() {
+  try {
+    await fetch(DB, { method: 'PUT', body: JSON.stringify(data) });
+  } catch (e) {
+    alert("خطأ في الاتصال بالسيرفر");
+  }
+  render();
 }
-function render(){
-document.getElementById('sTitle').innerText=data.name;
-document.getElementById('wBanner').innerText=data.banner;
-document.getElementById('oBadge').style.display=owner?"inline-block":"none";
-document.getElementById('setBtn').style.display=owner?"inline-block":"none";
-document.getElementById('addFab').style.display=owner?"block":"none";
-document.getElementById('authBtn').innerText=owner?"خروج":"🔐";
-let g=document.getElementById('pGrid');g.innerHTML="";
-if(!data.prods)data.prods=[];
-data.prods.forEach((p,i)=>{
-if(sIdx[p.id]===undefined)sIdx[p.id]=0;
-let ims=(p.imgs&&p.imgs.length)?p.imgs:["https://placeholder.com"];
-let cur=ims[sIdx[p.id]%ims.length];
-let nb=ims.length>1?`<button class="nbtn" onclick="nxt('${p.id}',${ims.length})">❮</button>`:"";
-g.innerHTML+=`<div class="pcard"><div class="slider"><img src="${cur}">${nb}</div><div class="pbody"><h3 class="ptitle">${p.name}</h3><p class="pdesc">${p.desc}</p><div class="pfoot"><span class="pprice">${Number(p.price).toLocaleString()} ج.س</span><div>${owner?`<button class="bedit" onclick="openPModal(${i})">تعديل</button><button class="bdel" onclick="delP(${i})">حذف</button>`:`<button class="bgold" onclick="addC(${i})">+ للسلة</button>`}</div></div></div></div>`;
-});
+
+function render() {
+  document.getElementById('sTitle').innerText = data.name;
+  document.getElementById('wBanner').innerText = data.banner;
+  document.getElementById('oBadge').style.display = owner ? "inline-block" : "none";
+  document.getElementById('setBtn').style.display = owner ? "inline-block" : "none";
+  document.getElementById('addFab').style.display = owner ? "block" : "none";
+  document.getElementById('authBtn').innerText = owner ? "خروج" : "🔐";
+  
+  let g = document.getElementById('pGrid');
+  g.innerHTML = "";
+  if (!data.prods) data.prods = [];
+  
+  data.prods.forEach((p, i) => {
+    if (sIdx[p.id] === undefined) sIdx[p.id] = 0;
+    let ims = (p.imgs && p.imgs.length) ? p.imgs : ["https://placeholder.com"];
+    let cur = ims[sIdx[p.id] % ims.length];
+    let nb = ims.length > 1 ? `<button class="nbtn" onclick="nxt('${p.id}', ${ims.length})">❮</button>` : "";
+    let btns = owner 
+      ? `<button class="bedit" onclick="openPModal(${i})">تعديل</button><button class="bdel" onclick="delP(${i})">حذف</button>` 
+      : `<button class="bgold" onclick="addC(${i})">+ للسلة</button>`;
+      
+    g.innerHTML += `
+      <div class="pcard">
+        <div class="slider"><img src="${cur}">${nb}</div>
+        <div class="pbody">
+          <h3 class="ptitle">${p.name}</h3>
+          <p class="pdesc">${p.desc}</p>
+          <div class="pfoot">
+            <span class="pprice">${Number(p.price).toLocaleString()} ج.س</span>
+            <div>${btns}</div>
+          </div>
+        </div>
+      </div>`;
+  });
 }
-function nxt(id,t){sIdx[id]=(sIdx[id]+1)%t;render()}
-function auth(){
-if(owner){owner=false;render();return}
-let x=prompt("أدخل الرمز:");
-if(x===PIN){owner=true;render()}else if(x!==null)alert("خطأ");
+
+function nxt(id, t) {
+  sIdx[id] = (sIdx[id] + 1) % t;
+  function auth() {
+  if (owner) {
+    owner = false;
+    render();
+    return;
+  }
+  let x = prompt("أدخل الرمز:");
+  if (x === PIN) {
+    owner = true;
+    render();
+  } else if (x !== null) {
+    alert("الرمز غير صحيح");
+  }
 }
-function openPModal(i=null){
-document.getElementById('eIdx').value=i!==null?i:"";
-document.getElementById('pmTitle').innerText=i!==null?"تعديل المنتج":"إضافة منتج";
-document.getElementById('pName').value=i!==null?data.prods[i].name:"";
-document.getElementById('pPrice').value=i!==null?data.prods[i].price:"";
-document.getElementById('pDesc').value=i!==null?data.prods[i].desc:"";
-document.getElementById('pImgs').value="";
-document.getElementById('pModal').style.display="flex";
+
+function openPModal(i = null) {
+  document.getElementById('eIdx').value = i !== null ? i : "";
+  document.getElementById('pmTitle').innerText = i !== null ? "تعديل المنتج" : "إضافة منتج";
+  document.getElementById('pName').value = i !== null ? data.prods[i].name : "";
+  document.getElementById('pPrice').value = i !== null ? data.prods[i].price : "";
+  document.getElementById('pDesc').value = i !== null ? data.prods[i].desc : "";
+  document.getElementById('pImgs').value = "";
+  document.getElementById('pModal').style.display = "flex";
 }
-function comp(f){
-return new Promise(res=>{
-let r=new FileReader();
-r.onload=e=>{
-let img=new Image();
-img.onload=()=>{
-let c=document.createElement('canvas'),w=500,s=w/img.width;
-c.width=w;c.height=img.height*s;
-c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-res(c.toDataURL('image/jpeg',0.7));
-};img.src=e.target.result;
-};r.readAsDataURL(f);
-});
+
+function comp(f) {
+  return new Promise(res => {
+    let r = new FileReader();
+    r.onload = e => {
+      let img = new Image();
+      img.onload = () => {
+        let c = document.createElement('canvas');
+        let w = 500;
+        let s = w / img.width;
+        c.width = w;
+        c.height = img.height * s;
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        res(c.toDataURL('image/jpeg', 0.7));
+      };
+      img.src = e.target.result;
+    };
+    r.readAsDataURL(f);
+  });
 }
-async function saveProd(){
+
+async function saveProd() {
+  let i = document.getElementById('eIdx').value;
+  let n = document.getElementById('pName').value;
+  let pr = document.getElementById('pPrice').value;
+  let d = document.getElementById('pDesc').value;
+  let fs = document.getElementById('pImgs').files;
+  
+  if (!n || !pr) return alert("أدخل الاسم والسعر");
+  
+  let arr = [];
+  if (fs.length > 0) {
+    for (let k = 0; k < fs.length; k++) {
+      arr.push(await comp(fs[k]));
+    }
+  } else if (i !== "") {
+    arr = data.prods[i].imgs || [];
+  }
+  
+  if (i === "") {
+    data.prods.unshift({ id: Date.now().toString(), name: n, price: pr, desc: d, imgs: arr });
+  } else {
+    data.prods[i] = { ...data.prods[i], name: n, price: pr, desc: d, imgs: arr };
+  }
+  
+  closeM('pModal');
+  await sync();
+}
+
+async function delP(i) {
+  if (confirm("هل أنت متأكد من الحذف؟")) {
+    data.prods.splice(i, 1);
+    await sync();
+  }
+}
+
+function addC(i) {
+  let p = data.prods[i];
+  let ex = cart.find(x => x.id === p.id);
+  if (ex) {
+    ex.q++;
+  } else {
+    cart.push({ id: p.id, name: p.name, price: Number(p.price), q: 1 });
+  }
+  document.getElementById('cCount').innerText = cart.reduce((s, x) => s + x.q, 0);
+  alert("تمت الإضافة للسلة");
+}
+
+function openCart() {
+  let l = document.getElementById('cList');
+  let cs = document.getElementById('chkSec');
+  let wb = document.getElementById('waBtn');
+  l.innerHTML = "";
+  
+  if (!cart.length) {
+    l.innerHTML = "<p style='text-align:center'>السلة فارغة</p>";
+    document.getElementById('cTotal').innerText = "0";
+    cs.style.display = "none";
+    wb.style.display = "none";
+  } else {
+    let tot = 0;
+    cart.forEach((x, i) => {
+      tot += x.price * x.q;
+      l.innerHTML += `
+        <div class="citem">
+          <div><b>${x.name}</b><br><small style="color:var(--gold)">${x.price} × ${x.q}</small></div>
+          <button class="bdel" onclick="remC(${i})">حذف</button>
+        </div>`;
+    });
+    document.getElementById('cTotal').innerText = tot.toLocaleString();
+    document.getElementById('dAcc').innerText = data.acc;
+    document.getElementById('dBName').innerText = "الاسم: " + data.bname;
+    cs.style.display = "block";
+    wb.style.display = "inline-block";
+  }
+  document.getElementById('cModal').style.display = "flex";
+}
+
+function remC(i) {
+  cart.splice(i, 1);
+  document.getElementById('cCount').innerText = cart.reduce((s, x) => s + x.q, 0);
+  openCart();
+}
+
+function copyAcc() {
+  navigator.clipboard.writeText(data.acc);
+  alert("تم نسخ الحساب: " + data.acc);
+}
+
+function sendWA() {
+  let n = document.getElementById('uName').value;
+  let ph = document.getElementById('uPhone').value;
+  let ad = document.getElementById('uAddr').value;
+  
+  if (!n || !ph) return alert("أدخل الاسم والهاتف");
+  
+  let tot = 0;
+  let txt = "";
+  cart.forEach((x, i) => {
+    let s = x.price * x.q;
+    tot += s;
+    txt += `${i + 1}- ${x.name} (${x.q}) = ${s} ج.س%0A`;
+  });
+  
+  let msg = `*طلب جديد من ${data.name}*%0Aالزبون: ${n}%0Aالهاتف: ${ph}%0Aالعنوان: ${ad}%0A%0A*المشتريات:*%0A${txt}%0A*الإجمالي:* ${tot} ج.س%0A✅ تم التحويل لبنك الخرطوم (${data.acc}) ومرفق الإشعار:`;
+  window.open(`https://wa.me{data.wa}?text=${msg}`, '_blank');
+}
+
+function openSettings() {
+  document.getElementById('inName').value = data.name;
+  document.getElementById('inBan').value = data.banner;
+  document.getElementById('inAcc').value = data.acc;
+  document.getElementById('inBName').value = data.bname;
+  document.getElementById('inWA').value = data.wa;
+  document.getElementById('sModal').style.display = "flex";
+}
+
+async function saveSet() {
+  data.name = document.getElementById('inName').value || data.name;
+  data.banner = document.getElementById('inBan').value || data.banner;
+  data.acc = document.getElementById('inAcc').value;
+  data.bname = document.getElementById('inBName').value;
+  data.wa = document.getElementById('inWA').value;
+  closeM('sModal');
+  await sync();
+  alert("تم الحفظ");
+}
+
+function closeM(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+load();
+</script>
+</body>
+</html>
