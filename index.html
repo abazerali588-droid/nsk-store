@@ -3,220 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر NSK</title>
+    <title>NSK Luxury Store</title>
     <style>
-        :root { --primary: #3f51b5; --owner: #b71c1c; --bg: #f4f6f9; }
-        body { font-family: Tahoma, Arial, sans-serif; margin: 0; background: var(--bg); color: #333; }
-        header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        header.owner-mode { background: var(--owner); }
-        .banner { background: #e8eaf6; color: #1a237e; text-align: center; padding: 10px; font-weight: bold; font-size: 14px; }
-        .container { max-width: 600px; margin: 15px auto; padding: 0 15px 80px; }
-        .card { background: white; border-radius: 10px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); display: flex; gap: 12px; align-items: center; }
-        .card img { width: 75px; height: 75px; object-fit: cover; border-radius: 8px; background: #eee; }
-        .info { flex: 1; }
-        .info h3 { margin: 0 0 4px; font-size: 16px; }
-        .info p { margin: 0 0 6px; color: #666; font-size: 13px; }
-        .price { color: #2e7d32; font-weight: bold; font-size: 15px; }
-        button { border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: inherit; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-owner { background: rgba(255,255,255,0.2); color: white; }
-        .btn-del { background: #d32f2f; color: white; }
-        .fab { position: fixed; bottom: 20px; left: 20px; background: var(--owner); color: white; padding: 14px 20px; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 15px; display: none; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 200; padding: 15px; }
-        .modal-box { background: white; padding: 20px; border-radius: 12px; width: 100%; max-width: 380px; }
-        input, textarea { width: 100%; padding: 10px; margin: 6px 0 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
-        .actions { display: flex; justify-content: flex-end; gap: 8px; }
+        @import url('https://googleapis.com');
+        
+        :root {
+            --bg-dark: #0f1015;
+            --card-dark: #181a22;
+            --gold: #d4af37;
+            --gold-hover: #f3ce5b;
+            --text-light: #f5f5f7;
+            --text-muted: #9ca3af;
+            --danger: #e11d48;
+            --success: #10b981;
+        }
+
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { margin: 0; background: var(--bg-dark); color: var(--text-light); padding-bottom: 90px; }
+
+        header {
+            background: rgba(24, 26, 34, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand h1 { margin: 0; font-size: 22px; font-weight: 800; color: var(--gold); letter-spacing: 1px; }
+        .owner-badge { background: var(--danger); color: white; font-size: 11px; padding: 2px 8px; border-radius: 12px; display: none; }
+
+        .header-btns { display: flex; gap: 10px; align-items: center; }
+        .icon-btn {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            position: relative;
+            transition: 0.2s;
+        }
+        .icon-btn:hover { background: rgba(212, 175, 55, 0.15); }
+        .badge {
+            position: absolute; top: -6px; right: -6px;
+            background: var(--danger); color: white;
+            font-size: 11px; width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1e2029 0%, #121318 100%);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 20px;
+            text-align: center;
+        }
+        .hero p { margin: 0; color: var(--gold); font-size: 15px; font-weight: 600; }
+
+        .container { max-width: 700px; margin: 20px auto; padding: 0 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+
+        .product-card {
+            background: var(--card-dark);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
+        }
+        .product-card:hover { border-color: rgba(212, 175, 55, 0.4); }
+
+        .img-slider { position: relative; width: 100%; height: 220px; background: #0a0b0e; }
+        .img-slider img { width: 100%; height: 100%; object-fit: cover; }
+        .slider-dots {
+            position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 5px; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 12px;
+        }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; }
+        .dot.active { background: var(--gold); width: 16px; border-radius: 4px; }
+        .next-img-btn {
+            position: absolute; top: 50%; left: 10px; transform: translateY(-50%);
+            background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%;
+            width: 30px; height: 30px; cursor: pointer; font-weight: bold;
+        }
+
+        .p-body { padding: 15px; }
+        .p-title { margin: 0 0 6px; font-size: 18px; font-weight: 700; color: white; }
+        .p-desc { margin: 0 0 12px; font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+        .p-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .p-price { font-size: 18px; font-weight: 800; color: var(--gold); }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+            color: #000; border: none; padding: 9px 16px; border-radius: 10px;
+            font-weight: 800; cursor: pointer; font-size: 14px;
+        }
+        .btn-gold:hover { background: var(--gold-hover); }
+        .btn-edit { background: #2563eb; color: white; border: none; padding: 7px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .btn-del { background: var(--danger); color: white; border: none; padding: 7px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; margin-right: 5px; }
+
+        .fab {
+            position: fixed; bottom: 25px; left: 25px;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+            color: #000; border: none; padding: 14px 22px; border-radius: 30px;
+            font-weight: 800; font-size: 15px; box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+            cursor: pointer; display: none; z-index: 90;
+        }
+
+        .modal {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            justify-content: center; align-items: center; z-index: 200; padding: 15px;
+        }
+        .modal-box {
+            background: var(--card-dark); border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 22px; border-radius: 18px; width: 100%; max-width: 420px;
+            max-height: 90vh; overflow-y: auto;
+        }
+        .modal-box h3 { margin-top: 0; color: var(--gold); font-size: 19px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; }
+        
+        label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
+        input, textarea {
+            width: 100%; padding: 11px; margin-bottom: 14px;
+            background: #0f1015; border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px; color: white; font-size: 14px;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--gold); }
+
+        .bank-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid var(--gold); border-radius: 12px; padding: 14px;
+            margin: 12px 0; text-align: center;
+        }
+        .bank-title { color: var(--gold); font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+        .acc-num { font-size: 20px; font-weight: 800; letter-spacing: 2px; color: #fff; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 8px; margin: 6px 0; }
+        .copy-btn { background: rgba(212, 175, 55, 0.2); color: var(--gold); border: 1px solid var(--gold); padding: 4px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+        .btn-cancel { background: rgba(255,255,255,0.1); color: white; border: none; padding: 9px 16px; border-radius: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<header id="appHeader">
-    <h2 id="storeTitle" style="margin:0;">متجر NSK</h2>
-    <div>
-        <button id="settingsBtn" class="btn-owner" style="display:none;" onclick="openModal('settingsModal')">الإعدادات</button>
-        <button id="authBtn" class="btn-owner" onclick="toggleOwner()">⚙️ المالك</button>
+<header>
+    <div class="brand">
+        <h1 id="storeTitle">NSK</h1>
+        <span class="owner-badge" id="ownerBadge">وضع المالك</span>
+    </div>
+    <div class="header-btns">
+        <button class="icon-btn" id="cartBtn" onclick="openCart()">
+            🛒 السلة <span class="badge" id="cartCount">0</span>
+        </button>
+        <button class="icon-btn" id="settingsBtn" style="display:none;" onclick="openSettings()">⚙️ الإعدادات</button>
+        <button class="icon-btn" id="authBtn" onclick="handleAuth()">🔐</button>
     </div>
 </header>
 
-<div class="banner" id="welcomeBanner">أهلاً بكم في متجر NSK الرسمي</div>
-<div class="container" id="productsList"></div>
-<button class="fab" id="addFab" onclick="openModal('productModal')">+ إضافة منتج</button>
+<div class="hero">
+    <p id="welcomeBanner">فخامة الاختيار وجودة المنتجات في متجر NSK</p>
+</div>
 
-<!-- نافذة إضافة منتج -->
+<div class="container">
+    <div class="grid" id="productsGrid"></div>
+</div>
+
+<button class="fab" id="addFab" onclick="openProductModal()">+ إضافة منتج جديد</button>
+
+<!-- نافذة إضافة / تعديل منتج -->
 <div class="modal" id="productModal">
     <div class="modal-box">
-        <h3 style="margin-top:0;">إضافة منتج جديد</h3>
-        <input type="text" id="pName" placeholder="اسم المنتج">
-        <input type="number" id="pPrice" placeholder="السعر (ج.م)">
-        <textarea id="pDesc" rows="2" placeholder="وصف المنتج"></textarea>
-        <label style="font-size:13px; color:#555;">صورة المنتج (اختياري):</label>
-        <input type="file" id="pImg" accept="image/*">
-        <div class="actions">
-            <button onclick="closeModal('productModal')">إلغاء</button>
-            <button class="btn-primary" onclick="addProduct()">حفظ ونشر</button>
+        <h3 id="prodModalTitle">إضافة منتج جديد</h3>
+        <input type="hidden" id="editProdId">
+        
+        <label>اسم المنتج</label>
+        <input type="text" id="pName" placeholder="أدخل اسم المنتج">
+        
+        <label>السعر (جنيه)</label>
+        <input type="number" id="pPrice" placeholder="أدخل السعر">
+        
+        <label>وصف المنتج</label>
+        <textarea id="pDesc" rows="2" placeholder="تفاصيل ومميزات المنتج"></textarea>
+        
+        <label>صور المنتج (يمكنك تحديد عدة صور معاً)</label>
+        <input type="file" id="pImgs" accept="image/*" multiple>
+        <small style="color:var(--gold); display:block; margin-top:-10px; margin-bottom:10px;">* عند التعديل: اترك الصور فارغة للاحتفاظ بالصور القديمة.</small>
+        
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('productModal')">إلغاء</button>
+            <button class="btn-gold" onclick="saveProduct()">حفظ ونشر فوراً</button>
         </div>
     </div>
 </div>
 
-<!-- نافذة الطلب -->
-<div class="modal" id="orderModal">
+<!-- نافذة سلة المشتريات والدفع عبر بنك الخرطوم -->
+<div class="modal" id="cartModal">
     <div class="modal-box">
-        <h3 id="orderTitle" style="margin-top:0;">طلب منتج</h3>
-        <input type="text" id="cName" placeholder="الاسم بالكامل">
-        <input type="tel" id="cPhone" placeholder="رقم الهاتف">
-        <input type="text" id="cAddress" placeholder="العنوان بالتفصيل">
-        <div class="actions">
-            <button onclick="closeModal('orderModal')">إلغاء</button>
-            <button class="btn-primary" onclick="sendOrder()">تأكيد الطلب</button>
+        <h3>🛒 سلة المشتريات والدفع</h3>
+        <div id="cartItemsList"></div>
+        <div style="text-align:left; font-size:18px; font-weight:800; color:var(--gold); margin:12px 0;">
+            الإجمالي: <span id="cartTotal">0</span> جنيه
         </div>
-    </div>
-</div>
 
-<!-- نافذة الإعدادات -->
-<div class="modal" id="settingsModal">
-    <div class="modal-box">
-        <h3 style="margin-top:0;">إعدادات المتجر</h3>
-        <input type="text" id="sName" placeholder="اسم المتجر">
-        <input type="text" id="sBanner" placeholder="رسالة الترحيب">
-        <input type="tel" id="sWhatsapp" placeholder="رقم واتساب لاستقبال الطلبات (مثال: 2010xxxxxxxx)">
-        <div class="actions">
-            <button onclick="closeModal('settingsModal')">إلغاء</button>
-            <button class="btn-primary" onclick="saveSettings()">حفظ</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    let isOwner = false;
-    const PIN = "1234";
-    let currentProd = null;
-
-    let data = JSON.parse(localStorage.getItem('nsk_v2')) || {
-        name: "متجر NSK",
-        banner: "أهلاً بكم في متجر NSK الرسمي - أفضل المنتجات بأفضل الأسعار",
-        whatsapp: "",
-        products: [
-            { name: "منتج NSK الأساسي", price: "350", desc: "جودة ممتازة وضمان استبدال.", img: "" },
-            { name: "منتج NSK برو", price: "690", desc: "الإصدار المطور بمواصفات عالية.", img: "" }
-        ]
-    };
-
-    function save() {
-        localStorage.setItem('nsk_v2', JSON.stringify(data));
-        render();
-    }
-
-    function render() {
-        document.getElementById('storeTitle').innerText = isOwner ? data.name + " (المالك)" : data.name;
-        document.getElementById('welcomeBanner').innerText = data.banner;
-        document.getElementById('appHeader').className = isOwner ? "owner-mode" : "";
-        document.getElementById('authBtn').innerText = isOwner ? "خروج" : "⚙️ المالك";
-        document.getElementById('addFab').style.display = isOwner ? "block" : "none";
-        document.getElementById('settingsBtn').style.display = isOwner ? "inline-block" : "none";
-
-        const list = document.getElementById('productsList');
-        list.innerHTML = "";
-        data.products.forEach((p, i) => {
-            const imgTag = p.img ? `<img src="${p.img}">` : `<img src="https://placeholder.com">`;
-            list.innerHTML += `
-                <div class="card">
-                    ${imgTag}
-                    <div class="info">
-                        <h3>${p.name}</h3>
-                        <p>${p.desc}</p>
-                        <div class="price">${p.price} ج.م</div>
-                    </div>
-                    <div>
-                        ${isOwner 
-                            ? `<button class="btn-del" onclick="delProd(${i})">حذف</button>`
-                            : `<button class="btn-primary" onclick="openOrder(${i})">اطلب</button>`}
-                    </div>
-                </div>`;
-        });
-    }
-
-    function toggleOwner() {
-        if (isOwner) { isOwner = false; render(); return; }
-        const code = prompt("أدخل رمز المالك (1234):");
-        if (code === PIN) { isOwner = true; render(); }
-        else if (code !== null) alert("رمز خاطئ!");
-    }
-
-    function addProduct() {
-        const name = document.getElementById('pName').value;
-        const price = document.getElementById('pPrice').value;
-        const desc = document.getElementById('pDesc').value;
-        const file = document.getElementById('pImg').files[0];
-
-        if (!name || !price) return alert("اكتب اسم المنتج والسعر");
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                data.products.unshift({ name, price, desc, img: e.target.result });
-                finishAdd();
-            };
-            reader.readAsDataURL(file);
-        } else {
-            data.products.unshift({ name, price, desc, img: "" });
-            finishAdd();
-        }
-    }
-
-    function finishAdd() {
-        document.getElementById('pName').value = "";
-        document.getElementById('pPrice').value = "";
-        document.getElementById('pDesc').value = "";
-        document.getElementById('pImg').value = "";
-        closeModal('productModal');
-        save();
-    }
-
-    function delProd(i) {
-        if (confirm("حذف المنتج؟")) { data.products.splice(i, 1); save(); }
-    }
-
-    function openOrder(i) {
-        currentProd = data.products[i];
-        document.getElementById('orderTitle').innerText = "طلب: " + currentProd.name;
-        openModal('orderModal');
-    }
-
-    function sendOrder() {
-        const n = document.getElementById('cName').value;
-        const p = document.getElementById('cPhone').value;
-        const a = document.getElementById('cAddress').value;
-        if (!n || !p) return alert("يرجى كتابة الاسم ورقم الهاتف");
-
-        closeModal('orderModal');
-        if (data.whatsapp) {
-            const msg = `طلب جديد من متجر ${data.name}:%0Aالمنتج: ${currentProd.name}%0Aالسعر: ${currentProd.price} ج.م%0Aالعميل: ${n}%0Aالهاتف: ${p}%0Aالعنوان: ${a}`;
-            window.open(`https://wa.me{data.whatsapp}?text=${msg}`, '_blank');
-        } else {
-            alert("تم استلام طلبك بنجاح! سنتواصل معك قريباً.");
-        }
-    }
-
-    function saveSettings() {
-        data.name = document.getElementById('sName').value || data.name;
-        data.banner = document.getElementById('sBanner').value || data.banner;
-        data.whatsapp = document.getElementById('sWhatsapp').value;
-        closeModal('settingsModal');
-        save();
-    }
-
-    function openModal(id) {
-        if (id === 'settingsModal') {
-            document.getElementById('sName').value = data.name;
-            document.getElementById('sBanner').value = data.banner;
-            document.getElementById('sWhatsapp').value = data.whatsapp;
-        }
-        document.getElementById(id).style.display = "flex";
-    }
-
-    function closeModal(id) { document.getElementById(id).style.display = "none"; }
-
-    render();
-</script>
-</body>
-</html>
+        <div id="checkoutSection" style="display:none;">
