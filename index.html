@@ -5,222 +5,151 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NSK STORE</title>
 <style>
-  body { margin: 0; font-family: sans-serif; background: #f4f4f5; color: #18181b; }
-  header { background: #18181b; color: #eab308; padding: 16px; display: flex; justify-content: space-between; align-items: center; }
-  header h1 { margin: 0; font-size: 20px; }
-  .btn { background: #18181b; color: #eab308; border: 1px solid #eab308; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-  .btn-gold { background: #eab308; color: #18181b; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; font-size: 16px; margin-top: 8px; cursor: pointer; }
-  .container { padding: 16px; max-width: 600px; margin: auto; }
-  .card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); display: flex; gap: 12px; align-items: center; }
-  .card img { width: 65px; height: 65px; border-radius: 8px; object-fit: cover; background: #18181b; }
-  .card-info { flex: 1; }
-  .price { color: #16a34a; font-weight: bold; margin-top: 4px; }
-  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); justify-content: center; align-items: center; padding: 16px; z-index: 99; }
-  .modal-box { background: #fff; padding: 20px; border-radius: 14px; width: 100%; max-width: 380px; max-height: 85vh; overflow-y: auto; }
-  input, select { width: 100%; padding: 10px; margin: 6px 0 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
-  .pay-box { background: #fef9c3; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eab308; font-size: 14px; }
-  .fab { position: fixed; bottom: 20px; left: 20px; background: #18181b; color: #eab308; border: 2px solid #eab308; padding: 14px 20px; border-radius: 30px; font-weight: bold; display: none; cursor: pointer; }
+body{margin:0;font-family:sans-serif;background:#f4f4f5;color:#18181b}
+header{background:#18181b;color:#eab308;padding:16px;display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:20px}
+.btn{background:#18181b;color:#eab308;border:1px solid #eab308;padding:8px 12px;border-radius:8px;font-weight:bold}
+.btn-gold{background:#eab308;color:#18181b;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;font-size:16px;margin-top:8px}
+.container{padding:16px;max-width:600px;margin:auto}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.08);display:flex;gap:12px;align-items:center}
+.card img{width:65px;height:65px;border-radius:8px;object-fit:cover;background:#18181b}
+.card-info{flex:1}
+.price{color:#16a34a;font-weight:bold;margin-top:4px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);justify-content:center;align-items:center;padding:16px;z-index:99}
+.modal-box{background:#fff;padding:20px;border-radius:14px;width:100%;max-width:380px;max-height:85vh;overflow-y:auto}
+input,select{width:100%;padding:10px;margin:6px 0 10px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;font-size:15px}
+.pay-box{background:#fef9c3;padding:10px;border-radius:8px;margin-bottom:10px;border:1px solid #eab308;font-size:14px}
+.fab{position:fixed;bottom:20px;left:20px;background:#18181b;color:#eab308;border:2px solid #eab308;padding:14px 20px;border-radius:30px;font-weight:bold;display:none}
 </style>
 </head>
 <body>
-
 <header>
   <h1>NSK STORE</h1>
-  <div id="adminControls">
-    <button class="btn" onclick="openModal('loginModal')">دخول المالك</button>
-  </div>
+  <div id="adminControls"><button class="btn" onclick="openModal('loginModal')">دخول المالك</button></div>
 </header>
-
-<div class="container" id="productsList">
-  <p style="text-align:center; color:#666;">جاري تحميل المنتجات...</p>
-</div>
-
+<div class="container" id="productsList"><p style="text-align:center;color:#666">جاري تحميل المنتجات...</p></div>
 <button class="fab" id="addBtn" onclick="openModal('productModal')">+ إضافة منتج</button>
 
-<div class="modal" id="loginModal">
-  <div class="modal-box">
-    <h3>دخول المالك</h3>
-    <input type="email" id="adminEmail" placeholder="البريد الإلكتروني">
-    <input type="password" id="adminPass" placeholder="كلمة المرور">
-    <button class="btn-gold" onclick="loginAdmin()">دخول</button>
-    <button class="btn" style="width:100%; margin-top:8px;" onclick="closeModal('loginModal')">إلغاء</button>
-  </div>
-</div>
+<div class="modal" id="loginModal"><div class="modal-box">
+  <h3>دخول المالك</h3>
+  <input type="email" id="adminEmail" placeholder="البريد الإلكتروني">
+  <input type="password" id="adminPass" placeholder="كلمة المرور">
+  <button class="btn-gold" onclick="loginAdmin()">دخول</button>
+  <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('loginModal')">إلغاء</button>
+</div></div>
 
-<div class="modal" id="productModal">
-  <div class="modal-box">
-    <h3>إضافة منتج جديد</h3>
-    <input type="text" id="pName" placeholder="اسم المنتج">
-    <input type="text" id="pPrice" placeholder="السعر (مثال: 1500 جنيه)">
-    <input type="text" id="pDesc" placeholder="وصف المنتج">
-    <input type="text" id="pImg" placeholder="رابط صورة المنتج (اختياري)">
-    <button class="btn-gold" onclick="saveProduct()">حفظ المنتج</button>
-    <button class="btn" style="width:100%; margin-top:8px;" onclick="closeModal('productModal')">إلغاء</button>
-  </div>
-</div>
+<div class="modal" id="productModal"><div class="modal-box">
+  <h3>إضافة منتج جديد</h3>
+  <input type="text" id="pName" placeholder="اسم المنتج">
+  <input type="text" id="pPrice" placeholder="السعر (مثال: 1500 جنيه)">
+  <input type="text" id="pDesc" placeholder="وصف المنتج">
+  <input type="text" id="pImg" placeholder="رابط صورة المنتج (اختياري)">
+  <button class="btn-gold" onclick="saveProduct()">حفظ المنتج</button>
+  <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('productModal')">إلغاء</button>
+</div></div>
 
-<div class="modal" id="settingsModal">
-  <div class="modal-box">
-    <h3>حسابات الدفع</h3>
-    <input type="text" id="setBankak" placeholder="رقم حساب بنكك والاسم">
-    <input type="text" id="setVodafone" placeholder="رقم فودافون كاش / إنستا باي">
-    <button class="btn-gold" onclick="saveSettings()">حفظ</button>
-    <button class="btn" style="width:100%; margin-top:8px;" onclick="closeModal('settingsModal')">إلغاء</button>
-  </div>
-</div>
+<div class="modal" id="settingsModal"><div class="modal-box">
+  <h3>حسابات الدفع</h3>
+  <input type="text" id="setBankak" placeholder="رقم حساب بنكك والاسم">
+  <input type="text" id="setVodafone" placeholder="رقم فودافون كاش / إنستا باي">
+  <button class="btn-gold" onclick="saveSettings()">حفظ</button>
+  <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('settingsModal')">إلغاء</button>
+</div></div>
 
-<div class="modal" id="orderModal">
-  <div class="modal-box">
-    <h3 id="orderTitle">طلب منتج</h3>
-    <input type="text" id="cName" placeholder="الاسم الكامل">
-    <input type="tel" id="cPhone" placeholder="رقم الهاتف / واتساب">
-    <select id="payMethod" onchange="updatePayInfo()">
-      <option value="bankak">تطبيق بنكك (Bankak)</option>
-      <option value="vodafone">فودافون كاش / إنستا باي</option>
-      <option value="cod">الدفع عند الاستلام</option>
-    </select>
-    <div id="payDetails" class="pay-box"></div>
-    <input type="text" id="txRef" placeholder="رقم العملية / المرجع">
-    <button class="btn-gold" onclick="submitOrder()">تأكيد الطلب</button>
-    <button class="btn" style="width:100%; margin-top:8px;" onclick="closeModal('orderModal')">إلغاء</button>
-  </div>
-</div>
+<div class="modal" id="orderModal"><div class="modal-box">
+  <h3 id="orderTitle">طلب منتج</h3>
+  <input type="text" id="cName" placeholder="الاسم الكامل">
+  <input type="tel" id="cPhone" placeholder="رقم الهاتف / واتساب">
+  <select id="payMethod" onchange="updatePayInfo()">
+    <option value="bankak">تطبيق بنكك (Bankak)</option>
+    <option value="vodafone">فودافون كاش / إنستا باي</option>
+    <option value="cod">الدفع عند الاستلام</option>
+  </select>
+  <div id="payDetails" class="pay-box"></div>
+  <input type="text" id="txRef" placeholder="رقم العملية / المرجع">
+  <button class="btn-gold" onclick="submitOrder()">تأكيد الطلب</button>
+  <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('orderModal')">إلغاء</button>
+</div></div>
 
-<div class="modal" id="ordersViewModal">
-  <div class="modal-box">
-    <h3>طلبات العملاء</h3>
-    <div id="ordersList"></div>
-    <button class="btn" style="width:100%; margin-top:8px;" onclick="closeModal('ordersViewModal')">إغلاق</button>
-  </div>
-</div>
+<div class="modal" id="ordersViewModal"><div class="modal-box">
+  <h3>طلبات العملاء</h3>
+  <div id="ordersList"></div>
+  <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('ordersViewModal')">إغلاق</button>
+</div></div>
 
 <script>
-  const API_KEY = "AIzaSyC5WJrQz2oGe1whqFonZNCypPYF4aIwhGU";
-  const PROJECT_ID = "nsk-store-c1a3b";
-  const DB_URL = `https://googleapis.com{PROJECT_ID}/databases/(default)/documents`;
-  let idToken = localStorage.getItem('nsk_token') || '';
-  let currentProduct = null;
-  let paymentInfo = { bankak: 'لم يحدد بعد', vodafone: 'لم يحدد بعد' };
+const KEY="AIzaSyC5WJrQz2oGe1whqFonZNCypPYF4aIwhGU",DB="https://googleapis.com";
+let tok=localStorage.getItem('nsk_tok')||'',cur=null,pay={bankak:'لم يحدد بعد',vodafone:'لم يحدد بعد'};
+const openModal=id=>document.getElementById(id).style.display='flex';
+const closeModal=id=>document.getElementById(id).style.display='none';
 
-  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function updateUI(){
+  const adm=!!tok;
+  document.getElementById('addBtn').style.display=adm?'block':'none';
+  document.getElementById('adminControls').innerHTML=adm?'<button class="btn" onclick="openOrders()">الطلبات</button> <button class="btn" onclick="openSettings()">الدفع</button> <button class="btn" onclick="logoutAdmin()">خروج</button>':'<button class="btn" onclick="openModal(\'loginModal\')">دخول المالك</button>';
+  loadProducts();
+}
 
-  function updateUI() {
-    const isAdmin = !!idToken;
-    document.getElementById('addBtn').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('adminControls').innerHTML = isAdmin
-      ? '<button class="btn" onclick="openOrders()">الطلبات</button> <button class="btn" onclick="openSettings()">الدفع</button> <button class="btn" onclick="logoutAdmin()">خروج</button>'
-      : '<button class="btn" onclick="openModal(\'loginModal\')">دخول المالك</button>';
-    loadProducts();
-  }
+async function loginAdmin(){
+  const email=document.getElementById('adminEmail').value.trim(),password=document.getElementById('adminPass').value.trim();
+  const r=await fetch(`https://googleapis.com{KEY}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password,returnSecureToken:true})});
+  const d=await r.json();
+  if(d.idToken){tok=d.idToken;localStorage.setItem('nsk_tok',tok);closeModal('loginModal');updateUI();}
+  else alert('تأكد من البريد وكلمة المرور');
+}
 
-  async function loginAdmin() {
-    const email = document.getElementById('adminEmail').value.trim();
-    const password = document.getElementById('adminPass').value.trim();
-    try {
-      const res = await fetch(`https://googleapis.com{API_KEY}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, returnSecureToken: true })
-      });
-      const data = await res.json();
-      if (data.idToken) {
-        idToken = data.idToken;
-        localStorage.setItem('nsk_token', idToken);
-        closeModal('loginModal');
-        updateUI();
-      } else {
-        alert('تأكد من البريد الإلكتروني وكلمة المرور');
-      }
-    } catch (e) { alert('تعذر الاتصال، تأكد من الإنترنت'); }
-  }
+function logoutAdmin(){tok='';localStorage.removeItem('nsk_tok');updateUI();}
 
-  function logoutAdmin() {
-    idToken = '';
-    localStorage.removeItem('nsk_token');
-    updateUI();
-  }
+async function saveProduct(){
+  await fetch(`${DB}/products`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{name:{stringValue:document.getElementById('pName').value},price:{stringValue:document.getElementById('pPrice').value},desc:{stringValue:document.getElementById('pDesc').value},image:{stringValue:document.getElementById('pImg').value}}})});
+  closeModal('productModal');['pName','pPrice','pDesc','pImg'].forEach(i=>document.getElementById(i).value='');loadProducts();
+}
 
-  async function saveProduct() {
-    const body = {
-      fields: {
-        name: { stringValue: document.getElementById('pName').value },
-        price: { stringValue: document.getElementById('pPrice').value },
-        desc: { stringValue: document.getElementById('pDesc').value },
-        image: { stringValue: document.getElementById('pImg').value }
-      }
-    };
-    await fetch(`${DB_URL}/products`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    closeModal('productModal');
-    document.getElementById('pName').value = '';
-    document.getElementById('pPrice').value = '';
-    document.getElementById('pDesc').value = '';
-    document.getElementById('pImg').value = '';
-    loadProducts();
-  }
+async function deleteProduct(p){if(confirm('حذف المنتج؟')){await fetch(`https://googleapis.com{p}`,{method:'DELETE'});loadProducts();}}
 
-  async function deleteProduct(docPath) {
-    if (confirm('حذف المنتج؟')) {
-      await fetch(`https://googleapis.com{docPath}`, { method: 'DELETE' });
-      loadProducts();
-    }
-  }
+async function openSettings(){
+  const d=await(await fetch(`${DB}/settings/payment`)).json();
+  if(d.fields){document.getElementById('setBankak').value=d.fields.bankak?.stringValue||'';document.getElementById('setVodafone').value=d.fields.vodafone?.stringValue||'';}
+  openModal('settingsModal');
+}
 
-  async function openSettings() {
-    const res = await fetch(`${DB_URL}/settings/payment`);
-    const data = await res.json();
-    if (data.fields) {
-      document.getElementById('setBankak').value = data.fields.bankak?.stringValue || '';
-      document.getElementById('setVodafone').value = data.fields.vodafone?.stringValue || '';
-    }
-    openModal('settingsModal');
-  }
+async function saveSettings(){
+  await fetch(`${DB}/settings/payment`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{bankak:{stringValue:document.getElementById('setBankak').value},vodafone:{stringValue:document.getElementById('setVodafone').value}}})});
+  closeModal('settingsModal');alert('تم الحفظ!');
+}
 
-  async function saveSettings() {
-    const body = {
-      fields: {
-        bankak: { stringValue: document.getElementById('setBankak').value },
-        vodafone: { stringValue: document.getElementById('setVodafone').value }
-      }
-    };
-    await fetch(`${DB_URL}/settings/payment`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    closeModal('settingsModal');
-    alert('تم حفظ بيانات الدفع بنجاح!');
-  }
+async function openOrder(name,price){
+  cur={name,price};document.getElementById('orderTitle').innerText=`طلب: ${name} (${price})`;
+  const d=await(await fetch(`${DB}/settings/payment`)).json();
+  if(d.fields){pay.bankak=d.fields.bankak?.stringValue||'لم يحدد بعد';pay.vodafone=d.fields.vodafone?.stringValue||'لم يحدد بعد';}
+  updatePayInfo();openModal('orderModal');
+}
 
-  async function openOrder(name, price) {
-    currentProduct = { name, price };
-    document.getElementById('orderTitle').innerText = `طلب: ${name} (${price})`;
-    const res = await fetch(`${DB_URL}/settings/payment`);
-    const data = await res.json();
-    if (data.fields) {
-      paymentInfo.bankak = data.fields.bankak?.stringValue || 'لم يحدد بعد';
-      paymentInfo.vodafone = data.fields.vodafone?.stringValue || 'لم يحدد بعد';
-    }
-    updatePayInfo();
-    openModal('orderModal');
-  }
+function updatePayInfo(){
+  const m=document.getElementById('payMethod').value,b=document.getElementById('payDetails');
+  if(m==='bankak'){b.style.display='block';b.innerHTML='<b>حساب بنكك:</b><br>'+pay.bankak;}
+  else if(m==='vodafone'){b.style.display='block';b.innerHTML='<b>فودافون كاش / إنستا باي:</b><br>'+pay.vodafone;}
+  else b.style.display='none';
+}
 
-  function updatePayInfo() {
-    const m = document.getElementById('payMethod').value;
-    const box = document.getElementById('payDetails');
-    if (m === 'bankak') { box.style.display = 'block'; box.innerHTML = '<b>حساب بنكك:</b><br>' + paymentInfo.bankak; }
-    else if (m === 'vodafone') { box.style.display = 'block'; box.innerHTML = '<b>فودافون كاش / إنستا باي:</b><br>' + paymentInfo.vodafone; }
-    else { box.style.display = 'none'; }
-  }
+async function submitOrder(){
+  await fetch(`${DB}/orders`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{product:{stringValue:cur.name},price:{stringValue:cur.price},customer:{stringValue:document.getElementById('cName').value},phone:{stringValue:document.getElementById('cPhone').value},method:{stringValue:document.getElementById('payMethod').value},ref:{stringValue:document.getElementById('txRef').value}}})});
+  closeModal('orderModal');alert('تم إرسال طلبك بنجاح!');
+}
 
-  async function submitOrder() {
-    const body = {
-      fields: {
-        product: { stringValue: currentProduct.name },
-        price: { stringValue: currentProduct.price },
-        customer: { stringValue: document.getElementById('cName').value },
-        phone: { stringValue: document.getElementById('cPhone').value },
+async function openOrders(){
+  openModal('ordersViewModal');document.getElementById('ordersList').innerHTML='جاري التحميل...';
+  const d=await(await fetch(`${DB}/orders`)).json();let h='';
+  if(d.documents)d.documents.forEach(x=>{const f=x.fields||{};h+=`<div style="border-bottom:1px solid #eee;padding:8px 0"><b>${f.product?.stringValue||''}</b> (${f.price?.stringValue||''})<br>العميل: ${f.customer?.stringValue||''} - ${f.phone?.stringValue||''}<br>الدفع: ${f.method?.stringValue||''} | المرجع: ${f.ref?.stringValue||'-'}</div>`;});
+  document.getElementById('ordersList').innerHTML=h||'لا توجد طلبات حتى الآن';
+}
+
+async function loadProducts(){
+  const adm=!!tok,d=await(await fetch(`${DB}/products`)).json();let h='';
+  if(d.documents)d.documents.forEach(x=>{const f=x.fields||{},n=f.name?.stringValue||'',pr=f.price?.stringValue||'',ds=f.desc?.stringValue||'',im=f.image?.stringValue||'';const img=im?`<img src="${im}">`:`<img src="https://placeholder.com">`;const btn=adm?`<button class="btn" style="background:#dc2626;color:#fff;border:none" onclick="deleteProduct('${x.name}')">حذف</button>`:`<button class="btn" onclick="openOrder('${n}','${pr}')">اطلب</button>`;h+=`<div class="card">${img}<div class="card-info"><b>${n}</b><div style="font-size:13px;color:#666">${ds}</div><div class="price">${pr}</div></div>${btn}</div>`;});
+  document.getElementById('productsList').innerHTML=h||'<p style="text-align:center;color:#666">لا توجد منتجات مضافة حالياً في متجر NSK</p>';
+}
+updateUI();
+</script>
+</body>
+</html>
