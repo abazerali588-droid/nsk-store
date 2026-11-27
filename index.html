@@ -7,26 +7,25 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><text y='75' x='5' font-size='65' font-family='Georgia,serif' font-weight='bold' fill='%230f172a'>N</text><text y='75' x='48' font-size='65' font-family='Georgia,serif' font-weight='bold' fill='%23000000'>R</text></svg>">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><text y='72' x='8' font-size='62' font-family='Georgia,serif' font-weight='bold' fill='%230f172a'>N</text><text y='72' x='48' font-size='62' font-family='Georgia,serif' font-weight='bold' fill='%23000000'>R</text></svg>">
 <style>
-body{margin:0;font-family:system-ui,sans-serif;background:#ffffff;color:#000000;position:relative;min-height:100vh}
-body::before{content:"NR";position:fixed;top:52%;left:50%;transform:translate(-50%,-50%);font-size:210px;font-family:Georgia,serif;font-weight:bold;color:rgba(15,23,42,0.045);pointer-events:none;z-index:0;letter-spacing:8px}
-header{background:#ffffff;color:#000000;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #0f172a;position:sticky;top:0;z-index:10}
+body{margin:0;font-family:system-ui,sans-serif;background:linear-gradient(180deg,#bae6fd 0%,#e0f2fe 50%,#f0f9ff 100%);color:#000;min-height:100vh}
+body::before{content:"NR";position:fixed;top:52%;left:50%;transform:translate(-50%,-50%);font-size:210px;font-family:Georgia,serif;font-weight:bold;color:rgba(15,23,42,0.06);pointer-events:none;z-index:0;letter-spacing:8px}
+header{background:rgba(255,255,255,0.88);backdrop-filter:blur(8px);color:#000;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #0f172a;position:sticky;top:0;z-index:10}
 .brand{display:flex;align-items:center;gap:10px}
 .logo-nr{font-family:Georgia,serif;font-size:26px;font-weight:bold;color:#0f172a;border:2px solid #0f172a;padding:2px 8px;border-radius:8px;letter-spacing:2px}
-.logo-nr span{color:#000000}
-header h1{margin:0;font-size:18px;color:#000000;letter-spacing:1px}
-.btn{background:#ffffff;color:#0f172a;border:1.5px solid #0f172a;padding:7px 12px;border-radius:8px;font-weight:bold;cursor:pointer}
-.btn-navy{background:#0f172a;color:#ffffff;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;font-size:16px;margin-top:8px;cursor:pointer}
+.logo-nr span{color:#000}
+header h1{margin:0;font-size:18px;color:#000}
+.btn{background:#fff;color:#0f172a;border:1.5px solid #0f172a;padding:7px 12px;border-radius:8px;font-weight:bold}
+.btn-navy{background:#0f172a;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;font-size:16px;margin-top:8px}
 .container{padding:16px;max-width:600px;margin:auto;position:relative;z-index:1}
-.card{background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(15,23,42,0.06);display:flex;gap:12px;align-items:center}
-.card img{width:68px;height:68px;border-radius:10px;object-fit:cover;border:1px solid #cbd5e1}
+.card{background:rgba(255,255,255,0.95);border:1px solid #bae6fd;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(15,23,42,0.08);display:flex;gap:12px;align-items:center}
+.card img{width:68px;height:68px;border-radius:10px;object-fit:cover;border:1px solid #7dd3fc}
 .card-info{flex:1}
-.card-info b{color:#000000;font-size:16px}
-.price{color:#0f172a;font-weight:bold;margin-top:5px;font-size:15px}
+.price{color:#0f172a;font-weight:bold;margin-top:5px}
 .modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.6);justify-content:center;align-items:center;padding:16px;z-index:99}
-.modal-box{background:#ffffff;color:#000000;padding:20px;border-radius:16px;width:100%;max-width:380px;max-height:85vh;overflow-y:auto;border:2px solid #0f172a}
-input,select{width:100%;padding:10px;margin:6px 0 10px;border:1.5px solid #cbd5e1;border-radius:8px;box-sizing:border-box;font-size:15px;color:#000000}
-.pay-box{background:#f1f5f9;padding:10px;border-radius:8px;margin-bottom:10px;border-right:4px solid #0f172a;font-size:14px;color:#000000}
-.fab{position:fixed;bottom:20px;left:20px;background:#0f172a;color:#ffffff;border:none;padding:14px 22px;border-radius:30px;font-weight:bold;display:none;box-shadow:0 6px 16px rgba(15,23,42,0.25);z-index:20}
+.modal-box{background:#fff;color:#000;padding:20px;border-radius:16px;width:100%;max-width:380px;max-height:85vh;overflow-y:auto;border:2px solid #0f172a}
+input,select{width:100%;padding:10px;margin:6px 0 10px;border:1.5px solid #cbd5e1;border-radius:8px;box-sizing:border-box;font-size:15px}
+.pay-box{background:#e0f2fe;padding:10px;border-radius:8px;margin-bottom:10px;border-right:4px solid #0f172a;font-size:14px}
+.fab{position:fixed;bottom:20px;left:20px;background:#0f172a;color:#fff;border:none;padding:14px 22px;border-radius:30px;font-weight:bold;display:none;z-index:20}
 </style>
 </head>
 <body>
@@ -34,12 +33,12 @@ input,select{width:100%;padding:10px;margin:6px 0 10px;border:1.5px solid #cbd5e
   <div class="brand"><div class="logo-nr">N<span>R</span></div><h1>NSK STORE</h1></div>
   <div id="adminControls"><button class="btn" onclick="openModal('loginModal')">دخول المالك</button></div>
 </header>
-<div class="container" id="productsList"><p style="text-align:center;color:#0f172a">جاري تحميل المنتجات...</p></div>
+<div class="container" id="productsList"><p style="text-align:center">جاري تحميل المنتجات...</p></div>
 <button class="fab" id="addBtn" onclick="openModal('productModal')">+ إضافة منتج</button>
 
 <div class="modal" id="loginModal"><div class="modal-box">
   <h3>دخول المالك - NR</h3>
-  <input type="password" id="adminPass" placeholder="اكتب كلمة المرور">
+  <input type="password" id="adminPass" placeholder="اكتب رمز الدخول">
   <button class="btn-navy" onclick="loginAdmin()">دخول</button>
   <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('loginModal')">إلغاء</button>
 </div></div>
@@ -49,11 +48,11 @@ input,select{width:100%;padding:10px;margin:6px 0 10px;border:1.5px solid #cbd5e
   <input type="text" id="pName" placeholder="اسم المنتج">
   <input type="text" id="pPrice" placeholder="السعر (مثال: 1500 جنيه)">
   <input type="text" id="pDesc" placeholder="وصف المنتج">
-  <input type="text" id="pImg" placeholder="رابط صورة المنتج (اختياري)">
+  <label style="font-size:13px;font-weight:bold">اختر صورة المنتج من الهاتف:</label>
+  <input type="file" id="pFile" accept="image/*" onchange="readImg(this)">
   <button class="btn-navy" onclick="saveProduct()">حفظ المنتج</button>
   <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('productModal')">إلغاء</button>
 </div></div>
-
 <div class="modal" id="settingsModal"><div class="modal-box">
   <h3>حسابات الدفع</h3>
   <input type="text" id="setBankak" placeholder="رقم حساب بنكك والاسم">
@@ -83,11 +82,30 @@ input,select{width:100%;padding:10px;margin:6px 0 10px;border:1.5px solid #cbd5e
   <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('ordersViewModal')">إغلاق</button>
 </div></div>
 
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
 <script>
-const DB="https://googleapis.com";
-let tok=localStorage.getItem('nsk_tok')||'',cur=null,pay={bankak:'لم يحدد بعد',vodafone:'لم يحدد بعد'};
+firebase.initializeApp({apiKey:"AIzaSyC5WJrQz2oGe1whqFonZNCypPYF4aIwhGU",projectId:"nsk-store-c1a3b"});
+const db=firebase.firestore();
+let tok=localStorage.getItem('nsk_tok2')||'',cur=null,imgData='',pay={bankak:'لم يحدد بعد',vodafone:'لم يحدد بعد'};
 const openModal=id=>document.getElementById(id).style.display='flex';
 const closeModal=id=>document.getElementById(id).style.display='none';
+
+function readImg(inp){
+  if(!inp.files||!inp.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      const c=document.createElement('canvas'),s=Math.min(1,300/img.width);
+      c.width=img.width*s;c.height=img.height*s;
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      imgData=c.toDataURL('image/jpeg',0.7);
+    };
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(inp.files[0]);
+}
 
 function updateUI(){
   const adm=!!tok;
@@ -97,60 +115,86 @@ function updateUI(){
 }
 
 function loginAdmin(){
-  if(document.getElementById('adminPass').value.trim()==='123456'){tok='admin';localStorage.setItem('nsk_tok',tok);closeModal('loginModal');updateUI();}
-  else alert('كلمة المرور خطأ');
+  if(document.getElementById('adminPass').value.trim()==='69866986'){tok='admin';localStorage.setItem('nsk_tok2',tok);closeModal('loginModal');updateUI();}
+  else alert('رمز الدخول غير صحيح');
+}
+function logoutAdmin(){tok='';localStorage.removeItem('nsk_tok2');updateUI();}
+
+function saveProduct(){
+  db.collection('products').add({
+    name:document.getElementById('pName').value,
+    price:document.getElementById('pPrice').value,
+    desc:document.getElementById('pDesc').value,
+    image:imgData
+  }).then(()=>{
+    closeModal('productModal');imgData='';
+    ['pName','pPrice','pDesc','pFile'].forEach(i=>document.getElementById(i).value='');
+    alert('تم إضافة المنتج بنجاح!');
+  }).catch(e=>alert('خطأ: '+e.message));
 }
 
-function logoutAdmin(){tok='';localStorage.removeItem('nsk_tok');updateUI();}
+function deleteProduct(id){if(confirm('حذف المنتج؟'))db.collection('products').doc(id).delete();}
 
-async function saveProduct(){
-  await fetch(`${DB}/products`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{name:{stringValue:document.getElementById('pName').value},price:{stringValue:document.getElementById('pPrice').value},desc:{stringValue:document.getElementById('pDesc').value},image:{stringValue:document.getElementById('pImg').value}}})});
-  closeModal('productModal');['pName','pPrice','pDesc','pImg'].forEach(i=>document.getElementById(i).value='');loadProducts();
+function openSettings(){
+  db.collection('settings').doc('payment').get().then(d=>{
+    if(d.exists){document.getElementById('setBankak').value=d.data().bankak||'';document.getElementById('setVodafone').value=d.data().vodafone||'';}
+    openModal('settingsModal');
+  });
 }
 
-async function deleteProduct(p){if(confirm('حذف المنتج؟')){await fetch(`https://googleapis.com{p}`,{method:'DELETE'});loadProducts();}}
-
-async function openSettings(){
-  const d=await(await fetch(`${DB}/settings/payment`)).json();
-  if(d.fields){document.getElementById('setBankak').value=d.fields.bankak?.stringValue||'';document.getElementById('setVodafone').value=d.fields.vodafone?.stringValue||'';}
-  openModal('settingsModal');
+function saveSettings(){
+  db.collection('settings').doc('payment').set({
+    bankak:document.getElementById('setBankak').value,
+    vodafone:document.getElementById('setVodafone').value
+  }).then(()=>{closeModal('settingsModal');alert('تم حفظ بيانات الدفع بنجاح!');}).catch(e=>alert('خطأ: '+e.message));
 }
 
-async function saveSettings(){
-  await fetch(`${DB}/settings/payment`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{bankak:{stringValue:document.getElementById('setBankak').value},vodafone:{stringValue:document.getElementById('setVodafone').value}}})});
-  closeModal('settingsModal');alert('تم الحفظ!');
-}
-
-async function openOrder(name,price){
-  cur={name,price};document.getElementById('orderTitle').innerText=`طلب: ${name} (${price})`;
-  const d=await(await fetch(`${DB}/settings/payment`)).json();
-  if(d.fields){pay.bankak=d.fields.bankak?.stringValue||'لم يحدد بعد';pay.vodafone=d.fields.vodafone?.stringValue||'لم يحدد بعد';}
-  updatePayInfo();openModal('orderModal');
+function openOrder(name,price){
+  cur={name,price};document.getElementById('orderTitle').innerText='طلب: '+name+' ('+price+')';
+  db.collection('settings').doc('payment').get().then(d=>{
+    if(d.exists)pay=d.data();
+    updatePayInfo();openModal('orderModal');
+  });
 }
 
 function updatePayInfo(){
   const m=document.getElementById('payMethod').value,b=document.getElementById('payDetails');
-  if(m==='bankak'){b.style.display='block';b.innerHTML='<b>حساب بنكك:</b><br>'+pay.bankak;}
-  else if(m==='vodafone'){b.style.display='block';b.innerHTML='<b>فودافون كاش / إنستا باي:</b><br>'+pay.vodafone;}
+  if(m==='bankak'){b.style.display='block';b.innerHTML='<b>حساب بنكك:</b><br>'+(pay.bankak||'لم يحدد بعد');}
+  else if(m==='vodafone'){b.style.display='block';b.innerHTML='<b>فودافون كاش / إنستا باي:</b><br>'+(pay.vodafone||'لم يحدد بعد');}
   else b.style.display='none';
 }
 
-async function submitOrder(){
-  await fetch(`${DB}/orders`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{product:{stringValue:cur.name},price:{stringValue:cur.price},customer:{stringValue:document.getElementById('cName').value},phone:{stringValue:document.getElementById('cPhone').value},method:{stringValue:document.getElementById('payMethod').value},ref:{stringValue:document.getElementById('txRef').value}}})});
-  closeModal('orderModal');alert('تم إرسال طلبك بنجاح!');
+function submitOrder(){
+  db.collection('orders').add({
+    product:cur.name,price:cur.price,
+    customer:document.getElementById('cName').value,
+    phone:document.getElementById('cPhone').value,
+    method:document.getElementById('payMethod').value,
+    ref:document.getElementById('txRef').value
+  }).then(()=>{closeModal('orderModal');alert('تم إرسال طلبك بنجاح!');});
 }
 
-async function openOrders(){
-  openModal('ordersViewModal');document.getElementById('ordersList').innerHTML='جاري التحميل...';
-  const d=await(await fetch(`${DB}/orders`)).json();let h='';
-  if(d.documents)d.documents.forEach(x=>{const f=x.fields||{};h+=`<div style="border-bottom:1px solid #e2e8f0;padding:8px 0"><b>${f.product?.stringValue||''}</b> (${f.price?.stringValue||''})<br>العميل: ${f.customer?.stringValue||''} - ${f.phone?.stringValue||''}<br>الدفع: ${f.method?.stringValue||''} | المرجع: ${f.ref?.stringValue||'-'}</div>`;});
-  document.getElementById('ordersList').innerHTML=h||'لا توجد طلبات حتى الآن';
+function openOrders(){
+  openModal('ordersViewModal');
+  db.collection('orders').onSnapshot(s=>{
+    let h='';
+    s.forEach(d=>{const o=d.data();h+=`<div style="border-bottom:1px solid #e2e8f0;padding:8px 0"><b>${o.product}</b> (${o.price})<br>العميل: ${o.customer} - ${o.phone}<br>الدفع: ${o.method} | المرجع: ${o.ref||'-'}</div>`;});
+    document.getElementById('ordersList').innerHTML=h||'لا توجد طلبات حتى الآن';
+  });
 }
 
-async function loadProducts(){
-  const adm=!!tok,d=await(await fetch(`${DB}/products`)).json();let h='';
-  if(d.documents)d.documents.forEach(x=>{const f=x.fields||{},n=f.name?.stringValue||'',pr=f.price?.stringValue||'',ds=f.desc?.stringValue||'',im=f.image?.stringValue||'';const img=im?`<img src="${im}">`:`<img src="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><text y='68' x='12' font-size='52' font-family='Georgia,serif' font-weight='bold' fill='%230f172a'>N</text><text y='68' x='48' font-size='52' font-family='Georgia,serif' font-weight='bold' fill='%23000000'>R</text></svg>">`;const btn=adm?`<button class="btn" style="background:#dc2626;color:#fff;border:none" onclick="deleteProduct('${x.name}')">حذف</button>`:`<button class="btn" style="background:#0f172a;color:#fff" onclick="openOrder('${n}','${pr}')">اطلب</button>`;h+=`<div class="card">${img}<div class="card-info"><b>${n}</b><div style="font-size:13px;color:#334155">${ds}</div><div class="price">${pr}</div></div>${btn}</div>`;});
-  document.getElementById('productsList').innerHTML=h||'<p style="text-align:center;color:#0f172a">لا توجد منتجات مضافة حالياً</p>';
+function loadProducts(){
+  const adm=!!tok;
+  db.collection('products').onSnapshot(s=>{
+    let h='';
+    s.forEach(d=>{
+      const p=d.data();
+      const img=p.image?`<img src="${p.image}">`:`<img src="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><text y='68' x='12' font-size='52' font-family='Georgia,serif' font-weight='bold' fill='%230f172a'>N</text><text y='68' x='48' font-size='52' font-family='Georgia,serif' font-weight='bold' fill='%23000000'>R</text></svg>">`;
+      const btn=adm?`<button class="btn" style="background:#dc2626;color:#fff;border:none" onclick="deleteProduct('${d.id}')">حذف</button>`:`<button class="btn" style="background:#0f172a;color:#fff" onclick="openOrder('${p.name}','${p.price}')">اطلب</button>`;
+      h+=`<div class="card">${img}<div class="card-info"><b>${p.name}</b><div style="font-size:13px;color:#334155">${p.desc||''}</div><div class="price">${p.price}</div></div>${btn}</div>`;
+    });
+    document.getElementById('productsList').innerHTML=h||'<p style="text-align:center">لا توجد منتجات مضافة حالياً</p>';
+  });
 }
 updateUI();
 </script>
