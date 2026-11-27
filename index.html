@@ -32,8 +32,7 @@ input,select{width:100%;padding:10px;margin:6px 0 10px;border:1px solid #ccc;bor
 
 <div class="modal" id="loginModal"><div class="modal-box">
   <h3>دخول المالك</h3>
-  <input type="email" id="adminEmail" placeholder="البريد الإلكتروني">
-  <input type="password" id="adminPass" placeholder="كلمة المرور">
+  <input type="password" id="adminPass" placeholder="اكتب كلمة المرور (123456)">
   <button class="btn-gold" onclick="loginAdmin()">دخول</button>
   <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('loginModal')">إلغاء</button>
 </div></div>
@@ -78,7 +77,7 @@ input,select{width:100%;padding:10px;margin:6px 0 10px;border:1px solid #ccc;bor
 </div></div>
 
 <script>
-const KEY="AIzaSyC5WJrQz2oGe1whqFonZNCypPYF4aIwhGU",DB="https://googleapis.com";
+const DB="https://googleapis.com";
 let tok=localStorage.getItem('nsk_tok')||'',cur=null,pay={bankak:'لم يحدد بعد',vodafone:'لم يحدد بعد'};
 const openModal=id=>document.getElementById(id).style.display='flex';
 const closeModal=id=>document.getElementById(id).style.display='none';
@@ -90,12 +89,9 @@ function updateUI(){
   loadProducts();
 }
 
-async function loginAdmin(){
-  const email=document.getElementById('adminEmail').value.trim(),password=document.getElementById('adminPass').value.trim();
-  const r=await fetch(`https://googleapis.com{KEY}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password,returnSecureToken:true})});
-  const d=await r.json();
-  if(d.idToken){tok=d.idToken;localStorage.setItem('nsk_tok',tok);closeModal('loginModal');updateUI();}
-  else alert('تأكد من البريد وكلمة المرور');
+function loginAdmin(){
+  if(document.getElementById('adminPass').value.trim()==='123456'){tok='admin';localStorage.setItem('nsk_tok',tok);closeModal('loginModal');updateUI();}
+  else alert('كلمة المرور خطأ');
 }
 
 function logoutAdmin(){tok='';localStorage.removeItem('nsk_tok');updateUI();}
