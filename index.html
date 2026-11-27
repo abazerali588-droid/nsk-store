@@ -5,241 +5,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر NSK</title>
     <style>
-        :root {
-            --bg-black: #0f1115;
-            --card-white: #ffffff;
-            --primary-blue: #0066ff;
-            --dark-blue: #004ecc;
-            --text-dark: #1a1a1a;
-        }
-        * { box-sizing: border-box; font-family: Tahoma, Arial, sans-serif; }
-        body { margin: 0; background-color: var(--bg-black); color: var(--card-white); }
-        
-        /* الهيدر */
-        header {
-            background-color: #000000;
-            border-bottom: 2px solid var(--primary-blue);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .logo { font-size: 24px; font-weight: bold; color: var(--card-white); letter-spacing: 2px; }
-        .logo span { color: var(--primary-blue); }
-        
-        .btn {
-            border: none; padding: 10px 15px; border-radius: 6px;
-            cursor: pointer; font-weight: bold; font-size: 14px;
-        }
-        .btn-blue { background-color: var(--primary-blue); color: white; }
-        .btn-blue:hover { background-color: var(--dark-blue); }
-        .btn-outline { background: transparent; border: 1px solid var(--primary-blue); color: white; }
-        .btn-danger { background-color: #dc3545; color: white; margin-top: 8px; width: 100%; }
-
-        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
-
-        /* لوحة المالك */
-        #owner-panel {
-            display: none;
-            background: #1c1f26;
-            border: 1px solid var(--primary-blue);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-        #owner-panel h3 { margin-top: 0; color: var(--primary-blue); }
-        input, textarea, select {
-            width: 100%; padding: 10px; margin: 8px 0 15px;
-            border-radius: 6px; border: 1px solid #444;
-            background: #2a2e37; color: white;
-        }
-
-        /* شبكة المنتجات */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background-color: var(--card-white);
-            color: var(--text-dark);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-        }
-        .card img { width: 100%; height: 200px; object-fit: cover; background: #eee; }
-        .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-title { font-size: 18px; font-weight: bold; margin: 0 0 8px; }
-        .card-desc { font-size: 14px; color: #555; margin: 0 0 12px; }
-        .card-price { font-size: 18px; font-weight: bold; color: var(--primary-blue); margin-bottom: 12px; }
-
-        /* نافذة الشراء (Modal) */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; padding: 15px;
-        }
-        .modal-content {
-            background: var(--card-white); color: var(--text-dark);
-            padding: 20px; border-radius: 10px; width: 100%; max-width: 450px;
-        }
-        .modal-content input, .modal-content select { background: #f4f4f4; color: #000; border: 1px solid #ccc; }
-        .payment-box {
-            background: #eef5ff; border-right: 4px solid var(--primary-blue);
-            padding: 10px; margin: 10px 0; font-size: 14px;
-        }
+        :root { --primary: #3f51b5; --owner: #b71c1c; --bg: #f4f6f9; }
+        body { font-family: Tahoma, Arial, sans-serif; margin: 0; background: var(--bg); color: #333; }
+        header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        header.owner-mode { background: var(--owner); }
+        .banner { background: #e8eaf6; color: #1a237e; text-align: center; padding: 10px; font-weight: bold; font-size: 14px; }
+        .container { max-width: 600px; margin: 15px auto; padding: 0 15px 80px; }
+        .card { background: white; border-radius: 10px; padding: 12px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); display: flex; gap: 12px; align-items: center; }
+        .card img { width: 75px; height: 75px; object-fit: cover; border-radius: 8px; background: #eee; }
+        .info { flex: 1; }
+        .info h3 { margin: 0 0 4px; font-size: 16px; }
+        .info p { margin: 0 0 6px; color: #666; font-size: 13px; }
+        .price { color: #2e7d32; font-weight: bold; font-size: 15px; }
+        button { border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: inherit; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-owner { background: rgba(255,255,255,0.2); color: white; }
+        .btn-del { background: #d32f2f; color: white; }
+        .fab { position: fixed; bottom: 20px; left: 20px; background: var(--owner); color: white; padding: 14px 20px; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 15px; display: none; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 200; padding: 15px; }
+        .modal-box { background: white; padding: 20px; border-radius: 12px; width: 100%; max-width: 380px; }
+        input, textarea { width: 100%; padding: 10px; margin: 6px 0 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .actions { display: flex; justify-content: flex-end; gap: 8px; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo"><span>NSK</span> STORE</div>
-    <button id="ownerBtn" class="btn btn-outline" onclick="toggleOwnerLogin()">دخول المالك</button>
+<header id="appHeader">
+    <h2 id="storeTitle" style="margin:0;">متجر NSK</h2>
+    <div>
+        <button id="settingsBtn" class="btn-owner" style="display:none;" onclick="openModal('settingsModal')">الإعدادات</button>
+        <button id="authBtn" class="btn-owner" onclick="toggleOwner()">⚙️ المالك</button>
+    </div>
 </header>
 
-<div class="container">
-    <!-- لوحة تحكم المالك -->
-    <div id="owner-panel">
-        <h3>لوحة تحكم المالك - إضافة منتج جديد</h3>
-        <input type="text" id="pName" placeholder="اسم المنتج">
-        <input type="text" id="pPrice" placeholder="السعر (مثال: 15,000 جنيه)">
-        <textarea id="pDesc" rows="3" placeholder="وصف المنتج بالتفصيل"></textarea>
-        <label style="font-size: 13px; color: #ccc;">اختر صورة المنتج من جهازك:</label>
-        <input type="file" id="pImage" accept="image/*">
-        <button class="btn btn-blue" style="width: 100%;" onclick="addProduct()">نشر المنتج في المتجر</button>
-    </div>
+<div class="banner" id="welcomeBanner">أهلاً بكم في متجر NSK الرسمي</div>
+<div class="container" id="productsList"></div>
+<button class="fab" id="addFab" onclick="openModal('productModal')">+ إضافة منتج</button>
 
-    <!-- عرض المنتجات -->
-    <div id="products-list" class="products-grid"></div>
+<!-- نافذة إضافة منتج -->
+<div class="modal" id="productModal">
+    <div class="modal-box">
+        <h3 style="margin-top:0;">إضافة منتج جديد</h3>
+        <input type="text" id="pName" placeholder="اسم المنتج">
+        <input type="number" id="pPrice" placeholder="السعر (ج.م)">
+        <textarea id="pDesc" rows="2" placeholder="وصف المنتج"></textarea>
+        <label style="font-size:13px; color:#555;">صورة المنتج (اختياري):</label>
+        <input type="file" id="pImg" accept="image/*">
+        <div class="actions">
+            <button onclick="closeModal('productModal')">إلغاء</button>
+            <button class="btn-primary" onclick="addProduct()">حفظ ونشر</button>
+        </div>
+    </div>
 </div>
 
-<!-- نافذة إتمام الشراء -->
-<div id="buyModal" class="modal">
-    <div class="modal-content">
-        <h3 style="margin-top:0; color: var(--primary-blue);">إتمام الطلب: <span id="mProdName"></span></h3>
-        <p style="font-weight:bold;">السعر: <span id="mProdPrice"></span></p>
-        
-        <label>اختر طريقة الدفع:</label>
-        <select id="payMethod" onchange="updatePaymentInfo()">
-            <option value="bankak">تطبيق بنكك (بنك الخرطوم)</option>
-            <option value="vodafone">فودافون كاش (Vodafone Cash)</option>
-        </select>
+<!-- نافذة الطلب -->
+<div class="modal" id="orderModal">
+    <div class="modal-box">
+        <h3 id="orderTitle" style="margin-top:0;">طلب منتج</h3>
+        <input type="text" id="cName" placeholder="الاسم بالكامل">
+        <input type="tel" id="cPhone" placeholder="رقم الهاتف">
+        <input type="text" id="cAddress" placeholder="العنوان بالتفصيل">
+        <div class="actions">
+            <button onclick="closeModal('orderModal')">إلغاء</button>
+            <button class="btn-primary" onclick="sendOrder()">تأكيد الطلب</button>
+        </div>
+    </div>
+</div>
 
-        <div id="paymentDetails" class="payment-box"></div>
-
-        <input type="text" id="custName" placeholder="اسمك الكامل">
-        <input type="text" id="custPhone" placeholder="رقم هاتفك (واتساب)">
-        <input type="text" id="custAddress" placeholder="المدينة / عنوان التوصيل">
-        <input type="text" id="transId" placeholder="رقم العملية / الإشعار بعد التحويل">
-
-        <button class="btn btn-blue" style="width:100%;" onclick="sendOrderWhatsApp()">تأكيد وإرسال الإيصال واتساب</button>
-        <button class="btn btn-danger" onclick="closeModal()">إلغاء</button>
+<!-- نافذة الإعدادات -->
+<div class="modal" id="settingsModal">
+    <div class="modal-box">
+        <h3 style="margin-top:0;">إعدادات المتجر</h3>
+        <input type="text" id="sName" placeholder="اسم المتجر">
+        <input type="text" id="sBanner" placeholder="رسالة الترحيب">
+        <input type="tel" id="sWhatsapp" placeholder="رقم واتساب لاستقبال الطلبات (مثال: 2010xxxxxxxx)">
+        <div class="actions">
+            <button onclick="closeModal('settingsModal')">إلغاء</button>
+            <button class="btn-primary" onclick="saveSettings()">حفظ</button>
+        </div>
     </div>
 </div>
 
 <script>
-    // ==========================================
-    // إعداداتك الخاصة (عدّل هذه البيانات برقمك)
-    // ==========================================
-    const OWNER_PASS = "69866986";
-    const WHATSAPP_NUMBER = "249900000000"; // ضع رقم الواتساب الخاص بك مع مفتاح الدولة بدون +
-    const BANKAK_INFO = "رقم الحساب: 1234567 <br> الاسم: أبازر علي"; // ضع بيانات بنكك هنا
-    const VODAFONE_INFO = "رقم المحفظة: 01000000000"; // ضع رقم فودافون كاش هنا
-    // ==========================================
-
     let isOwner = false;
-    let selectedProduct = null;
+    const PIN = "1234";
+    let currentProd = null;
 
-    // تحميل المنتجات المحفوظة أو عرض منتج تجريبي
-    let products = JSON.parse(localStorage.getItem('nsk_products')) || [
-        {
-            id: 1,
-            name: "منتج تجريبي NSK",
-            price: "10,000 جنيه",
-            desc: "هذا منتج تجريبي، يمكنك حذفه وإضافة منتجاتك من لوحة المالك.",
-            image: "https://placeholder.com"
-        }
-    ];
+    let data = JSON.parse(localStorage.getItem('nsk_v2')) || {
+        name: "متجر NSK",
+        banner: "أهلاً بكم في متجر NSK الرسمي - أفضل المنتجات بأفضل الأسعار",
+        whatsapp: "",
+        products: [
+            { name: "منتج NSK الأساسي", price: "350", desc: "جودة ممتازة وضمان استبدال.", img: "" },
+            { name: "منتج NSK برو", price: "690", desc: "الإصدار المطور بمواصفات عالية.", img: "" }
+        ]
+    };
 
-    function renderProducts() {
-        const list = document.getElementById('products-list');
-        list.innerHTML = '';
-        products.forEach((p, index) => {
+    function save() {
+        localStorage.setItem('nsk_v2', JSON.stringify(data));
+        render();
+    }
+
+    function render() {
+        document.getElementById('storeTitle').innerText = isOwner ? data.name + " (المالك)" : data.name;
+        document.getElementById('welcomeBanner').innerText = data.banner;
+        document.getElementById('appHeader').className = isOwner ? "owner-mode" : "";
+        document.getElementById('authBtn').innerText = isOwner ? "خروج" : "⚙️ المالك";
+        document.getElementById('addFab').style.display = isOwner ? "block" : "none";
+        document.getElementById('settingsBtn').style.display = isOwner ? "inline-block" : "none";
+
+        const list = document.getElementById('productsList');
+        list.innerHTML = "";
+        data.products.forEach((p, i) => {
+            const imgTag = p.img ? `<img src="${p.img}">` : `<img src="https://placeholder.com">`;
             list.innerHTML += `
                 <div class="card">
-                    <img src="${p.image}" alt="${p.name}">
-                    <div class="card-body">
-                        <div>
-                            <h4 class="card-title">${p.name}</h4>
-                            <p class="card-desc">${p.desc}</p>
-                        </div>
-                        <div>
-                            <div class="card-price">${p.price}</div>
-                            <button class="btn btn-blue" style="width:100%;" onclick="openBuyModal(${index})">شراء الآن</button>
-                            ${isOwner ? `<button class="btn btn-danger" onclick="deleteProduct(${index})">حذف المنتج</button>` : ''}
-                        </div>
+                    ${imgTag}
+                    <div class="info">
+                        <h3>${p.name}</h3>
+                        <p>${p.desc}</p>
+                        <div class="price">${p.price} ج.م</div>
                     </div>
-                </div>
-            `;
+                    <div>
+                        ${isOwner 
+                            ? `<button class="btn-del" onclick="delProd(${i})">حذف</button>`
+                            : `<button class="btn-primary" onclick="openOrder(${i})">اطلب</button>`}
+                    </div>
+                </div>`;
         });
     }
 
-    function toggleOwnerLogin() {
-        if (isOwner) {
-            isOwner = false;
-            document.getElementById('owner-panel').style.display = 'none';
-            document.getElementById('ownerBtn').innerText = 'دخول المالك';
-            renderProducts();
-            return;
-        }
-        const pass = prompt("أدخل كلمة مرور المالك:");
-        if (pass === OWNER_PASS) {
-            isOwner = true;
-            document.getElementById('owner-panel').style.display = 'block';
-            document.getElementById('ownerBtn').innerText = 'خروج المالك';
-            renderProducts();
-        } else if (pass !== null) {
-            alert("كلمة المرور غير صحيحة!");
-        }
+    function toggleOwner() {
+        if (isOwner) { isOwner = false; render(); return; }
+        const code = prompt("أدخل رمز المالك (1234):");
+        if (code === PIN) { isOwner = true; render(); }
+        else if (code !== null) alert("رمز خاطئ!");
     }
 
     function addProduct() {
         const name = document.getElementById('pName').value;
         const price = document.getElementById('pPrice').value;
         const desc = document.getElementById('pDesc').value;
-        const imgInput = document.getElementById('pImage');
+        const file = document.getElementById('pImg').files[0];
 
-        if (!name || !price || !imgInput.files[0]) {
-            alert("يرجى إدخال اسم المنتج، السعر، واختيار صورة.");
-            return;
+        if (!name || !price) return alert("اكتب اسم المنتج والسعر");
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                data.products.unshift({ name, price, desc, img: e.target.result });
+                finishAdd();
+            };
+            reader.readAsDataURL(file);
+        } else {
+            data.products.unshift({ name, price, desc, img: "" });
+            finishAdd();
         }
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            products.unshift({
-                id: Date.now(),
-                name: name,
-                price: price,
-                desc: desc,
-                image: e.target.result
-            });
-            localStorage.setItem('nsk_products', JSON.stringify(products));
-            renderProducts();
-            document.getElementById('pName').value = '';
-            document.getElementById('pPrice').value = '';
-            document.getElementById('pDesc').value = '';
-            imgInput.value = '';
-            alert("تم إضافة المنتج بنجاح!");
-        };
-        reader.readAsDataURL(imgInput.files[0]);
     }
 
-    function deleteProduct(index) {
-        if (confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
-            products.splice(index, 1);
-            localStorage.setItem('nsk_products', JSON.stringify(products));
-            renderProducts();
+    function finishAdd() {
+        document.getElementById('pName').value = "";
+        document.getElementById('pPrice').value = "";
+        document.getElementById('pDesc').value = "";
+        document.getElementById('pImg').value = "";
+        closeModal('productModal');
+        save();
+    }
+
+    function delProd(i) {
+        if (confirm("حذف المنتج؟")) { data.products.splice(i, 1); save(); }
+    }
+
+    function openOrder(i) {
+        currentProd = data.products[i];
+        document.getElementById('orderTitle').innerText = "طلب: " + currentProd.name;
+        openModal('orderModal');
+    }
+
+    function sendOrder() {
+        const n = document.getElementById('cName').value;
+        const p = document.getElementById('cPhone').value;
+        const a = document.getElementById('cAddress').value;
+        if (!n || !p) return alert("يرجى كتابة الاسم ورقم الهاتف");
+
+        closeModal('orderModal');
+        if (data.whatsapp) {
+            const msg = `طلب جديد من متجر ${data.name}:%0Aالمنتج: ${currentProd.name}%0Aالسعر: ${currentProd.price} ج.م%0Aالعميل: ${n}%0Aالهاتف: ${p}%0Aالعنوان: ${a}`;
+            window.open(`https://wa.me{data.whatsapp}?text=${msg}`, '_blank');
+        } else {
+            alert("تم استلام طلبك بنجاح! سنتواصل معك قريباً.");
+        }
+    }
+
+    function saveSettings() {
+        data.name = document.getElementById('sName').value || data.name;
+        data.banner = document.getElementById('sBanner').value || data.banner;
+        data.whatsapp = document.getElementById('sWhatsapp').value;
+        closeModal('settingsModal');
+        save();
+    }
+
+    function openModal(id) {
+        if (id === 'settingsModal') {
+            document.getElementById('sName').value = data.name;
+            document.getElementById('sBanner').value = data.banner;
+            document.getElementById('sWhatsapp').value = data.whatsapp;
+        }
+        document.getElementById(id).style.display = "flex";
+    }
+
+    function closeModal(id) { document.getElementById(id).style.display = "none"; }
+
+    render();
+</script>
+</body>
+</html>
