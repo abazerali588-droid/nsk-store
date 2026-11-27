@@ -5,23 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NSK STORE</title>
 <style>
-  body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: #f8f9fa; color: #1a1a1a; }
-  header { background: #1a1a1a; color: #d4af37; padding: 16px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
-  header h1 { margin: 0; font-size: 20px; letter-spacing: 2px; }
-  .btn { background: #1a1a1a; color: #d4af37; border: 1px solid #d4af37; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-  .btn-gold { background: #d4af37; color: #1a1a1a; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 16px; }
+  body { margin: 0; font-family: sans-serif; background: #f4f4f5; color: #18181b; }
+  header { background: #18181b; color: #eab308; padding: 16px; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { margin: 0; font-size: 20px; }
+  .btn { background: #18181b; color: #eab308; border: 1px solid #eab308; padding: 8px 12px; border-radius: 8px; font-weight: bold; }
+  .btn-gold { background: #eab308; color: #18181b; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; font-size: 16px; margin-top: 8px; }
   .container { padding: 16px; max-width: 600px; margin: auto; }
-  .card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; gap: 12px; align-items: center; }
-  .card img { width: 70px; height: 70px; border-radius: 8px; object-fit: cover; background: #eee; }
+  .card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); display: flex; gap: 12px; align-items: center; }
+  .card img { width: 65px; height: 65px; border-radius: 8px; object-fit: cover; background: #18181b; }
   .card-info { flex: 1; }
-  .card-info h3 { margin: 0 0 4px; font-size: 16px; }
-  .card-info p { margin: 0 0 6px; color: #666; font-size: 13px; }
-  .price { color: #15803d; font-weight: bold; font-size: 15px; }
-  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; padding: 16px; z-index: 50; }
-  .modal-box { background: #fff; padding: 20px; border-radius: 14px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
-  input, select { width: 100%; padding: 10px; margin: 8px 0 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
-  .pay-box { background: #fef3c7; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 14px; border: 1px solid #f59e0b; }
-  .fab { position: fixed; bottom: 20px; left: 20px; background: #1a1a1a; color: #d4af37; border: 2px solid #d4af37; padding: 14px 20px; border-radius: 30px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none; }
+  .price { color: #16a34a; font-weight: bold; margin-top: 4px; }
+  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); justify-content: center; align-items: center; padding: 16px; z-index: 99; }
+  .modal-box { background: #fff; padding: 20px; border-radius: 14px; width: 100%; max-width: 380px; }
+  input, select { width: 100%; padding: 10px; margin: 6px 0 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
+  .pay-box { background: #fef9c3; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eab308; font-size: 14px; }
+  .fab { position: fixed; bottom: 20px; left: 20px; background: #18181b; color: #eab308; border: 2px solid #eab308; padding: 14px 20px; border-radius: 30px; font-weight: bold; display: none; }
 </style>
 </head>
 <body>
@@ -34,15 +32,14 @@
 </header>
 
 <div class="container" id="productsList">
-  <p style="text-align:center; color:#777;">جاري تحميل منتجات متجر NSK...</p>
+  <p style="text-align:center; color:#666;">لا توجد منتجات مضافة حالياً في متجر NSK</p>
 </div>
 
-<button class="fab" id="addBtn" onclick="openAddModal()">+ إضافة منتج</button>
+<button class="fab" id="addBtn" onclick="openModal('productModal')">+ إضافة منتج</button>
 
-<!-- Login Modal -->
 <div class="modal" id="loginModal">
   <div class="modal-box">
-    <h3>دخول المالك - NSK</h3>
+    <h3>دخول المالك</h3>
     <input type="email" id="adminEmail" placeholder="البريد الإلكتروني">
     <input type="password" id="adminPass" placeholder="كلمة المرور">
     <button class="btn-gold" onclick="loginAdmin()">دخول</button>
@@ -50,7 +47,6 @@
   </div>
 </div>
 
-<!-- Add Product Modal -->
 <div class="modal" id="productModal">
   <div class="modal-box">
     <h3>إضافة منتج جديد</h3>
@@ -63,52 +59,46 @@
   </div>
 </div>
 
-<!-- Payment Settings Modal -->
 <div class="modal" id="settingsModal">
   <div class="modal-box">
-    <h3>إعدادات حسابات الدفع</h3>
-    <label>رقم حساب بنكك والاسم:</label>
-    <input type="text" id="setBankak" placeholder="رقم الحساب - الاسم">
-    <label>رقم فودافون كاش / إنستا باي:</label>
-    <input type="text" id="setVodafone" placeholder="010xxxxxxxx">
-    <button class="btn-gold" onclick="saveSettings()">حفظ الحسابات</button>
+    <h3>حسابات الدفع</h3>
+    <input type="text" id="setBankak" placeholder="رقم حساب بنكك والاسم">
+    <input type="text" id="setVodafone" placeholder="رقم فودافون كاش / إنستا باي">
+    <button class="btn-gold" onclick="saveSettings()">حفظ</button>
     <button class="btn" style="width:100%; margin-top:8px;" onclick="closeModal('settingsModal')">إلغاء</button>
   </div>
 </div>
 
-<!-- Order Modal -->
 <div class="modal" id="orderModal">
   <div class="modal-box">
     <h3 id="orderTitle">طلب منتج</h3>
     <input type="text" id="cName" placeholder="الاسم الكامل">
-    <input type="tel" id="cPhone" placeholder="رقم الهاتف / الواتساب">
-    <label>طريقة الدفع:</label>
+    <input type="tel" id="cPhone" placeholder="رقم الهاتف / واتساب">
     <select id="payMethod" onchange="updatePayInfo()">
       <option value="bankak">تطبيق بنكك (Bankak)</option>
       <option value="vodafone">فودافون كاش / إنستا باي</option>
       <option value="cod">الدفع عند الاستلام</option>
     </select>
     <div id="payDetails" class="pay-box"></div>
-    <input type="text" id="txRef" placeholder="رقم العملية / المرجع (في حالة التحويل)">
+    <input type="text" id="txRef" placeholder="رقم العملية / المرجع">
     <button class="btn-gold" onclick="submitOrder()">تأكيد الطلب</button>
     <button class="btn" style="width:100%; margin-top:8px;" onclick="closeModal('orderModal')">إلغاء</button>
   </div>
 </div>
 
-<!-- Orders View Modal for Admin -->
 <div class="modal" id="ordersViewModal">
   <div class="modal-box">
-    <h3>طلبات العملاء الواردة</h3>
+    <h3>طلبات العملاء</h3>
     <div id="ordersList"></div>
     <button class="btn" style="width:100%; margin-top:8px;" onclick="closeModal('ordersViewModal')">إغلاق</button>
   </div>
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://gstatic.com";
-  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://gstatic.com";
-  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, getDoc, setDoc, query, orderBy } from "https://gstatic.com";
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
 
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyC5WJrQz2oGe1whqFonZNCypPYF4aIwhGU",
     authDomain: "://firebaseapp.com",
@@ -118,100 +108,114 @@
     appId: "1:1008840600192:web:22aaac3be8d16f75ec9465"
   };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
   let isAdmin = false;
   let currentProduct = null;
-  let paymentInfo = { bankak: 'لم يتم تحديد حساب بنكك بعد', vodafone: 'لم يتم تحديد رقم فودافون بعد' };
+  let paymentInfo = { bankak: 'لم يحدد بعد', vodafone: 'لم يحدد بعد' };
 
-  window.openModal = id => document.getElementById(id).style.display = 'flex';
-  window.closeModal = id => document.getElementById(id).style.display = 'none';
+  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-  onAuthStateChanged(auth, user => {
+  auth.onAuthStateChanged(user => {
     isAdmin = !!user;
     document.getElementById('addBtn').style.display = isAdmin ? 'block' : 'none';
     document.getElementById('adminControls').innerHTML = isAdmin
-      ? `<button class="btn" onclick="openOrders()">الطلبات</button> <button class="btn" onclick="openSettings()">الدفع</button> <button class="btn" onclick="logoutAdmin()">خروج</button>`
-      : `<button class="btn" onclick="openModal('loginModal')">دخول المالك</button>`;
+      ? '<button class="btn" onclick="openOrders()">الطلبات</button> <button class="btn" onclick="openSettings()">الدفع</button> <button class="btn" onclick="auth.signOut()">خروج</button>'
+      : '<button class="btn" onclick="openModal(\'loginModal\')">دخول المالك</button>';
     loadProducts();
   });
 
-  window.loginAdmin = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, document.getElementById('adminEmail').value.trim(), document.getElementById('adminPass').value.trim());
-      closeModal('loginModal');
-    } catch (e) { alert('تأكد من البريد الإلكتروني وكلمة المرور'); }
-  };
+  function loginAdmin() {
+    const email = document.getElementById('adminEmail').value.trim();
+    const pass = document.getElementById('adminPass').value.trim();
+    auth.signInWithEmailAndPassword(email, pass)
+      .then(() => closeModal('loginModal'))
+      .catch(e => alert('خطأ: ' + e.message));
+  }
 
-  window.logoutAdmin = () => signOut(auth);
-
-  window.openAddModal = () => {
-    document.getElementById('pName').value = '';
-    document.getElementById('pPrice').value = '';
-    document.getElementById('pDesc').value = '';
-    document.getElementById('pImg').value = '';
-    openModal('productModal');
-  };
-
-  window.saveProduct = async () => {
-    await addDoc(collection(db, 'products'), {
+  function saveProduct() {
+    db.collection('products').add({
       name: document.getElementById('pName').value,
       price: document.getElementById('pPrice').value,
       desc: document.getElementById('pDesc').value,
       image: document.getElementById('pImg').value
+    }).then(() => {
+      closeModal('productModal');
+      document.getElementById('pName').value = '';
+      document.getElementById('pPrice').value = '';
+      document.getElementById('pDesc').value = '';
+      document.getElementById('pImg').value = '';
+    }).catch(e => alert('خطأ في الحفظ: ' + e.message));
+  }
+
+  function deleteProduct(id) {
+    if (confirm('حذف المنتج؟')) db.collection('products').doc(id).delete();
+  }
+
+  function openSettings() {
+    db.collection('settings').doc('payment').get().then(doc => {
+      if (doc.exists) {
+        document.getElementById('setBankak').value = doc.data().bankak || '';
+        document.getElementById('setVodafone').value = doc.data().vodafone || '';
+      }
+      openModal('settingsModal');
     });
-    closeModal('productModal');
-  };
+  }
 
-  window.deleteProduct = async (id) => {
-    if(confirm('هل تريد حذف هذا المنتج؟')) await deleteDoc(doc(db, 'products', id));
-  };
-
-  window.openSettings = async () => {
-    const snap = await getDoc(doc(db, 'settings', 'payment'));
-    if (snap.exists()) {
-      document.getElementById('setBankak').value = snap.data().bankak || '';
-      document.getElementById('setVodafone').value = snap.data().vodafone || '';
-    }
-    openModal('settingsModal');
-  };
-
-  window.saveSettings = async () => {
-    await setDoc(doc(db, 'settings', 'payment'), {
+  function saveSettings() {
+    db.collection('settings').doc('payment').set({
       bankak: document.getElementById('setBankak').value,
       vodafone: document.getElementById('setVodafone').value
-    });
-    closeModal('settingsModal');
-    alert('تم حفظ بيانات الدفع بنجاح');
-  };
+    }).then(() => { closeModal('settingsModal'); alert('تم الحفظ!'); });
+  }
 
-  window.openOrder = async (name, price) => {
+  function openOrder(name, price) {
     currentProduct = { name, price };
-    document.getElementById('orderTitle').innerText = `طلب: ${name} (${price})`;
-    const snap = await getDoc(doc(db, 'settings', 'payment'));
-    if (snap.exists()) paymentInfo = snap.data();
-    updatePayInfo();
-    openModal('orderModal');
-  };
+    document.getElementById('orderTitle').innerText = 'طلب: ' + name + ' (' + price + ')';
+    db.collection('settings').doc('payment').get().then(doc => {
+      if (doc.exists) paymentInfo = doc.data();
+      updatePayInfo();
+      openModal('orderModal');
+    });
+  }
 
-  window.updatePayInfo = () => {
+  function updatePayInfo() {
     const m = document.getElementById('payMethod').value;
     const box = document.getElementById('payDetails');
-    if (m === 'bankak') { box.style.display = 'block'; box.innerHTML = `<b>حساب بنكك للتحويل:</b><br>${paymentInfo.bankak}`; }
-    else if (m === 'vodafone') { box.style.display = 'block'; box.innerHTML = `<b>رقم فودافون كاش / إنستا باي:</b><br>${paymentInfo.vodafone}`; }
+    if (m === 'bankak') { box.style.display = 'block'; box.innerHTML = '<b>حساب بنكك:</b><br>' + paymentInfo.bankak; }
+    else if (m === 'vodafone') { box.style.display = 'block'; box.innerHTML = '<b>فودافون كاش / إنستا باي:</b><br>' + paymentInfo.vodafone; }
     else { box.style.display = 'none'; }
-  };
+  }
 
-  window.submitOrder = async () => {
-    await addDoc(collection(db, 'orders'), {
+  function submitOrder() {
+    db.collection('orders').add({
       product: currentProduct.name,
       price: currentProduct.price,
       customer: document.getElementById('cName').value,
       phone: document.getElementById('cPhone').value,
       method: document.getElementById('payMethod').value,
-      ref: document.getElementById('txRef').value,});closeModal('orderModal');alert('تم إرسال طلبك بنجاح! سنتواصل معك قريباً.');};
-window.openOrders = () => {openModal('ordersViewModal');onSnapshot(collection(db, 'orders'), snap => {let html = '';snap.forEach(d => {const o = d.data();html += <div style="border-bottom:1px solid #eee; padding:8px 0;"> <b>${o.product}</b> (${o.price})<br> العميل: ${o.customer} - ${o.phone}<br> الدفع: ${o.method} | المرجع: ${o.ref || '-'} </div>;});document.getElementById('ordersList').innerHTML = html || 'لا توجد طلبات حتى الآن';});};
-function loadProducts() {onSnapshot(collection(db, 'products'), snap => {let html = '';snap.forEach(d => {const p = d.data();const img = p.image ? <img src="${p.image}"> : <img src="https://placeholder.com">;const action = isAdmin? <button class="btn" style="background:#dc2626;color:#fff;border:none;" onclick="deleteProduct('${d.id}')">حذف</button>: <button class="btn" onclick="openOrder('${p.name}','${p.price}')">اطلب الآن</button>;html += <div class="card">${img}<div class="card-info"><h3>${p.name}</h3><p>${p.desc || ''}</p><div class="price">${p.price}</div></div>${action}</div>
+      ref: document.getElementById('txRef').value
+    }).then(() => { closeModal('orderModal'); alert('تم إرسال طلبك بنجاح!'); });
+  }
 
-;});document.getElementById('productsList').innerHTML = html || 'لا توجد منتجات مضافة حالياً في متجر NSK';});}
+  function openOrders() {
+    openModal('ordersViewModal');
+    db.collection('orders').onSnapshot(snap => {
+      let html = '';
+      snap.forEach(d => {
+        const o = d.data();
+        html += `<div style="border-bottom:1px solid #eee;padding:8px 0;"><b>${o.product}</b> (${o.price})<br>العميل: ${o.customer} - ${o.phone}<br>الدفع: ${o.method} | المرجع: ${o.ref || '-'}</div>`;
+      });
+      document.getElementById('ordersList').innerHTML = html || 'لا توجد طلبات بعد';
+    });
+  }
+
+  function loadProducts() {
+    db.collection('products').onSnapshot(snap => {
+      let html = '';
+      snap.forEach(d => {
+        const p = d.data();
+        const img = p.image ? `<img src="${p.image}">` : `<img src="https://placeholder.com">`;
+        const btn = isAdmin
