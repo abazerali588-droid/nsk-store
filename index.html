@@ -8,18 +8,18 @@
   body { margin: 0; font-family: sans-serif; background: #f4f4f5; color: #18181b; }
   header { background: #18181b; color: #eab308; padding: 16px; display: flex; justify-content: space-between; align-items: center; }
   header h1 { margin: 0; font-size: 20px; }
-  .btn { background: #18181b; color: #eab308; border: 1px solid #eab308; padding: 8px 12px; border-radius: 8px; font-weight: bold; }
-  .btn-gold { background: #eab308; color: #18181b; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; font-size: 16px; margin-top: 8px; }
+  .btn { background: #18181b; color: #eab308; border: 1px solid #eab308; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  .btn-gold { background: #eab308; color: #18181b; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; font-size: 16px; margin-top: 8px; cursor: pointer; }
   .container { padding: 16px; max-width: 600px; margin: auto; }
   .card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); display: flex; gap: 12px; align-items: center; }
   .card img { width: 65px; height: 65px; border-radius: 8px; object-fit: cover; background: #18181b; }
   .card-info { flex: 1; }
   .price { color: #16a34a; font-weight: bold; margin-top: 4px; }
   .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); justify-content: center; align-items: center; padding: 16px; z-index: 99; }
-  .modal-box { background: #fff; padding: 20px; border-radius: 14px; width: 100%; max-width: 380px; }
+  .modal-box { background: #fff; padding: 20px; border-radius: 14px; width: 100%; max-width: 380px; max-height: 85vh; overflow-y: auto; }
   input, select { width: 100%; padding: 10px; margin: 6px 0 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
   .pay-box { background: #fef9c3; padding: 10px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eab308; font-size: 14px; }
-  .fab { position: fixed; bottom: 20px; left: 20px; background: #18181b; color: #eab308; border: 2px solid #eab308; padding: 14px 20px; border-radius: 30px; font-weight: bold; display: none; }
+  .fab { position: fixed; bottom: 20px; left: 20px; background: #18181b; color: #eab308; border: 2px solid #eab308; padding: 14px 20px; border-radius: 30px; font-weight: bold; display: none; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -32,7 +32,7 @@
 </header>
 
 <div class="container" id="productsList">
-  <p style="text-align:center; color:#666;">لا توجد منتجات مضافة حالياً في متجر NSK</p>
+  <p style="text-align:center; color:#666;">جاري تحميل المنتجات...</p>
 </div>
 
 <button class="fab" id="addBtn" onclick="openModal('productModal')">+ إضافة منتج</button>
@@ -94,91 +94,119 @@
   </div>
 </div>
 
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
-
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyC5WJrQz2oGe1whqFonZNCypPYF4aIwhGU",
-    authDomain: "://firebaseapp.com",
-    projectId: "nsk-store-c1a3b",
-    storageBucket: "nsk-store-c1a3b.firebasestorage.app",
-    messagingSenderId: "1008840600192",
-    appId: "1:1008840600192:web:22aaac3be8d16f75ec9465"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-  let isAdmin = false;
+  const API_KEY = "AIzaSyC5WJrQz2oGe1whqFonZNCypPYF4aIwhGU";
+  const PROJECT_ID = "nsk-store-c1a3b";
+  const DB_URL = `https://googleapis.com{PROJECT_ID}/databases/(default)/documents`;
+  let idToken = localStorage.getItem('nsk_token') || '';
   let currentProduct = null;
   let paymentInfo = { bankak: 'لم يحدد بعد', vodafone: 'لم يحدد بعد' };
 
   function openModal(id) { document.getElementById(id).style.display = 'flex'; }
   function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-  auth.onAuthStateChanged(user => {
-    isAdmin = !!user;
+  function updateUI() {
+    const isAdmin = !!idToken;
     document.getElementById('addBtn').style.display = isAdmin ? 'block' : 'none';
     document.getElementById('adminControls').innerHTML = isAdmin
-      ? '<button class="btn" onclick="openOrders()">الطلبات</button> <button class="btn" onclick="openSettings()">الدفع</button> <button class="btn" onclick="auth.signOut()">خروج</button>'
+      ? '<button class="btn" onclick="openOrders()">الطلبات</button> <button class="btn" onclick="openSettings()">الدفع</button> <button class="btn" onclick="logoutAdmin()">خروج</button>'
       : '<button class="btn" onclick="openModal(\'loginModal\')">دخول المالك</button>';
     loadProducts();
-  });
+  }
 
-  function loginAdmin() {
+  async function loginAdmin() {
     const email = document.getElementById('adminEmail').value.trim();
-    const pass = document.getElementById('adminPass').value.trim();
-    auth.signInWithEmailAndPassword(email, pass)
-      .then(() => closeModal('loginModal'))
-      .catch(e => alert('خطأ: ' + e.message));
-  }
-
-  function saveProduct() {
-    db.collection('products').add({
-      name: document.getElementById('pName').value,
-      price: document.getElementById('pPrice').value,
-      desc: document.getElementById('pDesc').value,
-      image: document.getElementById('pImg').value
-    }).then(() => {
-      closeModal('productModal');
-      document.getElementById('pName').value = '';
-      document.getElementById('pPrice').value = '';
-      document.getElementById('pDesc').value = '';
-      document.getElementById('pImg').value = '';
-    }).catch(e => alert('خطأ في الحفظ: ' + e.message));
-  }
-
-  function deleteProduct(id) {
-    if (confirm('حذف المنتج؟')) db.collection('products').doc(id).delete();
-  }
-
-  function openSettings() {
-    db.collection('settings').doc('payment').get().then(doc => {
-      if (doc.exists) {
-        document.getElementById('setBankak').value = doc.data().bankak || '';
-        document.getElementById('setVodafone').value = doc.data().vodafone || '';
+    const password = document.getElementById('adminPass').value.trim();
+    try {
+      const res = await fetch(`https://googleapis.com{API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, returnSecureToken: true })
+      });
+      const data = await res.json();
+      if (data.idToken) {
+        idToken = data.idToken;
+        localStorage.setItem('nsk_token', idToken);
+        closeModal('loginModal');
+        updateUI();
+      } else {
+        alert('تأكد من البريد الإلكتروني وكلمة المرور');
       }
-      openModal('settingsModal');
+    } catch (e) { alert('تعذر الاتصال، تأكد من الإنترنت'); }
+  }
+
+  function logoutAdmin() {
+    idToken = '';
+    localStorage.removeItem('nsk_token');
+    updateUI();
+  }
+
+  async function saveProduct() {
+    const body = {
+      fields: {
+        name: { stringValue: document.getElementById('pName').value },
+        price: { stringValue: document.getElementById('pPrice').value },
+        desc: { stringValue: document.getElementById('pDesc').value },
+        image: { stringValue: document.getElementById('pImg').value }
+      }
+    };
+    await fetch(`${DB_URL}/products`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
     });
+    closeModal('productModal');
+    document.getElementById('pName').value = '';
+    document.getElementById('pPrice').value = '';
+    document.getElementById('pDesc').value = '';
+    document.getElementById('pImg').value = '';
+    loadProducts();
   }
 
-  function saveSettings() {
-    db.collection('settings').doc('payment').set({
-      bankak: document.getElementById('setBankak').value,
-      vodafone: document.getElementById('setVodafone').value
-    }).then(() => { closeModal('settingsModal'); alert('تم الحفظ!'); });
+  async function deleteProduct(docPath) {
+    if (confirm('حذف المنتج؟')) {
+      await fetch(`https://googleapis.com{docPath}`, { method: 'DELETE' });
+      loadProducts();
+    }
   }
 
-  function openOrder(name, price) {
+  async function openSettings() {
+    const res = await fetch(`${DB_URL}/settings/payment`);
+    const data = await res.json();
+    if (data.fields) {
+      document.getElementById('setBankak').value = data.fields.bankak?.stringValue || '';
+      document.getElementById('setVodafone').value = data.fields.vodafone?.stringValue || '';
+    }
+    openModal('settingsModal');
+  }
+
+  async function saveSettings() {
+    const body = {
+      fields: {
+        bankak: { stringValue: document.getElementById('setBankak').value },
+        vodafone: { stringValue: document.getElementById('setVodafone').value }
+      }
+    };
+    await fetch(`${DB_URL}/settings/payment`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    closeModal('settingsModal');
+    alert('تم حفظ بيانات الدفع بنجاح!');
+  }
+
+  async function openOrder(name, price) {
     currentProduct = { name, price };
-    document.getElementById('orderTitle').innerText = 'طلب: ' + name + ' (' + price + ')';
-    db.collection('settings').doc('payment').get().then(doc => {
-      if (doc.exists) paymentInfo = doc.data();
-      updatePayInfo();
-      openModal('orderModal');
-    });
+    document.getElementById('orderTitle').innerText = `طلب: ${name} (${price})`;
+    const res = await fetch(`${DB_URL}/settings/payment`);
+    const data = await res.json();
+    if (data.fields) {
+      paymentInfo.bankak = data.fields.bankak?.stringValue || 'لم يحدد بعد';
+      paymentInfo.vodafone = data.fields.vodafone?.stringValue || 'لم يحدد بعد';
+    }
+    updatePayInfo();
+    openModal('orderModal');
   }
 
   function updatePayInfo() {
@@ -189,33 +217,10 @@
     else { box.style.display = 'none'; }
   }
 
-  function submitOrder() {
-    db.collection('orders').add({
-      product: currentProduct.name,
-      price: currentProduct.price,
-      customer: document.getElementById('cName').value,
-      phone: document.getElementById('cPhone').value,
-      method: document.getElementById('payMethod').value,
-      ref: document.getElementById('txRef').value
-    }).then(() => { closeModal('orderModal'); alert('تم إرسال طلبك بنجاح!'); });
-  }
-
-  function openOrders() {
-    openModal('ordersViewModal');
-    db.collection('orders').onSnapshot(snap => {
-      let html = '';
-      snap.forEach(d => {
-        const o = d.data();
-        html += `<div style="border-bottom:1px solid #eee;padding:8px 0;"><b>${o.product}</b> (${o.price})<br>العميل: ${o.customer} - ${o.phone}<br>الدفع: ${o.method} | المرجع: ${o.ref || '-'}</div>`;
-      });
-      document.getElementById('ordersList').innerHTML = html || 'لا توجد طلبات بعد';
-    });
-  }
-
-  function loadProducts() {
-    db.collection('products').onSnapshot(snap => {
-      let html = '';
-      snap.forEach(d => {
-        const p = d.data();
-        const img = p.image ? `<img src="${p.image}">` : `<img src="https://placeholder.com">`;
-        const btn = isAdmin
+  async function submitOrder() {
+    const body = {
+      fields: {
+        product: { stringValue: currentProduct.name },
+        price: { stringValue: currentProduct.price },
+        customer: { stringValue: document.getElementById('cName').value },
+        phone: { stringValue: document.getElementById('cPhone').value },
