@@ -3,37 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NSK STORE</title>
+<title>NR - NSK STORE</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><text y='75' x='5' font-size='65' font-family='Georgia,serif' font-weight='bold' fill='%230f172a'>N</text><text y='75' x='48' font-size='65' font-family='Georgia,serif' font-weight='bold' fill='%23000000'>R</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><text y='72' x='8' font-size='62' font-family='Georgia,serif' font-weight='bold' fill='%230f172a'>N</text><text y='72' x='48' font-size='62' font-family='Georgia,serif' font-weight='bold' fill='%23000000'>R</text></svg>">
 <style>
-body{margin:0;font-family:sans-serif;background:#f4f4f5;color:#18181b}
-header{background:#18181b;color:#eab308;padding:16px;display:flex;justify-content:space-between;align-items:center}
-header h1{margin:0;font-size:20px}
-.btn{background:#18181b;color:#eab308;border:1px solid #eab308;padding:8px 12px;border-radius:8px;font-weight:bold}
-.btn-gold{background:#eab308;color:#18181b;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;font-size:16px;margin-top:8px}
-.container{padding:16px;max-width:600px;margin:auto}
-.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.08);display:flex;gap:12px;align-items:center}
-.card img{width:65px;height:65px;border-radius:8px;object-fit:cover;background:#18181b}
+body{margin:0;font-family:system-ui,sans-serif;background:#ffffff;color:#000000;position:relative;min-height:100vh}
+body::before{content:"NR";position:fixed;top:52%;left:50%;transform:translate(-50%,-50%);font-size:210px;font-family:Georgia,serif;font-weight:bold;color:rgba(15,23,42,0.045);pointer-events:none;z-index:0;letter-spacing:8px}
+header{background:#ffffff;color:#000000;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #0f172a;position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:10px}
+.logo-nr{font-family:Georgia,serif;font-size:26px;font-weight:bold;color:#0f172a;border:2px solid #0f172a;padding:2px 8px;border-radius:8px;letter-spacing:2px}
+.logo-nr span{color:#000000}
+header h1{margin:0;font-size:18px;color:#000000;letter-spacing:1px}
+.btn{background:#ffffff;color:#0f172a;border:1.5px solid #0f172a;padding:7px 12px;border-radius:8px;font-weight:bold;cursor:pointer}
+.btn-navy{background:#0f172a;color:#ffffff;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;font-size:16px;margin-top:8px;cursor:pointer}
+.container{padding:16px;max-width:600px;margin:auto;position:relative;z-index:1}
+.card{background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(15,23,42,0.06);display:flex;gap:12px;align-items:center}
+.card img{width:68px;height:68px;border-radius:10px;object-fit:cover;border:1px solid #cbd5e1}
 .card-info{flex:1}
-.price{color:#16a34a;font-weight:bold;margin-top:4px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);justify-content:center;align-items:center;padding:16px;z-index:99}
-.modal-box{background:#fff;padding:20px;border-radius:14px;width:100%;max-width:380px;max-height:85vh;overflow-y:auto}
-input,select{width:100%;padding:10px;margin:6px 0 10px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;font-size:15px}
-.pay-box{background:#fef9c3;padding:10px;border-radius:8px;margin-bottom:10px;border:1px solid #eab308;font-size:14px}
-.fab{position:fixed;bottom:20px;left:20px;background:#18181b;color:#eab308;border:2px solid #eab308;padding:14px 20px;border-radius:30px;font-weight:bold;display:none}
+.card-info b{color:#000000;font-size:16px}
+.price{color:#0f172a;font-weight:bold;margin-top:5px;font-size:15px}
+.modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.6);justify-content:center;align-items:center;padding:16px;z-index:99}
+.modal-box{background:#ffffff;color:#000000;padding:20px;border-radius:16px;width:100%;max-width:380px;max-height:85vh;overflow-y:auto;border:2px solid #0f172a}
+input,select{width:100%;padding:10px;margin:6px 0 10px;border:1.5px solid #cbd5e1;border-radius:8px;box-sizing:border-box;font-size:15px;color:#000000}
+.pay-box{background:#f1f5f9;padding:10px;border-radius:8px;margin-bottom:10px;border-right:4px solid #0f172a;font-size:14px;color:#000000}
+.fab{position:fixed;bottom:20px;left:20px;background:#0f172a;color:#ffffff;border:none;padding:14px 22px;border-radius:30px;font-weight:bold;display:none;box-shadow:0 6px 16px rgba(15,23,42,0.25);z-index:20}
 </style>
 </head>
 <body>
 <header>
-  <h1>NSK STORE</h1>
+  <div class="brand"><div class="logo-nr">N<span>R</span></div><h1>NSK STORE</h1></div>
   <div id="adminControls"><button class="btn" onclick="openModal('loginModal')">دخول المالك</button></div>
 </header>
-<div class="container" id="productsList"><p style="text-align:center;color:#666">جاري تحميل المنتجات...</p></div>
+<div class="container" id="productsList"><p style="text-align:center;color:#0f172a">جاري تحميل المنتجات...</p></div>
 <button class="fab" id="addBtn" onclick="openModal('productModal')">+ إضافة منتج</button>
 
 <div class="modal" id="loginModal"><div class="modal-box">
-  <h3>دخول المالك</h3>
-  <input type="password" id="adminPass" placeholder="اكتب كلمة المرور (123456)">
-  <button class="btn-gold" onclick="loginAdmin()">دخول</button>
+  <h3>دخول المالك - NR</h3>
+  <input type="password" id="adminPass" placeholder="اكتب كلمة المرور">
+  <button class="btn-navy" onclick="loginAdmin()">دخول</button>
   <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('loginModal')">إلغاء</button>
 </div></div>
 
@@ -43,7 +50,7 @@ input,select{width:100%;padding:10px;margin:6px 0 10px;border:1px solid #ccc;bor
   <input type="text" id="pPrice" placeholder="السعر (مثال: 1500 جنيه)">
   <input type="text" id="pDesc" placeholder="وصف المنتج">
   <input type="text" id="pImg" placeholder="رابط صورة المنتج (اختياري)">
-  <button class="btn-gold" onclick="saveProduct()">حفظ المنتج</button>
+  <button class="btn-navy" onclick="saveProduct()">حفظ المنتج</button>
   <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('productModal')">إلغاء</button>
 </div></div>
 
@@ -51,7 +58,7 @@ input,select{width:100%;padding:10px;margin:6px 0 10px;border:1px solid #ccc;bor
   <h3>حسابات الدفع</h3>
   <input type="text" id="setBankak" placeholder="رقم حساب بنكك والاسم">
   <input type="text" id="setVodafone" placeholder="رقم فودافون كاش / إنستا باي">
-  <button class="btn-gold" onclick="saveSettings()">حفظ</button>
+  <button class="btn-navy" onclick="saveSettings()">حفظ</button>
   <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('settingsModal')">إلغاء</button>
 </div></div>
 
@@ -66,7 +73,7 @@ input,select{width:100%;padding:10px;margin:6px 0 10px;border:1px solid #ccc;bor
   </select>
   <div id="payDetails" class="pay-box"></div>
   <input type="text" id="txRef" placeholder="رقم العملية / المرجع">
-  <button class="btn-gold" onclick="submitOrder()">تأكيد الطلب</button>
+  <button class="btn-navy" onclick="submitOrder()">تأكيد الطلب</button>
   <button class="btn" style="width:100%;margin-top:8px" onclick="closeModal('orderModal')">إلغاء</button>
 </div></div>
 
@@ -136,14 +143,14 @@ async function submitOrder(){
 async function openOrders(){
   openModal('ordersViewModal');document.getElementById('ordersList').innerHTML='جاري التحميل...';
   const d=await(await fetch(`${DB}/orders`)).json();let h='';
-  if(d.documents)d.documents.forEach(x=>{const f=x.fields||{};h+=`<div style="border-bottom:1px solid #eee;padding:8px 0"><b>${f.product?.stringValue||''}</b> (${f.price?.stringValue||''})<br>العميل: ${f.customer?.stringValue||''} - ${f.phone?.stringValue||''}<br>الدفع: ${f.method?.stringValue||''} | المرجع: ${f.ref?.stringValue||'-'}</div>`;});
+  if(d.documents)d.documents.forEach(x=>{const f=x.fields||{};h+=`<div style="border-bottom:1px solid #e2e8f0;padding:8px 0"><b>${f.product?.stringValue||''}</b> (${f.price?.stringValue||''})<br>العميل: ${f.customer?.stringValue||''} - ${f.phone?.stringValue||''}<br>الدفع: ${f.method?.stringValue||''} | المرجع: ${f.ref?.stringValue||'-'}</div>`;});
   document.getElementById('ordersList').innerHTML=h||'لا توجد طلبات حتى الآن';
 }
 
 async function loadProducts(){
   const adm=!!tok,d=await(await fetch(`${DB}/products`)).json();let h='';
-  if(d.documents)d.documents.forEach(x=>{const f=x.fields||{},n=f.name?.stringValue||'',pr=f.price?.stringValue||'',ds=f.desc?.stringValue||'',im=f.image?.stringValue||'';const img=im?`<img src="${im}">`:`<img src="https://placeholder.com">`;const btn=adm?`<button class="btn" style="background:#dc2626;color:#fff;border:none" onclick="deleteProduct('${x.name}')">حذف</button>`:`<button class="btn" onclick="openOrder('${n}','${pr}')">اطلب</button>`;h+=`<div class="card">${img}<div class="card-info"><b>${n}</b><div style="font-size:13px;color:#666">${ds}</div><div class="price">${pr}</div></div>${btn}</div>`;});
-  document.getElementById('productsList').innerHTML=h||'<p style="text-align:center;color:#666">لا توجد منتجات مضافة حالياً في متجر NSK</p>';
+  if(d.documents)d.documents.forEach(x=>{const f=x.fields||{},n=f.name?.stringValue||'',pr=f.price?.stringValue||'',ds=f.desc?.stringValue||'',im=f.image?.stringValue||'';const img=im?`<img src="${im}">`:`<img src="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><text y='68' x='12' font-size='52' font-family='Georgia,serif' font-weight='bold' fill='%230f172a'>N</text><text y='68' x='48' font-size='52' font-family='Georgia,serif' font-weight='bold' fill='%23000000'>R</text></svg>">`;const btn=adm?`<button class="btn" style="background:#dc2626;color:#fff;border:none" onclick="deleteProduct('${x.name}')">حذف</button>`:`<button class="btn" style="background:#0f172a;color:#fff" onclick="openOrder('${n}','${pr}')">اطلب</button>`;h+=`<div class="card">${img}<div class="card-info"><b>${n}</b><div style="font-size:13px;color:#334155">${ds}</div><div class="price">${pr}</div></div>${btn}</div>`;});
+  document.getElementById('productsList').innerHTML=h||'<p style="text-align:center;color:#0f172a">لا توجد منتجات مضافة حالياً</p>';
 }
 updateUI();
 </script>
