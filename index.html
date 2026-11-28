@@ -1,204 +1,231 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NSK STORE</title>
-    <style>
-        * { box-sizing: border-box; font-family: Tahoma, Arial, sans-serif; margin: 0; padding: 0; }
-        body { background-color: #07090e; color: #ffffff; }
-        header {
-            background: #0d111a; border-bottom: 2px solid #0066ff; padding: 15px 20px;
-            display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100;
-        }
-        .brand { font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #ffffff; cursor: pointer; user-select: none; }
-        .brand span { color: #00a3ff; }
-        .cart-btn {
-            background: #0066ff; border: none; color: white; padding: 8px 15px;
-            border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px;
-        }
-        .container { max-width: 850px; margin: 20px auto; padding: 0 15px; }
-        .panel-box {
-            background: #111622; border: 1px solid #0066ff; padding: 20px;
-            border-radius: 14px; margin-bottom: 25px;
-        }
-        .form-input {
-            width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px;
-            border: 1px solid #2a3447; background: #07090e; color: white; font-size: 14px;
-        }
-        .btn { border: none; padding: 12px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; }
-        .btn-blue { background: #0066ff; color: white; width: 100%; }
-        .btn-green { background: #10b981; color: white; }
-        .btn-red { background: #ef4444; color: white; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
-        .card {
-            background: #ffffff; color: #0f172a; border-radius: 14px;
-            overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,0.6); display: flex; flex-direction: column;
-        }
-        .card img { width: 100%; height: 200px; object-fit: cover; background: #e2e8f0; }
-        .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-title { font-size: 18px; font-weight: bold; margin-bottom: 6px; }
-        .card-price { font-size: 17px; font-weight: bold; color: #0066ff; margin: 10px 0; }
-        .modal {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
-            z-index: 200; justify-content: center; align-items: center; padding: 15px;
-        }
-        .modal-content {
-            background: #ffffff; color: #0f172a; padding: 20px; border-radius: 16px;
-            width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto;
-        }
-        .bank-info {
-            background: #eff6ff; border-right: 4px solid #0066ff; padding: 12px;
-            border-radius: 8px; margin: 12px 0; font-size: 14px; line-height: 1.8;
-        }
-        .status-box { padding: 15px; border-radius: 10px; text-align: center; margin-top: 12px; font-weight: bold; line-height: 1.6; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NSK STORE</title>
+<style>
+*{box-sizing:border-box;font-family:Tahoma,sans-serif;margin:0;padding:0}
+body{background:#07090e;color:#fff}
+header{background:#0d111a;border-bottom:2px solid #0066ff;padding:15px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:22px;font-weight:bold;cursor:pointer;user-select:none}
+.brand span{color:#00a3ff}
+.cart-btn{background:#0066ff;border:none;color:#fff;padding:8px 14px;border-radius:20px;font-weight:bold}
+.container{max-width:800px;margin:15px auto;padding:0 12px}
+.box{background:#111622;border:1px solid #0066ff;padding:15px;border-radius:12px;margin-bottom:20px}
+input,textarea{width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #334155;background:#07090e;color:#fff}
+.btn{border:none;padding:11px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer}
+.blue{background:#0066ff;color:#fff}
+.green{background:#10b981;color:#fff}
+.red{background:#ef4444;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
+.card{background:#fff;color:#0f172a;border-radius:12px;overflow:hidden}
+.card img{width:100%;height:180px;object-fit:cover}
+.card-b{padding:12px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:99;justify-content:center;align-items:center;padding:12px}
+.m-box{background:#fff;color:#000;padding:18px;border-radius:14px;width:100%;max-width:420px;max-height:90vh;overflow-y:auto}
+.m-box input{background:#f1f5f9;color:#000;border:1px solid #cbd5e1}
+.bank{background:#eff6ff;border-right:4px solid #0066ff;padding:10px;margin:10px 0;font-size:14px}
+</style>
 </head>
 <body>
-
 <header>
-    <button class="cart-btn" onclick="openCart()">🛒 السلة (<span id="cartCount">0</span>)</button>
-    <div id="headerNote" style="font-size:12px; color:#94a3b8;"></div>
-    <div class="brand" onclick="handleSecretTap()"><span>NSK</span> STORE</div>
+<button class="cart-btn" onclick="openCart()">🛒 السلة (<span id="cCount">0</span>)</button>
+<div id="topTxt" style="font-size:12px;color:#94a3b8"></div>
+<div class="brand" onclick="tapLogo()"><span>NSK</span> STORE</div>
 </header>
 
 <div class="container">
-    <div id="adminPanel" class="panel-box" style="display:none;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h3 style="color:#00a3ff;">لوحة تحكم المالك (NSK)</h3>
-            <button class="btn" style="background:#334155; color:white; padding:6px 12px;" onclick="closeAdmin()">إغلاق</button>
-        </div>
+<div id="adminBox" class="box" style="display:none">
+<div style="display:flex;justify-content:space-between;margin-bottom:12px">
+<h3 style="color:#00a3ff">لوحة المالك NSK</h3>
+<button onclick="closeAdmin()" style="background:#334155;color:#fff;border:none;padding:5px 10px;border-radius:6px">إغلاق</button>
+</div>
+<input id="sNote" placeholder="النص العلوي بجانب الشعار">
+<input id="sName" placeholder="اسمك في بنكك">
+<input id="sAcc" placeholder="رقم حساب بنكك">
+<input id="sWhats" placeholder="رقم واتسابك (مثال: 249912345678)">
+<button class="btn blue" onclick="saveSet()" style="margin-bottom:15px">حفظ الإعدادات</button>
 
-        <p style="font-size:13px; color:#94a3b8; margin-bottom:8px;">إعدادات الحساب والواتساب:</p>
-        <input type="text" id="setNote" class="form-input" placeholder="النص العلوي بجانب الشعار">
-        <input type="text" id="setBankName" class="form-input" placeholder="اسمك الكامل في تطبيق بنكك">
-        <input type="text" id="setBankAcc" class="form-input" placeholder="رقم حسابك في بنكك">
-        <input type="text" id="setWhats" class="form-input" placeholder="رقم الواتساب الخاص بك (مثال: 249912345678)">
-        <button class="btn btn-blue" style="margin-bottom:20px;" onclick="saveSettings()">حفظ الإعدادات</button>
+<h4 style="color:#00a3ff;margin-bottom:8px">إضافة منتج جديد:</h4>
+<input id="pName" placeholder="اسم المنتج">
+<input id="pPrice" type="number" placeholder="السعر بالأرقام">
+<textarea id="pDesc" rows="2" placeholder="وصف المنتج"></textarea>
+<input id="pImg" type="file" accept="image/*">
+<button class="btn blue" id="pubBtn" onclick="addProd()">نشر المنتج</button>
 
-        <hr style="border-color:#1e293b; margin-bottom:20px;">
-        <h4 style="color:#00a3ff; margin-bottom:10px;">إضافة منتج جديد:</h4>
-        <input type="text" id="pName" class="form-input" placeholder="اسم المنتج">
-        <input type="number" id="pPrice" class="form-input" placeholder="السعر بالأرقام (مثال: 15000)">
-        <textarea id="pDesc" class="form-input" rows="2" placeholder="وصف المنتج"></textarea>
-        <label style="font-size:13px; color:#cbd5e1; display:block; margin-bottom:6px;">اختر صورة المنتج:</label>
-        <input type="file" id="pImage" class="form-input" accept="image/*">
-        <button class="btn btn-blue" id="publishBtn" onclick="addProduct()">نشر المنتج الآن</button>
+<h4 style="color:#fbbf24;margin:15px 0 8px">طلبات الدفع للمراجعة:</h4>
+<div id="ordersDiv"></div>
+</div>
 
-        <hr style="border-color:#1e293b; margin:20px 0;">
-        <h4 style="color:#fbbf24; margin-bottom:10px;">مراجعة إشعارات الدفع:</h4>
-        <div id="adminOrdersList"></div>
-    </div>
-
-    <div id="productsGrid" class="products-grid"></div>
+<div id="grid" class="grid"></div>
 </div>
 
 <div id="cartModal" class="modal">
-    <div class="modal-content">
-        <h3 style="margin-bottom:10px;">سلة المشتريات والدفع</h3>
-        <div id="cartItems" style="margin-bottom:10px; font-size:14px;"></div>
-        <div style="font-weight:bold; font-size:16px; color:#0066ff; margin-bottom:12px;">
-            المبلغ المطلوب من السلة: <span id="cartTotal">0</span> ج.س
-        </div>
-
-        <div id="checkoutStep1">
-            <div class="bank-info">
-                <strong>يرجى الدفع عبر تطبيق بنكك:</strong><br>
-                الاسم: <span id="dispBankName" style="font-weight:bold;"></span><br>
-                رقم الحساب: <span id="dispBankAcc" style="font-weight:bold; color:#0066ff; font-size:16px;"></span>
-            </div>
-            <input type="text" id="custName" placeholder="اكتب اسمك الكامل" style="width:100%; padding:10px; margin-bottom:8px; border:1px solid #ccc; border-radius:8px;">
-            <label style="font-size:13px; font-weight:bold; display:block; margin-bottom:5px;">ضع صورة الإشعار هنا:</label>
-            <input type="file" id="receiptImg" accept="image/*" style="width:100%; margin-bottom:12px;">
-            <button class="btn btn-blue" id="sendReceiptBtn" onclick="submitReceipt()">إرسال الإشعار</button>
-        </div>
-
-        <div id="checkoutStatus" style="display:none;"></div>
-
-        <button class="btn btn-red" style="width:100%; margin-top:10px;" onclick="closeCart()">إغلاق</button>
-    </div>
+<div class="m-box">
+<h3>سلة المشتريات</h3>
+<div id="cItems" style="margin:8px 0;font-size:14px"></div>
+<p style="font-weight:bold;color:#0066ff;margin-bottom:10px">المطلوب من السلة: <span id="cTotal">0</span> ج.س</p>
+<div id="step1">
+<div class="bank">
+<b>الدفع عبر تطبيق بنكك:</b><br>
+الاسم: <span id="bName"></span><br>
+رقم الحساب: <span id="bAcc" style="color:#0066ff;font-weight:bold"></span>
 </div>
-
+<input id="uName" placeholder="اسمك الكامل">
+<label style="font-size:13px;font-weight:bold">صورة إشعار التحويل:</label>
+<input id="uImg" type="file" accept="image/*">
+<button class="btn blue" id="sendBtn" onclick="sendOrder()">إرسال الإشعار</button>
+</div>
+<div id="step2" style="display:none;text-align:center;padding:12px;border-radius:10px;font-weight:bold"></div>
+<button class="btn red" onclick="closeCart()" style="margin-top:10px">إغلاق</button>
+</div>
+</div>
 <script>
-    const OWNER_PASS = "69866986";
-    let isAdmin = false;
-    let tapCount = 0;
-    let tapTimer = null;
+const PASS="69866986";
+let admin=false,taps=0,tTimer=null,cart=[];
+let cfg=JSON.parse(localStorage.getItem("nsk_cfg")||"null")||{note:"أهلاً بكم",name:"مالك NSK",acc:"000000",whats:"249900000000"};
+let prods=JSON.parse(localStorage.getItem("nsk_prods")||"null")||[{id:1,name:"منتج تجريبي NSK",price:10000,desc:"اضغط 5 مرات على NSK STORE للدخول كمالك",img:"https://placeholder.com"}];
 
-    let settings = JSON.parse(localStorage.getItem('nsk_settings')) || {
-        note: "أهلاً بكم في NSK",
-        bankName: "صاحب متجر NSK",
-        bankAcc: "0000000",
-        whats: "249900000000"
-    };
+function start(){
+document.getElementById("topTxt").innerText=cfg.note;
+document.getElementById("sNote").value=cfg.note;
+document.getElementById("sName").value=cfg.name;
+document.getElementById("sAcc").value=cfg.acc;
+document.getElementById("sWhats").value=cfg.whats;
+showProds();showOrders();
+}
 
-    let products = JSON.parse(localStorage.getItem('nsk_products')) || [
-        {
-            id: 1,
-            name: "منتج تجريبي NSK",
-            price: 15000,
-            desc: "اضغط 5 مرات على شعار NSK في الأعلى للدخول كمالك وإضافة منتجاتك.",
-            image: "https://placeholder.com"
-        }
-    ];
-    let cart = [];
+function tapLogo(){
+if(admin)return;
+taps++;clearTimeout(tTimer);
+tTimer=setTimeout(()=>taps=0,2500);
+if(taps>=5){
+taps=0;
+if(prompt("باسوورد المالك:")===PASS){
+admin=true;document.getElementById("adminBox").style.display="block";showProds();showOrders();
+}else alert("خطأ");
+}
+}
 
-    function init() {
-        document.getElementById('headerNote').innerText = settings.note;
-        document.getElementById('setNote').value = settings.note;
-        document.getElementById('setBankName').value = settings.bankName;
-        document.getElementById('setBankAcc').value = settings.bankAcc;
-        document.getElementById('setWhats').value = settings.whats;
-        renderProducts();
-        renderAdminOrders();
-    }
+function closeAdmin(){admin=false;document.getElementById("adminBox").style.display="none";showProds()}
 
-    function handleSecretTap() {
-        if (isAdmin) return;
-        tapCount++;
-        clearTimeout(tapTimer);
-        tapTimer = setTimeout(() => { tapCount = 0; }, 2500);
-        if (tapCount >= 5) {
-            tapCount = 0;
-            const pass = prompt("أدخل باسوورد المالك:");
-            if (pass === OWNER_PASS) {
-                isAdmin = true;
-                document.getElementById('adminPanel').style.display = 'block';
-                renderProducts();
-                renderAdminOrders();
-            } else if (pass !== null) {
-                alert("الباسوورد غير صحيح!");
-            }
-        }
-    }
+function saveSet(){
+cfg={note:document.getElementById("sNote").value,name:document.getElementById("sName").value,acc:document.getElementById("sAcc").value,whats:document.getElementById("sWhats").value};
+localStorage.setItem("nsk_cfg",JSON.stringify(cfg));
+document.getElementById("topTxt").innerText=cfg.note;
+alert("تم الحفظ");
+}
 
-    function closeAdmin() {
-        isAdmin = false;
-        document.getElementById('adminPanel').style.display = 'none';
-        renderProducts();
-    }
+function shrink(file,cb){
+const r=new FileReader();
+r.onload=e=>{
+const i=new Image();
+i.onload=()=>{
+const c=document.createElement("canvas"),w=400;
+c.width=w;c.height=i.height*(w/i.width);
+c.getContext("2d").drawImage(i,0,0,c.width,c.height);
+cb(c.toDataURL("image/jpeg",0.7));
+};i.src=e.target.result;
+};r.readAsDataURL(file);
+}
 
-    function saveSettings() {
-        settings.note = document.getElementById('setNote').value;
-        settings.bankName = document.getElementById('setBankName').value;
-        settings.bankAcc = document.getElementById('setBankAcc').value;
-        settings.whats = document.getElementById('setWhats').value;
-        localStorage.setItem('nsk_settings', JSON.stringify(settings));
-        document.getElementById('headerNote').innerText = settings.note;
-        alert("تم حفظ الإعدادات بنجاح!");
-    }
+function addProd(){
+const n=document.getElementById("pName").value,p=document.getElementById("pPrice").value,d=document.getElementById("pDesc").value,f=document.getElementById("pImg");
+if(!n||!p||!f.files)return alert("أكمل البيانات والصورة");
+const b=document.getElementById("pubBtn");b.innerText="جاري النشر...";b.disabled=true;
+shrink(f.files,b64=>{
+prods.unshift({id:Date.now(),name:n,price:Number(p),desc:d,img:b64});
+localStorage.setItem("nsk_prods",JSON.stringify(prods));
+showProds();
+document.getElementById("pName").value="";document.getElementById("pPrice").value="";document.getElementById("pDesc").value="";f.value="";
+b.innerText="نشر المنتج";b.disabled=false;
+alert("تم النشر بنجاح!");
+});
+}
 
-    function compressImage(file, callback) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const img = new Image();
-            img.onload = function() {
-                const canvas = document.createElement('canvas');
-                const maxW = 450;
-                const scale = maxW / img.width;
-                canvas.width = maxW;
-                canvas.height = img.height * scale;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                callback(canvas.toDataURL('image/jpeg', 0.7));
-            };
+function delProd(id){
+if(confirm("حذف؟")){prods=prods.filter(x=>x.id!==id);localStorage.setItem("nsk_prods",JSON.stringify(prods));showProds()}
+}
+
+function showProds(){
+document.getElementById("grid").innerHTML=prods.map(p=>`
+<div class="card">
+<img src="${p.img}">
+<div class="card-b">
+<h4>${p.name}</h4>
+<p style="font-size:13px;color:#555;margin:5px 0">${p.desc}</p>
+<p style="color:#0066ff;font-weight:bold;margin-bottom:8px">${p.price} ج.س</p>
+<button class="btn blue" onclick="toCart(${p.id})">شراء</button>
+${admin?`<button class="btn red" style="margin-top:5px" onclick="delProd(${p.id})">حذف</button>`:""}
+</div>
+</div>`).join("");
+}
+
+function toCart(id){
+const x=prods.find(p=>p.id===id);
+if(x){cart.push(x);document.getElementById("cCount").innerText=cart.length;openCart()}
+}
+
+function openCart(){
+document.getElementById("bName").innerText=cfg.name;
+document.getElementById("bAcc").innerText=cfg.acc;
+let tot=0;
+document.getElementById("cItems").innerHTML=cart.map(i=>{tot+=i.price;return`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #eee"><span>${i.name}</span><span>${i.price}</span></div>`}).join("");
+document.getElementById("cTotal").innerText=tot;
+checkView();
+document.getElementById("cartModal").style.display="flex";
+}
+
+function closeCart(){document.getElementById("cartModal").style.display="none"}
+
+function sendOrder(){
+const u=document.getElementById("uName").value,f=document.getElementById("uImg"),tot=document.getElementById("cTotal").innerText;
+if(!cart.length||!u||!f.files)return alert("أكمل الاسم وصورة الإشعار");
+shrink(f.files,b64=>{
+const ord={user:u,tot:tot,items:cart.map(x=>x.name).join("+"),img:b64,st:"wait"};
+localStorage.setItem("nsk_ord",JSON.stringify(ord));
+checkView();showOrders();
+window.open(`https://wa.me{cfg.whats}?text=*Snk*%0Aهنا من دفع المال، راجع الطلب:%0Aالعميل: ${u}%0Aالمبلغ: ${tot} ج.س`,"_blank");
+});
+}
+
+function checkView(){
+const o=JSON.parse(localStorage.getItem("nsk_ord")||"null"),s1=document.getElementById("step1"),s2=document.getElementById("step2");
+if(!o){s1.style.display="block";s2.style.display="none";return}
+s1.style.display="none";s2.style.display="block";
+if(o.st==="wait"){s2.style.background="#fef3c7";s2.style.color="#92400e";s2.innerHTML="⏳ يتم مراجعة طلبك..."}
+else if(o.st==="ok"){s2.style.background="#d1fae5";s2.style.color="#065f46";s2.innerHTML=`✅ يتم إتمام طلبك الآن!<br><button class="btn green" style="margin-top:8px" onclick="sendLoc()">📍 تحديد موقع التسليم وإرساله واتساب</button>`}
+else{s2.style.background="#fee2e2";s2.style.color="#991b1b";s2.innerHTML=`❌ لم يتم إتمام طلبك<br><button class="btn blue" style="margin-top:8px" onclick="localStorage.removeItem('nsk_ord');checkView()">إعادة</button>`}
+}
+
+function showOrders(){
+const o=JSON.parse(localStorage.getItem("nsk_ord")||"null"),d=document.getElementById("ordersDiv");
+if(!o){d.innerHTML="<p style='font-size:13px;color:#888'>لا توجد طلبات</p>";return}
+d.innerHTML=`<div style="background:#07090e;padding:10px;border-radius:8px;border:1px solid #334155">
+<p>${o.user} - ${o.tot} ج.س</p>
+<img src="${o.img}" style="width:100%;max-height:180px;object-fit:contain;margin:8px 0;background:#fff">
+<div style="display:flex;gap:8px">
+<button class="btn green" onclick="setOrd('ok')">إشعار صحيح</button>
+<button class="btn red" onclick="setOrd('no')">إشعار غير صحيح</button>
+</div></div>`;
+}
+
+function setOrd(s){
+const o=JSON.parse(localStorage.getItem("nsk_ord"));
+if(o){o.st=s;localStorage.setItem("nsk_ord",JSON.stringify(o));showOrders();alert("تم الرد على العميل")}
+}
+
+function sendLoc(){
+const o=JSON.parse(localStorage.getItem("nsk_ord"));
+navigator.geolocation.getCurrentPosition(p=>{
+const url=`https://google.com{p.coords.latitude},${p.coords.longitude}`;
+window.open(`https://wa.me{cfg.whats}?text=*Snk*%0Aالعميل: ${o.user}%0Aالمبلغ المطلوب من السلة: ${o.tot} ج.س%0Aموقع التسليم:%0A${url}`,"_blank");
+localStorage.removeItem("nsk_ord");cart=[];document.getElementById("cCount").innerText="0";closeCart();
+},()=>alert("فعّل GPS في الهاتف"));
+}
+
+start();
+</script>
+</body>
+</html>
