@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NSK STORE</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
@@ -31,12 +31,18 @@
             top: 0;
             z-index: 100;
         }
+        /* الشعار المخفي تماماً بدون أي وميض أو تأثير لمس */
         .brand-logo {
             font-size: 26px;
             font-weight: 900;
             letter-spacing: 2px;
             user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
             cursor: default;
+            outline: none;
             direction: ltr;
         }
         .brand-logo .white-part { color: #ffffff; }
@@ -49,7 +55,7 @@
 
         .container { max-width: 1100px; margin: 25px auto; padding: 0 15px; }
 
-        /* لوحة تحكم المالك (مطابقة للصورة) */
+        /* لوحة تحكم المالك */
         .admin-panel {
             display: none;
             background: var(--card-dark);
@@ -223,7 +229,7 @@
 </header>
 
 <div class="container">
-    <!-- لوحة تحكم المالك (تفتح بعد 20 ضغطة على الشعار + الباسورد) -->
+    <!-- لوحة تحكم المالك -->
     <div id="adminPanel" class="admin-panel">
         <div class="admin-header">
             <h2>لوحة تحكم المالك (NSK Admin)</h2>
@@ -270,7 +276,6 @@
 </div>
 
 <script>
-    // البيانات الأساسية
     let isAdmin = false;
     let adminPass = localStorage.getItem('nsk_pass') || '69866986';
     let whatsappNum = localStorage.getItem('nsk_whatsapp') || '249900000000';
@@ -287,33 +292,34 @@
     ];
 
     document.getElementById('headerNote').textContent = headerNote;
-
-    // البوابة السرية (20 ضغطة على STORE NSK)
     let clickCount = 0;
-    let clickTimer = null;
+    let lastClickTime = 0;
+    const secretLogo = document.querySelector('.brand-logo');
 
-    function handleSecretClick() {
+    secretLogo.addEventListener('pointerdown', function() {
         if (isAdmin) {
             document.getElementById('adminPanel').style.display = 'block';
             return;
         }
+        const now = Date.now();
+        if (now - lastClickTime > 5000) { clickCount = 0; }
+        lastClickTime = now;
         clickCount++;
-        clearTimeout(clickTimer);
-        clickTimer = setTimeout(() => { clickCount = 0; }, 3500);
-        clickTimer = setTimeout(() => { clickCount = 0; }, 3500);
 
-        if (clickCount >= 20) {
+        if (clickCount === 20) {
             clickCount = 0;
-            let pass = prompt('أدخل كلمة المرور:');
-            if (pass === adminPass) {
-                isAdmin = true;
-                document.getElementById('adminPanel').style.display = 'block';
-                document.getElementById('whatsappNumberInput').value = whatsappNum;
-                document.getElementById('headerNoteInput').value = headerNote;
-                renderProducts();
-            }
+            setTimeout(() => {
+                let pass = prompt('أدخل كلمة المرور:');
+                if (pass === adminPass) {
+                    isAdmin = true;
+                    document.getElementById('adminPanel').style.display = 'block';
+                    document.getElementById('whatsappNumberInput').value = whatsappNum;
+                    document.getElementById('headerNoteInput').value = headerNote;
+                    renderProducts();
+                }
+            }, 50);
         }
-    }
+    });
 
     function logoutAdmin() {
         isAdmin = false;
@@ -321,7 +327,6 @@
         renderProducts();
     }
 
-    // حفظ الإعدادات
     function saveSettings() {
         let newNum = document.getElementById('whatsappNumberInput').value.trim();
         let newNote = document.getElementById('headerNoteInput').value.trim();
@@ -340,12 +345,9 @@
             localStorage.setItem('nsk_pass', adminPass);
             document.getElementById('newPasswordInput').value = '';
         }
-
         alert('تم حفظ البيانات بنجاح!');
         renderProducts();
     }
-
-    // إضافة منتج
     function addProduct() {
         let name = document.getElementById('pName').value.trim();
         let price = document.getElementById('pPrice').value.trim();
@@ -357,12 +359,12 @@
             return;
         }
 
-        if (fileInput.files && fileInput.files[0]) {
+        if (fileInput.files && fileInput.files) {
             let reader = new FileReader();
             reader.onload = function(e) {
                 saveProductData(name, price, desc, e.target.result);
             };
-            reader.readAsDataURL(fileInput.files[0]);
+            reader.readAsDataURL(fileInput.files);
         } else {
             saveProductData(name, price, desc, 'https://placeholder.com');
         }
@@ -381,7 +383,6 @@
         alert('تم نشر المنتج!');
     }
 
-    // حذف منتج
     function deleteProduct(id) {
         if (confirm('حذف هذا المنتج نهائياً؟')) {
             products = products.filter(p => p.id !== id);
@@ -390,7 +391,6 @@
         }
     }
 
-    // عرض المنتجات
     function renderProducts() {
         let list = document.getElementById('productsList');
         list.innerHTML = '';
@@ -398,11 +398,7 @@
         products.forEach(p => {
             let msg = encodeURIComponent(`مرحباً متجر NSK، أرغب في طلب:\n• المنتج: ${p.name}\n• السعر: ${p.price}`);
             let waLink = `https://wa.me{whatsappNum}?text=${msg}`;
-
-            let adminHtml = isAdmin ? `
-                <div class="admin-actions">
-                    <button class="delete-btn" onclick="deleteProduct(${p.id})">🗑️ حذف المنتج</button>
-                </div>` : '';
+            let adminHtml = isAdmin ? `<div class="admin-actions"><button class="delete-btn" onclick="deleteProduct(${p.id})">🗑️ حذف المنتج</button></div>` : '';
 
             list.innerHTML += `
                 <div class="product-card">
@@ -421,6 +417,5 @@
 
     renderProducts();
 </script>
-
 </body>
 </html>
