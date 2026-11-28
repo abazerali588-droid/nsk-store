@@ -1,230 +1,426 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NSK | الفخامة في التسوق</title>
-<link href="https://googleapis.com" rel="stylesheet">
-<style>
-:root{--bg-black:#07090e;--surface-dark:#111622;--card-white:#ffffff;--royal-blue:#0066ff;--glow-blue:#00a3ff;--text-dark:#0f172a;--text-muted:#64748b}
-*{box-sizing:border-box;font-family:'Cairo',sans-serif;margin:0;padding:0}
-body{background-color:var(--bg-black);color:var(--card-white);overflow-x:hidden;padding-bottom:80px}
-header{background:rgba(7,9,14,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,102,255,0.3);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
-.brand{font-size:26px;font-weight:900;letter-spacing:2px;color:var(--card-white);cursor:pointer;user-select:none;display:flex;align-items:center;gap:8px}
-.brand span{background:linear-gradient(135deg,var(--royal-blue),var(--glow-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.top-note{color:var(--glow-blue);font-size:13px;font-weight:700;user-select:none;margin-right:10px}
-.cart-btn{background:rgba(0,102,255,0.15);border:1px solid var(--royal-blue);color:var(--glow-blue);padding:7px 14px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;position:relative}
-.badge{background:#e11d48;color:white;font-size:11px;padding:1px 6px;border-radius:10px;margin-right:4px}
-.hero{background:radial-gradient(circle at top center,rgba(0,102,255,0.25) 0%,var(--bg-black) 70%);text-align:center;padding:40px 20px 25px;border-bottom:1px solid rgba(255,255,255,0.05)}
-.hero h1{font-size:30px;font-weight:900;margin-bottom:10px}
-.hero h1 span{color:var(--glow-blue)}
-.hero p{color:#94a3b8;font-size:14px;max-width:500px;margin:0 auto 20px}
-.search-box{max-width:500px;margin:0 auto}
-.search-box input{width:100%;padding:13px 20px;border-radius:30px;border:1px solid rgba(0,102,255,0.4);background:var(--surface-dark);color:white;font-size:14px;outline:none}
-.container{max-width:1000px;margin:25px auto;padding:0 20px}
-#owner-panel{display:none;background:linear-gradient(145deg,#111622,#0a0d14);border:1px solid var(--royal-blue);box-shadow:0 10px 30px rgba(0,102,255,0.2);padding:20px;border-radius:16px;margin-bottom:30px}
-.owner-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-.owner-header h3{color:var(--glow-blue);font-size:18px}
-.form-input{width:100%;padding:11px 14px;margin-bottom:12px;border-radius:10px;border:1px solid #2a3447;background:#07090e;color:white;font-size:14px}
-.btn{border:none;padding:11px 18px;border-radius:10px;cursor:pointer;font-weight:700;font-size:14px}
-.btn-luxury{background:linear-gradient(135deg,var(--royal-blue),#0044cc);color:white;width:100%}
-.btn-edit{background:#0284c7;color:white;padding:7px 12px;font-size:13px;border-radius:8px;border:none;cursor:pointer}
-.btn-del{background:#dc2626;color:white;padding:7px 12px;font-size:13px;border-radius:8px;border:none;cursor:pointer;margin-right:5px}
-.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
-.card{background:var(--card-white);color:var(--text-dark);border-radius:18px;overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,0.6);display:flex;flex-direction:column}
-.card-img-wrap{position:relative;width:100%;height:220px;background:#f1f5f9}
-.card-img-wrap img{width:100%;height:100%;object-fit:cover}
-.next-img{position:absolute;top:50%;left:10px;transform:translateY(-50%);background:rgba(0,0,0,0.6);color:white;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer}
-.price-tag{position:absolute;bottom:10px;right:10px;background:var(--bg-black);color:var(--card-white);padding:5px 12px;border-radius:20px;font-weight:800;font-size:13px;border:1px solid var(--royal-blue)}
-.card-body{padding:18px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between}
-.card-title{font-size:18px;font-weight:800;margin-bottom:6px;color:var(--bg-black)}
-.card-desc{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:15px}
-.modal{display:none;position:fixed;inset:0;background:rgba(7,9,14,0.9);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;padding:15px}
-.modal-content{background:var(--card-white);color:var(--text-dark);padding:22px;border-radius:20px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto}
-.modal-content input{width:100%;padding:11px;margin:5px 0 12px;border-radius:10px;border:1px solid #cbd5e1;background:#f8fafc;color:#0f172a;font-size:14px}
-.payment-card{background:#f0f7ff;border:1px solid #bae6fd;border-right:4px solid var(--royal-blue);padding:14px;border-radius:10px;margin:12px 0;text-align:center}
-.acc-box{font-size:20px;font-weight:900;letter-spacing:2px;background:#fff;padding:6px;border-radius:8px;border:1px dashed var(--royal-blue);margin:6px 0}
-.btn-copy{background:var(--royal-blue);color:white;padding:5px 12px;font-size:12px;border-radius:6px;border:none;cursor:pointer}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSK STORE</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #060b14;
+            --card-dark: #0c1424;
+            --input-dark: #070b12;
+            --cyan: #0ea5e9;
+            --cyan-glow: rgba(14, 165, 233, 0.25);
+            --border-color: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
+        body { background-color: var(--bg-dark); color: var(--text-main); padding-bottom: 60px; }
+
+        /* الهيدر العلوي */
+        header {
+            background: #04080f;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .brand-logo {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            user-select: none;
+            cursor: default;
+            direction: ltr;
+        }
+        .brand-logo .white-part { color: #ffffff; }
+        .brand-logo .blue-part { color: var(--cyan); }
+        
+        .header-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .container { max-width: 1100px; margin: 25px auto; padding: 0 15px; }
+
+        /* لوحة تحكم المالك (مطابقة للصورة) */
+        .admin-panel {
+            display: none;
+            background: var(--card-dark);
+            border: 1px solid #1e3a5f;
+            box-shadow: 0 0 25px var(--cyan-glow);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .admin-header h2 {
+            color: var(--cyan);
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .close-admin-btn {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .section-box {
+            background: rgba(7, 11, 18, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 18px;
+        }
+        .section-title {
+            color: var(--cyan);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+        .form-input {
+            width: 100%;
+            background: var(--input-dark);
+            border: 1px solid #1e293b;
+            color: #ffffff;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus {
+            border-color: var(--cyan);
+        }
+
+        .btn-cyan {
+            width: 100%;
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-top: 5px;
+        }
+        .btn-cyan:hover { opacity: 0.9; }
+
+        /* شبكة عرض المنتجات */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: var(--card-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--cyan);
+        }
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: #070b12;
+        }
+        .product-info { padding: 16px; }
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+        .product-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+        .product-price {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--cyan);
+            margin-bottom: 14px;
+        }
+
+        .order-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 11px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+        .order-btn:hover { box-shadow: 0 0 15px var(--cyan-glow); }
+
+        .admin-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .delete-btn {
+            flex: 1;
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 7px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
+
 <header>
-<div style="display:flex;align-items:center">
-<div class="brand" onclick="handleSecretTap()"><span>NSK</span> STORE</div>
-<span class="top-note" id="topNote"></span>
-</div>
-<button class="cart-btn" onclick="openCart()">🛒 السلة <span class="badge" id="cartCount">0</span></button>
+    <div class="header-subtitle" id="headerNote">مرحباً بك في متجرنا</div>
+    <div class="brand-logo" onclick="handleSecretClick()">
+        <span class="white-part">STORE</span> <span class="blue-part">NSK</span>
+    </div>
 </header>
 
-<section class="hero">
-<h1>اختياراتك الفاخرة في <span>NSK</span></h1>
-<p id="heroSub">تسوق أحدث المنتجات المختارة بعناية مع خيارات دفع سريعة وآمنة عبر بنكك</p>
-<div class="search-box">
-<input type="text" id="searchInput" onkeyup="renderProducts()" placeholder="ابحث عن منتج...">
-</div>
-</section>
-
 <div class="container">
-<div id="owner-panel">
-<div class="owner-header">
-<h3>لوحة تحكم المالك (NSK Admin)</h3>
-<button class="btn" style="background:#334155;color:white;padding:6px 12px;font-size:12px" onclick="logoutOwner()">إغلاق اللوحة</button>
+    <!-- لوحة تحكم المالك (تفتح بعد 20 ضغطة على الشعار + الباسورد) -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="admin-header">
+            <h2>لوحة تحكم المالك (NSK Admin)</h2>
+            <button class="close-admin-btn" onclick="logoutAdmin()">إغلاق اللوحة</button>
+        </div>
+
+        <!-- إعدادات المتجر والواتساب -->
+        <div class="section-box">
+            <span class="section-title">إعدادات المتجر والواتساب:</span>
+            <div class="form-group">
+                <input type="text" id="headerNoteInput" class="form-input" placeholder="النص العلوي بجانب الشعار (اكتب أي شيء أو اتركه فارغاً)">
+            </div>
+            <div class="form-group">
+                <input type="text" id="whatsappNumberInput" class="form-input" placeholder="رقم الواتساب مع رمز الدولة (مثال: 249900000000)">
+            </div>
+            <div class="form-group">
+                <input type="password" id="newPasswordInput" class="form-input" placeholder="تغيير كلمة مرور المالك (اتركه فارغاً لعدم التغيير)">
+            </div>
+            <button class="btn-cyan" onclick="saveSettings()">حفظ الإعدادات والواتساب</button>
+        </div>
+
+        <!-- إضافة منتج جديد -->
+        <div class="section-box" style="margin-bottom: 0;">
+            <span class="section-title">إضافة منتج جديد للمتجر:</span>
+            <div class="form-group">
+                <input type="text" id="pName" class="form-input" placeholder="اسم المنتج">
+            </div>
+            <div class="form-group">
+                <input type="text" id="pPrice" class="form-input" placeholder="السعر (مثال: 50,000 ج.س)">
+            </div>
+            <div class="form-group">
+                <textarea id="pDesc" class="form-input" rows="2" placeholder="وصف وتفاصيل المنتج..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>اختر صورة المنتج:</label>
+                <input type="file" id="pImage" class="form-input" accept="image/*">
+            </div>
+            <button class="btn-cyan" onclick="addProduct()">+ نشر المنتج في المتجر</button>
+        </div>
+    </div>
+
+    <!-- شبكة عرض المنتجات للزبائن -->
+    <div id="productsList" class="products-grid"></div>
 </div>
 
-<div style="background:rgba(0,102,255,0.1);border:1px solid rgba(0,102,255,0.3);padding:12px;border-radius:12px;margin-bottom:15px">
-<label style="font-size:12px;color:#00a3ff;display:block;margin-bottom:6px">إعدادات المتجر وبنك الخرطوم والواتساب:</label>
-<input type="text" id="setTopNote" class="form-input" placeholder="النص العلوي بجانب الشعار (اكتب أي شيء أو اتركه فارغاً)">
-<input type="text" id="setBankAcc" class="form-input" placeholder="رقم حساب بنك الخرطوم">
-<input type="text" id="setBankName" class="form-input" placeholder="الاسم المسجل في بنك الخرطوم">
-<input type="tel" id="setWhatsapp" class="form-input" placeholder="رقم الواتساب لاستقبال الطلبات (مثال: 249912345678)">
-<button class="btn" style="background:#0284c7;color:white;width:100%" onclick="saveSettings()">حفظ بيانات الدفع والواتساب</button>
-</div>
-
-<h4 style="color:#fff;margin-bottom:10px" id="formTitle">إضافة منتج جديد:</h4>
-<input type="hidden" id="editIndex">
-<input type="text" id="pName" class="form-input" placeholder="اسم المنتج الفاخر">
-<input type="number" id="pPrice" class="form-input" placeholder="السعر (أرقام فقط مثال: 25000)">
-<textarea id="pDesc" class="form-input" rows="2" placeholder="وصف المنتج ومميزاته"></textarea>
-<label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:5px">صور المنتج (يمكنك تحديد عدة صور معاً):</label>
-<input type="file" id="pImages" class="form-input" accept="image/*" multiple>
-<button class="btn btn-luxury" onclick="saveProduct()">نشر / حفظ المنتج الآن</button>
-</div>
-
-<div class="products-grid" id="products-list"></div>
-</div>
-
-<div class="modal" id="cartModal">
-<div class="modal-content">
-<h3 style="margin-bottom:10px;color:var(--bg-black)">🛒 سلة المشتريات والدفع</h3>
-<div id="cartItems"></div>
-<div style="font-size:17px;font-weight:800;color:var(--royal-blue);margin:10px 0">الإجمالي: <span id="cartTotal">0</span> جنيه</div>
-<div id="checkoutBox" style="display:none">
-<div class="payment-card">
-<div style="font-weight:800;color:var(--royal-blue)">🏦 الدفع عبر تطبيق بنكك (بنك الخرطوم)</div>
-<div class="acc-box" id="showBankAcc">0000000</div>
-<div style="font-weight:700;color:var(--bg-black);margin-bottom:6px" id="showBankName">الاسم: صاحب المتجر</div>
-<button class="btn-copy" onclick="copyAcc()">📋 نسخ رقم الحساب</button>
-<div style="font-size:11px;color:#dc2626;margin-top:6px">* يرجى إرفاق صورة إشعار التحويل في الواتساب بعد إرسال الطلب</div>
-</div>
-<input type="text" id="custName" placeholder="اسم الزبون بالكامل">
-<input type="tel" id="custPhone" placeholder="رقم هاتف الزبون">
-<input type="text" id="custAddr" placeholder="عنوان التوصيل بالتفصيل">
-</div>
-<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
-<button class="btn" style="background:#e2e8f0;color:#0f172a" onclick="closeCart()">إغلاق</button>
-<button class="btn" id="sendWaBtn" style="background:#16a34a;color:white;display:none" onclick="sendOrderWA()">📲 إرسال الطلب للواتساب</button>
-</div>
-</div>
-</div>
 <script>
-const DB="https://firebaseio.com";
-const PIN="69866986";
-let isOwner=false,cart=[],taps=0,tapTimer,slideIdx={};
-let store={topNote:"",bankAcc:"0000000",bankName:"صاحب متجر NSK",whatsapp:"249900000000",products:[{id:"1",name:"منتج NSK الملكي",price:25000,desc:"جودة عالية وتصميم حصري.",images:["https://placeholder.com"]}]};
+    // البيانات الأساسية
+    let isAdmin = false;
+    let adminPass = localStorage.getItem('nsk_pass') || '69866986';
+    let whatsappNum = localStorage.getItem('nsk_whatsapp') || '249900000000';
+    let headerNote = localStorage.getItem('nsk_note') || 'أفضل المنتجات بأفضل الأسعار';
+    
+    let products = JSON.parse(localStorage.getItem('nsk_products')) || [
+        {
+            id: 1,
+            name: 'منتج تجريبي',
+            price: '15,000 ج.س',
+            desc: 'وصف المنتج يظهر هنا للزبون بشكل واضح وأنيق.',
+            image: 'https://placeholder.com'
+        }
+    ];
 
-async function init(){
-try{let r=await fetch(DB);let d=await r.json();if(d)store=d}catch(e){}
-updateUI();
-}
-async function syncDB(){
-try{await fetch(DB,{method:'PUT',body:JSON.stringify(store)})}catch(e){alert("خطأ في المزامنة")}
-updateUI();
-}
-function updateUI(){
-document.getElementById('topNote').innerText=store.topNote||"";
-document.getElementById('owner-panel').style.display=isOwner?"block":"none";
-if(isOwner){
-document.getElementById('setTopNote').value=store.topNote||"";
-document.getElementById('setBankAcc').value=store.bankAcc||"";
-document.getElementById('setBankName').value=store.bankName||"";
-document.getElementById('setWhatsapp').value=store.whatsapp||"";
-}
-renderProducts();
-}
-function renderProducts(){
-let q=document.getElementById('searchInput').value.toLowerCase();
-let list=document.getElementById('products-list');list.innerHTML="";
-if(!store.products)store.products=[];
-store.products.forEach((p,i)=>{
-if(q&&!p.name.toLowerCase().includes(q)&&!p.desc.toLowerCase().includes(q))return;
-if(slideIdx[p.id]===undefined)slideIdx[p.id]=0;
-let imgs=(p.images&&p.images.length)?p.images:["https://placeholder.com"];
-let cur=imgs[slideIdx[p.id]%imgs.length];
-let nBtn=imgs.length>1?`<button class="next-img" onclick="nextImg('${p.id}',${imgs.length})">❮</button>`:"";
-let act=isOwner?`<button class="btn-edit" onclick="editProd(${i})">تعديل</button><button class="btn-del" onclick="delProd(${i})">حذف</button>`:`<button class="btn btn-luxury" onclick="addCart(${i})">+ أضف للسلة</button>`;
-list.innerHTML+=`<div class="card"><div class="card-img-wrap"><img src="${cur}">${nBtn}<div class="price-tag">${Number(p.price).toLocaleString()} جنيه</div></div><div class="card-body"><div><h3 class="card-title">${p.name}</h3><p class="card-desc">${p.desc}</p></div><div>${act}</div></div></div>`;
-});
-}
-function nextImg(id,len){slideIdx[id]=(slideIdx[id]+1)%len;renderProducts()}
-function handleSecretTap(){
-if(isOwner)return;
-taps++;clearTimeout(tapTimer);tapTimer=setTimeout(()=>taps=0,1500);
-if(taps>=5){taps=0;let p=prompt("أدخل الرمز:");if(p===PIN){isOwner=true;updateUI()}}
-}
-function logoutOwner(){isOwner=false;updateUI()}
-async function saveSettings(){
-store.topNote=document.getElementById('setTopNote').value;
-store.bankAcc=document.getElementById('setBankAcc').value;
-store.bankName=document.getElementById('setBankName').value;
-store.whatsapp=document.getElementById('setWhatsapp').value;
-await syncDB();alert("تم حفظ الإعدادات بنجاح");
-}
-function compress(file){
-return new Promise(res=>{
-let r=new FileReader();
-r.onload=e=>{let img=new Image();img.onload=()=>{let c=document.createElement('canvas'),w=500,s=w/img.width;c.width=w;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',0.7))};img.src=e.target.result};
-r.readAsDataURL(file);
-});
-}
-async function saveProduct(){
-let idx=document.getElementById('editIndex').value,n=document.getElementById('pName').value,pr=document.getElementById('pPrice').value,d=document.getElementById('pDesc').value,fs=document.getElementById('pImages').files;
-if(!n||!pr)return alert("أدخل اسم المنتج والسعر");
-let imgs=[];
-if(fs.length>0){for(let k=0;k<fs.length;k++)imgs.push(await compress(fs[k]))}
-else if(idx!=="")imgs=store.products[idx].images||[];
-if(idx==="")store.products.unshift({id:Date.now().toString(),name:n,price:pr,desc:d,images:imgs});
-else store.products[idx]={...store.products[idx],name:n,price:pr,desc:d,images:imgs};
-document.getElementById('editIndex').value="";document.getElementById('pName').value="";document.getElementById('pPrice').value="";document.getElementById('pDesc').value="";document.getElementById('pImages').value="";document.getElementById('formTitle').innerText="إضافة منتج جديد:";
-await syncDB();alert("تم نشر المنتج بنجاح");
-}
-function editProd(i){
-let p=store.products[i];
-document.getElementById('editIndex').value=i;document.getElementById('pName').value=p.name;document.getElementById('pPrice').value=p.price;document.getElementById('pDesc').value=p.desc;document.getElementById('formTitle').innerText="تعديل المنتج المنشور:";
-window.scrollTo({top:0,behavior:'smooth'});
-}
-async function delProd(i){if(confirm("حذف المنتج؟")){store.products.splice(i,1);await syncDB()}}
-function addCart(i){
-let p=store.products[i],ex=cart.find(x=>x.id===p.id);
-if(ex)ex.q++;else cart.push({id:p.id,name:p.name,price:Number(p.price),q:1});
-document.getElementById('cartCount').innerText=cart.reduce((s,x)=>s+x.q,0);
-alert("تمت إضافة المنتج للسلة");
-}
-function openCart(){
-let box=document.getElementById('cartItems'),chk=document.getElementById('checkoutBox'),btn=document.getElementById('sendWaBtn');
-box.innerHTML="";
-if(!cart.length){box.innerHTML="<p style='text-align:center;color:#64748b'>السلة فارغة</p>";document.getElementById('cartTotal').innerText="0";chk.style.display="none";btn.style.display="none"}
-else{
-let tot=0;
-cart.forEach((x,i)=>{tot+=x.price*x.q;box.innerHTML+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #e2e8f0"><div><b>${x.name}</b><br><small>${x.price.toLocaleString()} × ${x.q}</small></div><button class="btn-del" onclick="remCart(${i})">حذف</button></div>`});
-document.getElementById('cartTotal').innerText=tot.toLocaleString();
-document.getElementById('showBankAcc').innerText=store.bankAcc;
-document.getElementById('showBankName').innerText="الاسم: "+store.bankName;
-chk.style.display="block";btn.style.display="inline-block";
-}
-document.getElementById('cartModal').style.display="flex";
-}
-function remCart(i){cart.splice(i,1);document.getElementById('cartCount').innerText=cart.reduce((s,x)=>s+x.q,0);openCart()}
-function closeCart(){document.getElementById('cartModal').style.display="none"}
-function copyAcc(){navigator.clipboard.writeText(store.bankAcc);alert("تم نسخ رقم الحساب: "+store.bankAcc)}
-function sendOrderWA(){
-let n=document.getElementById('custName').value,ph=document.getElementById('custPhone').value,ad=document.getElementById('custAddr').value;
-if(!n||!ph)return alert("يرجى إدخال اسم الزبون ورقم الهاتف");
-let tot=0,txt="";
-cart.forEach((x,i)=>{let s=x.price*x.q;tot+=s;txt+=`${i+1}- ${x.name} (الكمية: ${x.q}) = ${s.toLocaleString()} جنيه%0A`});
-let msg=`*طلب جديد من متجر NSK* 🛍️%0A%0A*بيانات الزبون:*%0Aالاسم: ${n}%0Aالهاتف: ${ph}%0Aالعنوان: ${ad}%0A%0A*المشتريات:*%0A${txt}%0A*الإجمالي:* ${tot.toLocaleString()} جنيه%0A✅ *تم التحويل لحساب بنك الخرطوم (${store.bankAcc}) ومرفق صورة إشعار التحويل أدناه:* 👇`;
-window.open(`https://wa.me{store.whatsapp}?text=${msg}`,'_blank');
-}
-init();
+    document.getElementById('headerNote').textContent = headerNote;
+
+    // البوابة السرية (20 ضغطة على STORE NSK)
+    let clickCount = 0;
+    let clickTimer = null;
+
+    function handleSecretClick() {
+        if (isAdmin) {
+            document.getElementById('adminPanel').style.display = 'block';
+            return;
+        }
+        clickCount++;
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => { clickCount = 0; }, 3500);
+        clickTimer = setTimeout(() => { clickCount = 0; }, 3500);
+
+        if (clickCount >= 20) {
+            clickCount = 0;
+            let pass = prompt('أدخل كلمة المرور:');
+            if (pass === adminPass) {
+                isAdmin = true;
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('whatsappNumberInput').value = whatsappNum;
+                document.getElementById('headerNoteInput').value = headerNote;
+                renderProducts();
+            }
+        }
+    }
+
+    function logoutAdmin() {
+        isAdmin = false;
+        document.getElementById('adminPanel').style.display = 'none';
+        renderProducts();
+    }
+
+    // حفظ الإعدادات
+    function saveSettings() {
+        let newNum = document.getElementById('whatsappNumberInput').value.trim();
+        let newNote = document.getElementById('headerNoteInput').value.trim();
+        let newPass = document.getElementById('newPasswordInput').value.trim();
+
+        if (newNum) {
+            whatsappNum = newNum;
+            localStorage.setItem('nsk_whatsapp', whatsappNum);
+        }
+        headerNote = newNote;
+        localStorage.setItem('nsk_note', headerNote);
+        document.getElementById('headerNote').textContent = headerNote;
+
+        if (newPass) {
+            adminPass = newPass;
+            localStorage.setItem('nsk_pass', adminPass);
+            document.getElementById('newPasswordInput').value = '';
+        }
+
+        alert('تم حفظ البيانات بنجاح!');
+        renderProducts();
+    }
+
+    // إضافة منتج
+    function addProduct() {
+        let name = document.getElementById('pName').value.trim();
+        let price = document.getElementById('pPrice').value.trim();
+        let desc = document.getElementById('pDesc').value.trim();
+        let fileInput = document.getElementById('pImage');
+
+        if (!name || !price) {
+            alert('يرجى كتابة اسم المنتج وسعره.');
+            return;
+        }
+
+        if (fileInput.files && fileInput.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                saveProductData(name, price, desc, e.target.result);
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            saveProductData(name, price, desc, 'https://placeholder.com');
+        }
+    }
+
+    function saveProductData(name, price, desc, imgData) {
+        products.unshift({ id: Date.now(), name, price, desc, image: imgData });
+        localStorage.setItem('nsk_products', JSON.stringify(products));
+
+        document.getElementById('pName').value = '';
+        document.getElementById('pPrice').value = '';
+        document.getElementById('pDesc').value = '';
+        document.getElementById('pImage').value = '';
+
+        renderProducts();
+        alert('تم نشر المنتج!');
+    }
+
+    // حذف منتج
+    function deleteProduct(id) {
+        if (confirm('حذف هذا المنتج نهائياً؟')) {
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('nsk_products', JSON.stringify(products));
+            renderProducts();
+        }
+    }
+
+    // عرض المنتجات
+    function renderProducts() {
+        let list = document.getElementById('productsList');
+        list.innerHTML = '';
+
+        products.forEach(p => {
+            let msg = encodeURIComponent(`مرحباً متجر NSK، أرغب في طلب:\n• المنتج: ${p.name}\n• السعر: ${p.price}`);
+            let waLink = `https://wa.me{whatsappNum}?text=${msg}`;
+
+            let adminHtml = isAdmin ? `
+                <div class="admin-actions">
+                    <button class="delete-btn" onclick="deleteProduct(${p.id})">🗑️ حذف المنتج</button>
+                </div>` : '';
+
+            list.innerHTML += `
+                <div class="product-card">
+                    <img src="${p.image}" class="product-img" alt="${p.name}">
+                    <div class="product-info">
+                        <div class="product-title">${p.name}</div>
+                        <div class="product-desc">${p.desc}</div>
+                        <div class="product-price">${p.price}</div>
+                        <a href="${waLink}" target="_blank" class="order-btn">طلب</a>
+                        ${adminHtml}
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    renderProducts();
 </script>
+
 </body>
 </html>
