@@ -1,231 +1,231 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NSK STORE</title>
-<style>
-*{box-sizing:border-box;font-family:Tahoma,sans-serif;margin:0;padding:0}
-body{background:#07090e;color:#fff}
-header{background:#0d111a;border-bottom:2px solid #0066ff;padding:15px;display:flex;justify-content:space-between;align-items:center}
-.brand{font-size:22px;font-weight:bold;cursor:pointer;user-select:none}
-.brand span{color:#00a3ff}
-.cart-btn{background:#0066ff;border:none;color:#fff;padding:8px 14px;border-radius:20px;font-weight:bold}
-.container{max-width:800px;margin:15px auto;padding:0 12px}
-.box{background:#111622;border:1px solid #0066ff;padding:15px;border-radius:12px;margin-bottom:20px}
-input,textarea{width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #334155;background:#07090e;color:#fff}
-.btn{border:none;padding:11px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer}
-.blue{background:#0066ff;color:#fff}
-.green{background:#10b981;color:#fff}
-.red{background:#ef4444;color:#fff}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
-.card{background:#fff;color:#0f172a;border-radius:12px;overflow:hidden}
-.card img{width:100%;height:180px;object-fit:cover}
-.card-b{padding:12px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:99;justify-content:center;align-items:center;padding:12px}
-.m-box{background:#fff;color:#000;padding:18px;border-radius:14px;width:100%;max-width:420px;max-height:90vh;overflow-y:auto}
-.m-box input{background:#f1f5f9;color:#000;border:1px solid #cbd5e1}
-.bank{background:#eff6ff;border-right:4px solid #0066ff;padding:10px;margin:10px 0;font-size:14px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NSK STORE</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #060b14;
+            --card-dark: #0c1424;
+            --input-dark: #070b12;
+            --cyan: #0ea5e9;
+            --cyan-glow: rgba(14, 165, 233, 0.25);
+            --border-color: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
+        body { background-color: var(--bg-dark); color: var(--text-main); padding-bottom: 60px; }
+
+        header {
+            background: #04080f;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            cursor: default;
+            outline: none;
+            direction: ltr;
+            padding: 4px 8px;
+        }
+        .brand-logo .white-part { color: #ffffff; }
+        .brand-logo .blue-part { color: var(--cyan); }
+
+        .cart-btn {
+            background: #0c1424;
+            border: 1px solid #1e3a5f;
+            color: var(--cyan);
+            padding: 7px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cart-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 12px;
+            padding: 1px 7px;
+            border-radius: 50px;
+        }
+
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+
+        .admin-panel {
+            display: none;
+            background: var(--card-dark);
+            border: 1px solid #1e3a5f;
+            box-shadow: 0 0 25px var(--cyan-glow);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .admin-header h2 { color: var(--cyan); font-size: 18px; }
+        .close-btn {
+            background: #1e293b; color: #e2e8f0; border: 1px solid #334155;
+            padding: 5px 12px; border-radius: 8px; cursor: pointer; font-size: 13px;
+        }
+        .section-box {
+            background: rgba(7, 11, 18, 0.6); border: 1px solid var(--border-color);
+            border-radius: 14px; padding: 15px; margin-bottom: 15px;
+        }
+        .section-title { color: var(--cyan); font-size: 14px; font-weight: 700; margin-bottom: 10px; display: block; }
+        .form-group { margin-bottom: 10px; }
+        .form-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+        .form-input {
+            width: 100%; background: var(--input-dark); border: 1px solid #1e293b;
+            color: #fff; padding: 11px; border-radius: 10px; font-size: 14px; outline: none;
+        }
+        .form-input:focus { border-color: var(--cyan); }
+        .btn-cyan {
+            width: 100%; background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: #fff; border: none; padding: 11px; border-radius: 10px;
+            font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 5px;
+        }
+
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px;
+        }
+        .product-card {
+            background: var(--card-dark); border: 1px solid var(--border-color);
+            border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .img-slider { position: relative; width: 100%; height: 230px; background: #070b12; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; }
+        .slider-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.65); color: white; border: none;
+            width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 16px;
+        }
+        .prev-btn { right: 8px; }
+        .next-btn { left: 8px; }
+        .img-counter {
+            position: absolute; bottom: 8px; left: 10px;
+            background: rgba(0,0,0,0.7); color: #fff; font-size: 11px;
+            padding: 2px 8px; border-radius: 10px;
+        }
+
+        .product-info { padding: 15px; }
+        .product-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+        .product-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
+
+        .price-row {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #070b12; padding: 8px 12px; border-radius: 10px;
+            border: 1px solid #1e293b; margin-bottom: 12px;
+        }
+        .base-price { font-size: 13px; color: var(--text-muted); }
+        .total-price { font-size: 17px; font-weight: 900; color: var(--cyan); }
+
+        .qty-controls {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #070b12; border: 1px solid #1e293b; border-radius: 10px;
+            padding: 4px; margin-bottom: 10px;
+        }
+        .qty-btn {
+            background: #1e293b; color: var(--cyan); border: none;
+            width: 36px; height: 34px; border-radius: 8px; font-size: 18px; font-weight: 900; cursor: pointer;
+        }
+        .qty-val { font-size: 16px; font-weight: 700; color: #fff; }
+
+        .card-actions { display: flex; gap: 8px; }
+        .add-cart-btn {
+            flex: 1; background: #1e293b; color: var(--cyan); border: 1px solid #1e3a5f;
+            padding: 10px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer;
+        }
+        .direct-order-btn {
+            flex: 1; background: linear-gradient(135deg, #0284c7, #0ea5e9); color: #fff;
+            border: none; padding: 10px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer;
+        }
+        .delete-btn {
+            width: 100%; background: rgba(239,68,68,0.15); color: #f87171;
+            border: 1px solid rgba(239,68,68,0.3); padding: 7px; border-radius: 8px;
+            margin-top: 8px; cursor: pointer; font-size: 12px;
+        }
+
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 200; justify-content: center; align-items: center; padding: 15px;
+        }
+        .modal-content {
+            background: var(--card-dark); border: 1px solid #1e3a5f; border-radius: 18px;
+            width: 100%; max-width: 450px; padding: 20px; max-height: 85vh; overflow-y: auto;
+        }
+        .cart-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid var(--border-color); font-size: 14px;
+        }
+    </style>
 </head>
 <body>
+
 <header>
-<button class="cart-btn" onclick="openCart()">🛒 السلة (<span id="cCount">0</span>)</button>
-<div id="topTxt" style="font-size:12px;color:#94a3b8"></div>
-<div class="brand" onclick="tapLogo()"><span>NSK</span> STORE</div>
+    <button class="cart-btn" onclick="openCart()">
+        🛒 السلة <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <div class="brand-logo" id="secretLogo">
+        <span class="white-part">STORE</span> <span class="blue-part">NSK</span>
+    </div>
 </header>
 
 <div class="container">
-<div id="adminBox" class="box" style="display:none">
-<div style="display:flex;justify-content:space-between;margin-bottom:12px">
-<h3 style="color:#00a3ff">لوحة المالك NSK</h3>
-<button onclick="closeAdmin()" style="background:#334155;color:#fff;border:none;padding:5px 10px;border-radius:6px">إغلاق</button>
-</div>
-<input id="sNote" placeholder="النص العلوي بجانب الشعار">
-<input id="sName" placeholder="اسمك في بنكك">
-<input id="sAcc" placeholder="رقم حساب بنكك">
-<input id="sWhats" placeholder="رقم واتسابك (مثال: 249912345678)">
-<button class="btn blue" onclick="saveSet()" style="margin-bottom:15px">حفظ الإعدادات</button>
+    <div id="adminPanel" class="admin-panel">
+        <div class="admin-header">
+            <h2>لوحة تحكم المالك (NSK Admin)</h2>
+            <button class="close-btn" onclick="logoutAdmin()">إغلاق</button>
+        </div>
 
-<h4 style="color:#00a3ff;margin-bottom:8px">إضافة منتج جديد:</h4>
-<input id="pName" placeholder="اسم المنتج">
-<input id="pPrice" type="number" placeholder="السعر بالأرقام">
-<textarea id="pDesc" rows="2" placeholder="وصف المنتج"></textarea>
-<input id="pImg" type="file" accept="image/*">
-<button class="btn blue" id="pubBtn" onclick="addProd()">نشر المنتج</button>
+        <div class="section-box">
+            <span class="section-title">إعدادات الواتساب والعملة:</span>
+            <div class="form-group">
+                <input type="text" id="whatsappNumberInput" class="form-input" placeholder="رقم الواتساب مع رمز الدولة (مثال: 249999580005)">
+            </div>
+            <div class="form-group">
+                <input type="text" id="currencyInput" class="form-input" placeholder="العملة (مثال: ج.س)">
+            </div>
+            <div class="form-group">
+                <input type="password" id="newPasswordInput" class="form-input" placeholder="كلمة مرور جديدة (اتركه فارغاً لعدم التغيير)">
+            </div>
+            <button class="btn-cyan" onclick="saveSettings()">حفظ الإعدادات</button>
+        </div>
 
-<h4 style="color:#fbbf24;margin:15px 0 8px">طلبات الدفع للمراجعة:</h4>
-<div id="ordersDiv"></div>
-</div>
-
-<div id="grid" class="grid"></div>
-</div>
-
-<div id="cartModal" class="modal">
-<div class="m-box">
-<h3>سلة المشتريات</h3>
-<div id="cItems" style="margin:8px 0;font-size:14px"></div>
-<p style="font-weight:bold;color:#0066ff;margin-bottom:10px">المطلوب من السلة: <span id="cTotal">0</span> ج.س</p>
-<div id="step1">
-<div class="bank">
-<b>الدفع عبر تطبيق بنكك:</b><br>
-الاسم: <span id="bName"></span><br>
-رقم الحساب: <span id="bAcc" style="color:#0066ff;font-weight:bold"></span>
-</div>
-<input id="uName" placeholder="اسمك الكامل">
-<label style="font-size:13px;font-weight:bold">صورة إشعار التحويل:</label>
-<input id="uImg" type="file" accept="image/*">
-<button class="btn blue" id="sendBtn" onclick="sendOrder()">إرسال الإشعار</button>
-</div>
-<div id="step2" style="display:none;text-align:center;padding:12px;border-radius:10px;font-weight:bold"></div>
-<button class="btn red" onclick="closeCart()" style="margin-top:10px">إغلاق</button>
-</div>
-</div>
-<script>
-const PASS="69866986";
-let admin=false,taps=0,tTimer=null,cart=[];
-let cfg=JSON.parse(localStorage.getItem("nsk_cfg")||"null")||{note:"أهلاً بكم",name:"مالك NSK",acc:"000000",whats:"249900000000"};
-let prods=JSON.parse(localStorage.getItem("nsk_prods")||"null")||[{id:1,name:"منتج تجريبي NSK",price:10000,desc:"اضغط 5 مرات على NSK STORE للدخول كمالك",img:"https://placeholder.com"}];
-
-function start(){
-document.getElementById("topTxt").innerText=cfg.note;
-document.getElementById("sNote").value=cfg.note;
-document.getElementById("sName").value=cfg.name;
-document.getElementById("sAcc").value=cfg.acc;
-document.getElementById("sWhats").value=cfg.whats;
-showProds();showOrders();
-}
-
-function tapLogo(){
-if(admin)return;
-taps++;clearTimeout(tTimer);
-tTimer=setTimeout(()=>taps=0,2500);
-if(taps>=5){
-taps=0;
-if(prompt("باسوورد المالك:")===PASS){
-admin=true;document.getElementById("adminBox").style.display="block";showProds();showOrders();
-}else alert("خطأ");
-}
-}
-
-function closeAdmin(){admin=false;document.getElementById("adminBox").style.display="none";showProds()}
-
-function saveSet(){
-cfg={note:document.getElementById("sNote").value,name:document.getElementById("sName").value,acc:document.getElementById("sAcc").value,whats:document.getElementById("sWhats").value};
-localStorage.setItem("nsk_cfg",JSON.stringify(cfg));
-document.getElementById("topTxt").innerText=cfg.note;
-alert("تم الحفظ");
-}
-
-function shrink(file,cb){
-const r=new FileReader();
-r.onload=e=>{
-const i=new Image();
-i.onload=()=>{
-const c=document.createElement("canvas"),w=400;
-c.width=w;c.height=i.height*(w/i.width);
-c.getContext("2d").drawImage(i,0,0,c.width,c.height);
-cb(c.toDataURL("image/jpeg",0.7));
-};i.src=e.target.result;
-};r.readAsDataURL(file);
-}
-
-function addProd(){
-const n=document.getElementById("pName").value,p=document.getElementById("pPrice").value,d=document.getElementById("pDesc").value,f=document.getElementById("pImg");
-if(!n||!p||!f.files)return alert("أكمل البيانات والصورة");
-const b=document.getElementById("pubBtn");b.innerText="جاري النشر...";b.disabled=true;
-shrink(f.files,b64=>{
-prods.unshift({id:Date.now(),name:n,price:Number(p),desc:d,img:b64});
-localStorage.setItem("nsk_prods",JSON.stringify(prods));
-showProds();
-document.getElementById("pName").value="";document.getElementById("pPrice").value="";document.getElementById("pDesc").value="";f.value="";
-b.innerText="نشر المنتج";b.disabled=false;
-alert("تم النشر بنجاح!");
-});
-}
-
-function delProd(id){
-if(confirm("حذف؟")){prods=prods.filter(x=>x.id!==id);localStorage.setItem("nsk_prods",JSON.stringify(prods));showProds()}
-}
-
-function showProds(){
-document.getElementById("grid").innerHTML=prods.map(p=>`
-<div class="card">
-<img src="${p.img}">
-<div class="card-b">
-<h4>${p.name}</h4>
-<p style="font-size:13px;color:#555;margin:5px 0">${p.desc}</p>
-<p style="color:#0066ff;font-weight:bold;margin-bottom:8px">${p.price} ج.س</p>
-<button class="btn blue" onclick="toCart(${p.id})">شراء</button>
-${admin?`<button class="btn red" style="margin-top:5px" onclick="delProd(${p.id})">حذف</button>`:""}
-</div>
-</div>`).join("");
-}
-
-function toCart(id){
-const x=prods.find(p=>p.id===id);
-if(x){cart.push(x);document.getElementById("cCount").innerText=cart.length;openCart()}
-}
-
-function openCart(){
-document.getElementById("bName").innerText=cfg.name;
-document.getElementById("bAcc").innerText=cfg.acc;
-let tot=0;
-document.getElementById("cItems").innerHTML=cart.map(i=>{tot+=i.price;return`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #eee"><span>${i.name}</span><span>${i.price}</span></div>`}).join("");
-document.getElementById("cTotal").innerText=tot;
-checkView();
-document.getElementById("cartModal").style.display="flex";
-}
-
-function closeCart(){document.getElementById("cartModal").style.display="none"}
-
-function sendOrder(){
-const u=document.getElementById("uName").value,f=document.getElementById("uImg"),tot=document.getElementById("cTotal").innerText;
-if(!cart.length||!u||!f.files)return alert("أكمل الاسم وصورة الإشعار");
-shrink(f.files,b64=>{
-const ord={user:u,tot:tot,items:cart.map(x=>x.name).join("+"),img:b64,st:"wait"};
-localStorage.setItem("nsk_ord",JSON.stringify(ord));
-checkView();showOrders();
-window.open(`https://wa.me{cfg.whats}?text=*Snk*%0Aهنا من دفع المال، راجع الطلب:%0Aالعميل: ${u}%0Aالمبلغ: ${tot} ج.س`,"_blank");
-});
-}
-
-function checkView(){
-const o=JSON.parse(localStorage.getItem("nsk_ord")||"null"),s1=document.getElementById("step1"),s2=document.getElementById("step2");
-if(!o){s1.style.display="block";s2.style.display="none";return}
-s1.style.display="none";s2.style.display="block";
-if(o.st==="wait"){s2.style.background="#fef3c7";s2.style.color="#92400e";s2.innerHTML="⏳ يتم مراجعة طلبك..."}
-else if(o.st==="ok"){s2.style.background="#d1fae5";s2.style.color="#065f46";s2.innerHTML=`✅ يتم إتمام طلبك الآن!<br><button class="btn green" style="margin-top:8px" onclick="sendLoc()">📍 تحديد موقع التسليم وإرساله واتساب</button>`}
-else{s2.style.background="#fee2e2";s2.style.color="#991b1b";s2.innerHTML=`❌ لم يتم إتمام طلبك<br><button class="btn blue" style="margin-top:8px" onclick="localStorage.removeItem('nsk_ord');checkView()">إعادة</button>`}
-}
-
-function showOrders(){
-const o=JSON.parse(localStorage.getItem("nsk_ord")||"null"),d=document.getElementById("ordersDiv");
-if(!o){d.innerHTML="<p style='font-size:13px;color:#888'>لا توجد طلبات</p>";return}
-d.innerHTML=`<div style="background:#07090e;padding:10px;border-radius:8px;border:1px solid #334155">
-<p>${o.user} - ${o.tot} ج.س</p>
-<img src="${o.img}" style="width:100%;max-height:180px;object-fit:contain;margin:8px 0;background:#fff">
-<div style="display:flex;gap:8px">
-<button class="btn green" onclick="setOrd('ok')">إشعار صحيح</button>
-<button class="btn red" onclick="setOrd('no')">إشعار غير صحيح</button>
-</div></div>`;
-}
-
-function setOrd(s){
-const o=JSON.parse(localStorage.getItem("nsk_ord"));
-if(o){o.st=s;localStorage.setItem("nsk_ord",JSON.stringify(o));showOrders();alert("تم الرد على العميل")}
-}
-
-function sendLoc(){
-const o=JSON.parse(localStorage.getItem("nsk_ord"));
-navigator.geolocation.getCurrentPosition(p=>{
-const url=`https://google.com{p.coords.latitude},${p.coords.longitude}`;
-window.open(`https://wa.me{cfg.whats}?text=*Snk*%0Aالعميل: ${o.user}%0Aالمبلغ المطلوب من السلة: ${o.tot} ج.س%0Aموقع التسليم:%0A${url}`,"_blank");
-localStorage.removeItem("nsk_ord");cart=[];document.getElementById("cCount").innerText="0";closeCart();
-},()=>alert("فعّل GPS في الهاتف"));
-}
-
-start();
-</script>
-</body>
-</html>
+        <div class="section-box" style="margin-bottom:0;">
+            <span class="section-title">إضافة منتج جديد (يمكنك اختيار عدة صور):</span>
+            <div class="form-group">
+                <input type="text" id="pName" class="form-input" placeholder="اسم المنتج">
+            </div>
+            <div class="form-group">
+                <input type="number" id="pPrice" class="form-input" placeholder="السعر الأساسي أرقام فقط (مثال: 15000)">
+            </div>
+            <div class="form-group">
+                <textarea id="pDesc" class="form-input" rows="2" placeholder="وصف المنتج..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>اختر صورة أو عدة صور للمنتج:</label>
